@@ -66,7 +66,7 @@ Recently, 3D environment understanding is gaining the attention in the research 
  \centering
  % Requires \usepackage{graphicx}
  %\resizebox{\linewidth}{!}{
- \includegraphics[width=0.45\textwidth]{./figures/main_ui}\\ %\vspace{-0.3cm}
+ \includegraphics[width=0.9\linewidth]{./figures/main_ui}\\ %\vspace{-0.3cm}
   \caption{An illustration of our annotation platform. The yellow fonts at the left-top of the label scene shows the detail information of the object. The 4 sub-windows at the left side are over-head view, front view, side view and corresponding camera image, respectively. The context component shows the flexible operations.}
      \label{fig:main_ui}
      %\vspace{-0.2cm}
@@ -183,18 +183,26 @@ When we rotate the box, some interior points may go out, but in most occasions, 
 \begin{figure}
 	\centering
 
-	\begin{minipage}{0.22\textwidth}
+	\begin{minipage}{0.2\linewidth}
 		\centering
-		\includegraphics[width=\textwidth]{./figures/points-enclosed} % first figure itself
-		\caption{first figure}
+		\includegraphics[width=\textwidth]{./figures/points-enclosed}		
 	\end{minipage}\hfill
     ~
-	\begin{minipage}{0.22\textwidth}
+	\begin{minipage}{0.2\linewidth}
 		\centering
-		\includegraphics[width=\textwidth]{./figures/adjust-naively} % second figure itself
-		\caption{second figure}
+		\includegraphics[width=\textwidth]{./figures/adjust-naively}
 	\end{minipage}\hfill
-	\caption{Pictures of animals}\label{fig:animals}
+	~
+	\begin{minipage}{0.2\linewidth}
+		\centering
+		\includegraphics[width=\textwidth]{./figures/rotate-fail}
+	\end{minipage}\hfill
+	~
+	\begin{minipage}{0.2\linewidth}
+		\centering
+		\includegraphics[width=\textwidth]{./figures/rotate-success}
+	\end{minipage}\hfill
+	\caption{Boundary-aware-rotation}\label{fig:animals}
 \end{figure}
 
 \subsubsection{Prototype-based box initialization}
@@ -206,8 +214,6 @@ A euclidean distance based expansion algorithm is invoked to adjust the box to e
 
 \section{Implementation}
 \label{Implementation}
-
-we introduce the architecture of our tool and the details of the semi-auto annotation algorithm in this section.
 
 \subsection{Software Architecture}
 
