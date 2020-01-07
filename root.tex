@@ -1,0 +1,259 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+\usepackage[colorlinks,linkcolor=black]{hyperref}
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+%In case you encounter the following error:
+%Error 1010 The PDF file may be corrupt (unable to open PDF file) OR
+%Error 1000 An error occurred while parsing a contents stream. Unable to analyze the PDF file.
+%This is a known problem with pdfLaTeX conversion filter. The file cannot be opened with acrobat reader
+%Please use one of the alternatives below to circumvent this error by uncommenting one or the other
+%\pdfobjcompresslevel=0
+%\pdfminorversion=4
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+\usepackage{algorithm,algorithmic}
+\usepackage{epsfig} % for postscript graphics files
+\usepackage{mathptmx} % assumes new font selection scheme installed
+\usepackage{times} % assumes new font selection scheme installed
+\usepackage{amsmath,amssymb,graphicx,graphics,hyperref,subfigure,epstopdf,cite,enumerate,epstopdf,multirow,cleveref,gensymb,color}
+\usepackage{multicol}
+
+\title{\LARGE \bf
+SUSTech Points: An Efficient 3D Point Clouds Labelling Tool
+}
+
+\author{E Li$^{1}$, Chengyang Li$^{1}$,Shuaijun Wang$^{1,2}$, Xiangbin Wu$^{3}$, and Qi Hao$^{1,*}$% <-this % stops a space
+\thanks{This work is partially supported by the National Natural Science Foundation of China (No: 61773197), the Science and Technology Innovation Committee of Shenzhen City (No: GJHZ20170314114424152), the Nanshan District Science and Technology Innovation Bureau (No: LHTD20170007), and the Intel ICRI-IACV Research Fund (CG$\#$52514373).}
+\thanks{$^{*}$Corresponding author: Qi Hao (hao.q@sustech.edu.cn).}
+\thanks{$^{1}$Department of Computer Science and Engineering,
+Southern University of Science and Technology, Shenzhen, Guangdong, China, 518055}
+\thanks{$^{2}$Harbin Institute of Technology,
+92 West Dazhi Street, Nan Gang District, Harbin, China, 150001}%
+% <-this % stops a space
+\thanks{$^{3}$ Intel Corporation}%
+% <-this % stops a space
+}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+The major challenges of labeling the 3D objects lie in reasonable structure annotation results, flexible tool, and high-precision annotation. This paper presents a novel annotation framework (i.e. SUSTech Points), which can successfully process the trade-off between time-consuming and dataset quality. The novelty of this work includes three-folds: (1) developing a flexible operation annotation tool for 3D point clouds; (2) developing a semi-autonomous method to annotate the same objects in the consecutive frames; (3) developing an intelligent plug-in being used to count the number and type of labeled objects. The method is tested with the online annotation under various scenes. And the experimental results have demonstrated the robust performance of the proposed method.
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{INTRODUCTION}
+%3D environment understanding plays an important role in the autonomous driving. There are many ways to build the 3D environment, which can be divided into 2 categories, including sensor-based and algorithm-based.
+Recently, 3D environment understanding is gaining the attention in the research areas and industrial applications, like autonomous driving, etc. The 3D environment is often represented as point clouds. And the density of the point clouds reflects the quality of the 3D environment. The methods of obtaining 3D point clouds can be divided into 2 categories: sensor-based and algorithm-based. The sensor-based method means that the point clouds are acquired by the sensors, like LiDAR, etc. The algorithm-based method means that the point clouds are obtained by the computer vision-based algorithms, like stereo vision methods, structure-from-motion (SFM), SLAM, etc. However, the labeling process of the point clouds obtained by these 2 categories methods have to deal with the following limitations/challenges:
+\begin{figure}[ht]
+ \centering
+ % Requires \usepackage{graphicx}
+ %\resizebox{\linewidth}{!}{
+ \includegraphics[width=0.45\textwidth]{./figures/main_ui}\\ %\vspace{-0.3cm}
+  \caption{An illustration of our annotation platform. The yellow fonts at the left-top of the label scene shows the detail information of the object. The 4 sub-windows at the left side are over-head view, front view, side view and corresponding camera image, respectively. The context component shows the flexible operations.}
+     \label{fig:main_ui}
+     %\vspace{-0.2cm}
+\end{figure}
+\begin{enumerate}
+  \item Irregular density point cloud. In practical, the density of point clouds depends on distance between the sensor and measured objects, sensor type, and reflectivity of the measured objects, etc. Therefore, how to solve the different density of point clouds, including sparse and dense, becomes crucial.
+  \item High-precision annotation. Compared with 2D image annotation, the annotation information of 3D point clouds becomes more complexity. It includes scale at each dimensionality axis, and heading angle of the object. How to obtain the accurate annotation information becomes important.
+  \item Rich categories of object. The data-driven-based methods can distill the knowledge from the rich categories of the dataset, so that these methods can keep the favorable performance. The number of these objects is numerous. How to quickly annotate and balance these objects is also a critical issue.
+  \item Reasonable data structure. The reasonable annotation data structure can efficiently decrease the store space and boost the speed of access.
+  \item Flexible tool. Labeling the 3D objects is an enormous work, which includes annotation large amounts of objects and operation instructions for users. Therefore, developing a flexible labeling tool is much more important.
+\end{enumerate}
+
+The resolution of 3D point clouds is a formidable limitation for 3D annotation. Each frame point clouds obtained by LiDAR, like Velodyne, RoboSense, etc., has at least 10K 3D points. The measurement radius of  LiDAR is larger than 150 meters. So there are quite a few objects with a small number of points, extremely fewer than 10 points. These low-resolution 3D objects are even beyond the perception ability of humans. Another limitation is how to improve the annotation efficiency of the same object in consecutive frames, especially when the objects being farthest away from the sensor are with low-resolution 3D points.
+
+An flexible annotation tool can improve the annotation efficiency and dataset quality. A considerable amount of research has been done on how to annotate 3D point clouds, like PointAtMe~\cite{pointatme}, LabelMe3D~\cite{LabelMe3D}, etc., during the last decade. The flexible annotation tool should be with easily applicable, intelligible and favorable visibility, as shown in the Fig.~\ref{fig:main_ui}. The intelligible plug-in of the annotation toolkit can promote the speed of the annotation process. The favorable visibility can raise the quality of the dataset, specifically in balancing the number of objects.
+
+In this paper, we propose an efficient 3D point clouds annotation tool, with flexible operation, semi-autonomous annotation, and rapid deployment, to improve the annotation efficiency and assure the dataset quality. The contribution of this work as shown in the following.
+\begin{itemize}
+  \item Developing a flexible operation annotation tool for 3D point clouds;
+  \item Developing a semi-autonomous method to annotate the same objects in the consecutive frames;
+  \item Developing an intelligent plug-in being used to count the number and type of labeled objects.
+\end{itemize}
+
+The rest of this paper is organized as follows. Section~\ref{Realtedwork} introduces the related work on 3D objects annotation methods.
+Section~\ref{setup-statement} describes the system setup and problem statement. Section~\ref{Approach} presents the proposed method.
+Section~\ref{result} provides the experiment results and discussions. Section~\ref{conclusions} concludes this paper and outlines future work. To facilitate future research, the code has been released at "\url{http://www.baidu.com}".
+\section{Related work}
+\label{Realtedwork}
+According to the types of annotation equipment, much of the research in the 3D annotation area in recent years can be classified as VR-free (virtual-reality-based) and VR-based methods.
+\subsection{PC-based annotation method}
+VR-free methods can assure the 3D annotation quality  and are without additional equipments to finish specific annotation tasks.
+Details on VR-free methods include the 2D-3D fusion-based and pure 3D-based annotation.
+2D-3D fusion-based methods need the accurate spatial transformation relationship between 2D cameras and 3D sensors.
+The spatial transformation relationship is calibrated by the stereo-vision algorithms, including Zhang's method~\cite{zhangzhegnyou}, Camera-LiDAR calibration~\cite{roadCalibration}, etc.
+But the performance of annotation strongly depends on the 2D-3D correspondence estimated from each sensor data. In addition, the 3D point are discrete and cannot find the accurate corresponding pixels at the image, which can increase the error of calibration and projection. A slice of these methods can only process the specific scenarios, like static scenarios, indoor scenarios, and so on.
+
+Another kind of methods directly operates at the layer of 3D point clouds.
+The method proposed by Yu \textit{et al.}~\cite{yu2012efficient} selects some points around the 2D projection of the object in 3D environment, which can approximately annotate the 3D object according to the structure-aware information. The cluster-based methods and segmentation-based method stand for the semi-autonomous and fully autonomous annotation method.
+These methods outperform the VR-based annotation methods. However, these methods are with higher time consuming and computation complexity~\cite{pointatme}. It is worth noting that the method~\cite{monica2017multi} is the only one seriously evaluating the speed of their annotation tool. And we also adopt the metric~\cite{monica2017multi} to evaluate the speed of our label tool.
+\subsection{VR-based annotation method}
+VR equipment is helpful for the 3D environment understanding. It can afford the immersion experience during wearing VR equipment, which can directly show the real environment before the practitioners. Taking advantages of VR, VR-based methods for 3D annotation are proposed in quite a few works~\cite{pointatme,wilkes20123dVR,coffey2011interactiveVR}. These methods use the 6 degree-of-freedom (DoF) device and VR buttons to replace the 2D screen-based or the smartphone functionality-based operations. And these method also acquire the satisfied results. However, the annotated objects by these methods are too coarse to afford the requirements of the practical applications. The VR-based methods depends on the hand gestures and 2 controllers to tune the bounding box of the 3D objects. During the trade-off between efficiency and quality, it is difficult to implement fine-tuning the attitude, size and angle.  The labelled bounding box by the VR-based methods are with bigger errors than that of the VR-free methods.
+
+Another limitation of VR-based methods is the point clouds subject to the same object within an appropriate bounding box.
+It needs multiple repeat operations to select the proper boundary points.
+Specifically, the labeling process of the complex objects with irregular boundaries, like trees, zebra lines, etc., becomes more difficult than that of other objects with regular boundaries, such as cars, vans, and so on.
+These 2 limitations increase the time consuming and decrease the annotation quality of 3D objects.
+\subsection{The framework of annotation method}
+The framework of annotation method includes explorer-based and software-based. The explorer-based framework is flexible to users for labeling 3D objects, which is based on the elements of the Web page. Therefore, the annotation framework, like LabelMe3D~\cite{LabelMe3D}, our proposed method, etc., can adaptively perform at any computer without additional operations. The software-based methods, like AppoloSuite[], also need additional component that can ensure to execute. And it is difficult to synchronously and instantly update, which maybe cause the inconsistency of data, or other unpredictable results.
+
+In this work, our proposed method directly annotate the objects at the 3D point clouds layer with the explorer-based framework. Our proposed method can successfully process the trade-off between time-consuming and data-quality. 
+\section{3D annotation tool}
+\label{3D annotation tool}
+
+We choose PC-based platform and web-based architecture to implement our tool. We follow the listed philosophies below to create our tool:
+
+\begin{itemize}
+	\item the details of an object and its 3d bounding box should be easy to check
+	\item the operations to annotate one object should be minimized
+	\item human work shall be reused and exploited to reduce the burden of labor
+\end{itemize}
+
+\subsection{Visualization}
+we split the view into 5 parts, as shown in Fig.~\ref{fig:main_ui}. they are
+\begin{itemize}
+	\item main-view 
+	\item image context
+	\item top-view
+	\item side-view
+	\item front-view
+	\item 3d-2d fusion view
+\end{itemize}
+
+we also provide a focus mode, 
+
+camera auto-switch
+
+object color
+
+\subsection{Editing}
+mouse operation
+
+keyboard operation
+
+one-key direction reversion
+
+
+\subsection{Assistant algorithms}
+
+\subsubsection{Semi-auto annotation}
+
+In autonomous driving scenario, data sets are often organized by scenes\cite{Caesar2019nuScenesAM,Patil2019TheHD,lyft2019}, a scene is a sequence of frames shot at one continuous period of time. There are much similarities between neighboring frames, which makes it possible to transfer annotations among them. \cite{Zimmer20193DBA} copies annotations to next frame directly and let user do the adjustment.\cite{Wang2019LATTEAL} uses box estimation algorithm to automatically adjust the box, reusing previous annotated object size if appropriate. Our tool takes this way further by invoking registration algorithm \cite{Yang2016GoICPAG} to automatically adjust the position and rotation, reusing both the size and rotation previously annotated. In most cases our method produces  accurate enough annotation result.
+
+
+\subsubsection{Auto-shrink}
+
+Due to the unavoidable granularity of adjustment operations (of both keyboard and mouse), it's hard to determine precisely the border of a bounding box, our tool solves this problem by automatically shrink the borders to nearest inner points. 
+
+The user can drag the border or corner of a box to enclose all points of the object, after releasing the mouse key, the borders will automatically shrink to best positions.
+
+
+
+\subsubsection{Boundary-aware rotation}
+
+When annotate an object we normally perform the following 2 steps iteratively:
+\begin{itemize}
+	\item adjust position and/or scale
+	\item adjust rotation	
+\end{itemize}
+
+When we rotate the box, some interior points may go out, but in most occasions, we want interior points kept interior while the scale and/or position being auto-adjusted. We emphasize that with this feature, to annotate an object is as easy as to enclose related points first and then rotate once.
+
+
+
+\begin{figure}
+	\centering
+
+	\begin{minipage}{0.22\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{./figures/points-enclosed} % first figure itself
+		\caption{first figure}
+	\end{minipage}\hfill
+    ~
+	\begin{minipage}{0.22\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{./figures/adjust-naively} % second figure itself
+		\caption{second figure}
+	\end{minipage}\hfill
+	\caption{Pictures of animals}\label{fig:animals}
+\end{figure}
+
+\subsubsection{Prototype-based box initialization}
+
+we use popup context menu to start annotating a new object, when user click object type name, a box is placed at the clicked position (center part of\ref{hptb}), the dimension is set according to the object type, and the heading direction(z-axis rotation) is set upward along the main view (better if the main view is rotated properly beforehand).
+A euclidean distance based expansion algorithm is invoked to adjust the box to enclose all points of the same object. By this way the initial bounding box is almost ready.
+
+\subsubsection{Calibration tuning}
+
+\section{Implementation}
+\label{Implementation}
+
+we introduce the architecture of our tool and the details of the semi-auto annotation algorithm in this section.
+
+\subsection{Software Architecture}
+
+\subsection{Semi-auto annotation algorithm}
+
+\subsection{Boundary-aware rotation}
+
+A naive implementation is to recalculate the dimension of all original interior points and adjust the box accordingly, but it may fail when ground plane is present, after several rotation the box may become too big. One solution is to remove ground plane beforehand, but no algorithm can do this work perfectly as of our best knowledge, especially when the ground is not smooth (as can be seen often in KITTI data set\cite{Geiger2012CVPR} where many cars park on roadside). We use a simple yet effective method to tackle this problem. Specifically, we just ignore the most bottom part (0.1m by default) of the object when calculating the box dimension. Since a user is annotating the object, the pose of the object must be already roughly correct, so the bottom part can filter out ground points effectively. In the other hand, the object dimension estimation is not affected since almost all objects are much higher than 0.1m in traffic scenarios.
+
+
+\section{Metrics}
+\label Metrics
+
+\section{USING THE TEMPLATE}
+\label{result}
+
+\section{CONCLUSIONS}
+\label{conclusions}
+A conclusion section is not required. Although a conclusion may review the main points of the paper, do not replicate the abstract as the conclusion. A conclusion might elaborate on the importance of the work or suggest applications and extensions.
+
+\addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
+                                  % on the last page of the document manually. It shortens
+                                  % the textheight of the last page by a suitable amount.
+                                  % This command does not take effect until the next page
+                                  % so it should come on the page before the last. Make
+                                  % sure that you do not shorten the textheight too much.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{APPENDIX}
+
+Appendixes should appear before the acknowledgment.
+
+\section*{ACKNOWLEDGMENT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+References are important to the reader; therefore, each citation must be complete and correct. If at all possible, references should be commonly available publications.
+
+\bibliographystyle{IEEEtran}
+\bibliography{MyReference}
+\end{document}
