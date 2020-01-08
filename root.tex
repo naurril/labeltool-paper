@@ -194,9 +194,9 @@ All operations can also be performed by keyboard, and they are summarized in Tab
 	\caption{Keyboard Operations on sub-view}
 	\label{table_keyboard_subview}
 	\begin{center}
-		\begin{tabular}{|c|c|}
+		\begin{tabular}{|c|l|}
 			\hline
-			\textbf{Key} & \textbf{function}\\			
+			\textbf{Key} & \textbf{Function}\\			
 			\hline
 			A & move left\\
 			\hline
@@ -218,9 +218,9 @@ All operations can also be performed by keyboard, and they are summarized in Tab
 	\caption{Keyboard Operations on main-view}
 	\label{table_keyboard_mainview}
 	\begin{center}
-		\begin{tabular}{|c|c|}
+		\begin{tabular}{|c|l|}
 			\hline
-			\textbf{Key} & \textbf{function}\\
+			\textbf{Key} & \textbf{Function}\\
 			\hline
 			1 & select previous object in current frame\\
 			\hline
@@ -239,7 +239,11 @@ All operations can also be performed by keyboard, and they are summarized in Tab
 			g & reverse box direction (yaw angle)\\
 			\hline
 			v & switch editing mode(Fig.\ref{fig:box-mouse-edit})\\
-			\hline			
+			\hline
+			Ctrl+s & save\\
+			\hline
+			Ctrl+c & copy reference box (semi-auto annotation \ref{semi-auto-anno})\\
+			\hline
 		\end{tabular}
 	\end{center}
 \end{table}
@@ -247,7 +251,7 @@ All operations can also be performed by keyboard, and they are summarized in Tab
 \subsection{Assistant algorithms}
 
 \subsubsection{Semi-auto annotation}
-
+\label{semi-auto-anno}
 In autonomous driving scenario, data sets are often organized by scenes\cite{Caesar2019nuScenesAM,Patil2019TheHD,lyft2019}, a scene is a sequence of frames shot at one continuous period of time. There are much similarities between neighboring frames, which makes it possible to transfer annotations among them. \cite{Zimmer20193DBA} copies annotations to next frame directly and let user do the adjustment.\cite{Wang2019LATTEAL} uses box estimation algorithm to automatically adjust the box, reusing previous annotated object size if appropriate. Our tool takes this way further by invoking registration algorithm \cite{Yang2016GoICPAG} to automatically adjust the position and rotation, reusing both the size and rotation previously annotated. In most cases our method produces  accurate enough annotation result.
 
 
@@ -265,7 +269,7 @@ When annotate an object we normally perform the following 2 steps iteratively:
 	\item adjust rotation	
 \end{itemize}
 
-When we rotate the box, some interior points may go out, but in most occasions, we want interior points kept interior while the scale and/or position being auto-adjusted. We emphasize that with this feature, to annotate an object is as easy as to enclose related points first and then rotate once.
+When we rotate the box, some interior points may go outside, but we want interior points being kept interior while the dimension and/or position being auto-adjusted. We emphasize that with this feature, to annotate an object is as easy as to enclose all points first and then rotate once.
 
 \begin{figure}[ht]
 	\begin{subfigure}[t]{0.2\linewidth}
@@ -340,6 +344,10 @@ In server, the raw data is organized by scenes, the directory structure is as in
 
 
 \subsection{Semi-auto annotation algorithm}
+
+Semi-auto annotation of our tool is roughly a method to transfer annotation between frames, more accurately than naive paste or liner interpolation. The user need to first select (copy) a reference box, then paste it in appropriate position in target frame. A registration algorithm is invoked to compute the relative transform relation between the reference and target object, the target box is adjusted by the same transform relation. Note that the user need only to paste the box on the roughly right position.
+
+
 
 \subsection{Boundary-aware rotation}
 
