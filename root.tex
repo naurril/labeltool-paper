@@ -24,12 +24,20 @@
 % on the last page of the document
 
 % The following packages can be found on http:\\www.ctan.org
-\usepackage{algorithm,algorithmic}
-\usepackage{epsfig} % for postscript graphics files
-\usepackage{mathptmx} % assumes new font selection scheme installed
-\usepackage{times} % assumes new font selection scheme installed
-\usepackage{amsmath,amssymb,graphicx,graphics,hyperref,subfigure,epstopdf,cite,enumerate,epstopdf,multirow,cleveref,gensymb,color}
-\usepackage{multicol}
+\usepackage{amsmath} % assumes amsmath package installed
+\usepackage{amssymb}  % assumes amsmath package installed
+
+\usepackage{amsfonts}
+\usepackage{cite}
+%\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{subcaption}% needed for subfigure
+\usepackage{diagbox}
+%\usepackage{biblatex}
+%\usepackage{textcomp}
+\usepackage{xargs}    
+\usepackage[pdftex,dvipsnames,table]{xcolor}
+\usepackage{dirtree}
 
 \title{\LARGE \bf
 SUSTech Points: An Efficient 3D Point Clouds Labelling Tool
@@ -120,7 +128,7 @@ In this work, our proposed method directly annotate the objects at the 3D point 
 \section{3D annotation tool}
 \label{3D annotation tool}
 
-We choose PC-based platform and web-based architecture to implement our tool. We follow the listed philosophies below to create our tool:
+We follow the listed philosophies below to create our tool:
 
 \begin{itemize}
 	\item the details of an object and its 3d bounding box should be easy to check
@@ -129,29 +137,112 @@ We choose PC-based platform and web-based architecture to implement our tool. We
 \end{itemize}
 
 \subsection{Visualization}
-we split the view into 5 parts, as shown in Fig.~\ref{fig:main_ui}. they are
-\begin{itemize}
-	\item main-view 
-	\item image context
-	\item top-view
-	\item side-view
-	\item front-view
-	\item 3d-2d fusion view
-\end{itemize}
 
-we also provide a focus mode, 
+\subsubsection{Sub-views}
+We split the main window into 1 main view and 5 sub-views, as shown in Fig.~\ref{fig:main_ui}. As in \cite{Zimmer20193DBA, more..}, the top/side/front projective views is provided to easily check the box alignment, different from \cite{Zimmer20193DBA} we hide environment points in these views to make it clean. we also provide an extra focused fusion view (bottom left sub-view in \ref{fig:main_ui}) to help check image details easily, otherwise a user will have to zoom in/out the context image.
 
-camera auto-switch
+\subsubsection{fast-toolbox}
+When an object is selected (by mouse click, or navigate key shortcut), a floating fast-tool-box shows next to it, as shown in Fig.\ref{fig:main_ui}. A user can change object type, tracking id, activate focus mode, among others.
 
-object color
+\subsubsection{focus-mode}
+We provide a focus mode, when activated for a selected object, the object is centered and zoomed in with backgrounds removed, such that a user can inspect all annotation details. Without this feature a use has to pan,  zoom and rotate the main view, which we think is a lot operations and hard work.
 
-\subsection{Editing}
-mouse operation
+\begin{figure}[thpb]
+	\centering	
+	\includegraphics[width=0.9\linewidth]{./figures/focus-mode}\\ 
+	\caption{In focus mode, the target object is automatically centered and zoomed in with most background removed, all editing features are still applicable.}
+	\label{fig:focus-mode}
+\end{figure}
 
-keyboard operation
 
-one-key direction reversion
+\subsubsection{camera auto-switch}
+it's common to have multiple cameras and corresponding images to annotate, \cite{Zimmer20193DBA} displays all them on top of the main view, while \cite{} display one of them, we choose the latter way but with an automatic image switching feature. Specifically when an object is selected, the most relevant camera image is displayed, while manual selection is also possible.
+note that this feature needs the calibration data to be available.
 
+\subsubsection{coloring}
+All boxes and points inside are colored according to their types, and selected object are colored differently.
+
+\subsection{Box editing}
+In this section we describe the basic editing operation, some advanced algorithm-assisted editing are introduced later.
+
+
+A box can be created with context menu(triggered by right click), the box dimension is initialized by object category. In main view(Fig.\ref{fig:main_ui}), click a box to select it, click again (or click edit button in fast toolbox) to show/switch the operation handlers (Fig.\ref{fig:box-mouse-edit}), drag the handlers to resize,rotate or move the box, click empty place (or press ESC key) to hide operation handlers or un-select the box.
+
+\begin{figure}[thpb]
+	\centering
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[height=2.5cm]{./figures/box-move}\\ 
+		\caption{move}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[height=2.5cm]{./figures/box-rotate}\\ 
+		\caption{rotate}
+	\end{subfigure}	
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[height=2.5cm]{./figures/box-resize}\\ 
+		\caption{resize}
+	\end{subfigure}
+	\caption{Box editing in perspective view}
+	\label{fig:box-mouse-edit}
+\end{figure}
+
+Edit in main view is inconvenient, sometimes you have to change viewpoint for better operation. Actually the annotation is easily and should be checked in the side sub-views, thus we enable editing directly on side sub-views to make a better editing experience. when an object is selected and mouse enters one of the sub-views, the editing is activated automatically on this sub-view. user can drag dotted lines to rotate, resize or move the box, as can be seen in Fig.\ref{fig:box-rotate-in-subview}. 
+
+All operations can also be performed by keyboard, and they are summarized in Table \ref{table_keyboard_subview}.
+
+\begin{table}[h]
+	\caption{Keyboard Operations on sub-view}
+	\label{table_keyboard_subview}
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			\textbf{Key} & \textbf{function}\\			
+			\hline
+			A & move left\\
+			\hline
+			S & move down\\
+			\hline
+			D & move right\\
+			\hline
+			W & move up\\
+			\hline
+			Q & rotate left\\
+			\hline
+			E & rotate right\\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[h]
+	\caption{Keyboard Operations on main-view}
+	\label{table_keyboard_mainview}
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			\textbf{Key} & \textbf{function}\\
+			\hline
+			1 & select previous object in current frame\\
+			\hline
+			2 & select next object in current frame\\
+			\hline
+			3 & previous frame\\
+			\hline
+			4 & next frame\\
+			\hline
+			r & rotate box in conter-clockwise(yaw angle)\\
+			\hline
+			f & rotate box in clockwise(yaw angle)\\
+			\hline
+			t & reset box\\
+			\hline
+			g & reverse box direction (yaw angle)\\
+			\hline
+			v & switch editing mode(Fig.\ref{fig:box-mouse-edit})\\
+			\hline			
+		\end{tabular}
+	\end{center}
+\end{table}
 
 \subsection{Assistant algorithms}
 
@@ -166,8 +257,6 @@ Due to the unavoidable granularity of adjustment operations (of both keyboard an
 
 The user can drag the border or corner of a box to enclose all points of the object, after releasing the mouse key, the borders will automatically shrink to best positions.
 
-
-
 \subsubsection{Boundary-aware rotation}
 
 When annotate an object we normally perform the following 2 steps iteratively:
@@ -178,32 +267,29 @@ When annotate an object we normally perform the following 2 steps iteratively:
 
 When we rotate the box, some interior points may go out, but in most occasions, we want interior points kept interior while the scale and/or position being auto-adjusted. We emphasize that with this feature, to annotate an object is as easy as to enclose related points first and then rotate once.
 
+\begin{figure}[ht]
+	\begin{subfigure}[t]{0.2\linewidth}
+		\includegraphics[height=4cm]{./figures/points-enclosed}
+		\caption{}
 
-
-\begin{figure}
-	\centering
-
-	\begin{minipage}{0.2\linewidth}
-		\centering
-		\includegraphics[width=\textwidth]{./figures/points-enclosed}		
-	\end{minipage}\hfill
-    ~
-	\begin{minipage}{0.2\linewidth}
-		\centering
-		\includegraphics[width=\textwidth]{./figures/adjust-naively}
-	\end{minipage}\hfill
-	~
-	\begin{minipage}{0.2\linewidth}
-		\centering
-		\includegraphics[width=\textwidth]{./figures/rotate-fail}
-	\end{minipage}\hfill
-	~
-	\begin{minipage}{0.2\linewidth}
-		\centering
-		\includegraphics[width=\textwidth]{./figures/rotate-success}
-	\end{minipage}\hfill
-	\caption{Boundary-aware-rotation}\label{fig:animals}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.2\linewidth}
+		\includegraphics[height=4cm]{./figures/adjust-naively}
+		\caption{}
+		\label{fig:box-rotate-in-subview}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.2\linewidth}
+		\includegraphics[height=4cm]{./figures/rotate-fail}
+		\caption{}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.2\linewidth}
+		\includegraphics[height=4cm]{./figures/rotate-success}
+		\caption{}
+	\end{subfigure}\hfill
+	\caption{For box in (a), which encloses all points of a car (easily done with auto-shrink operation), if we rotate it counter-clockwise to adjust the heading direction(b), part of the object will go outside(c), our tool can automatically adjust the dimension of the box as shown in (d)} 
+	\label{fig:boundary-aware-rotation}
 \end{figure}
+
 
 \subsubsection{Prototype-based box initialization}
 
@@ -215,7 +301,43 @@ A euclidean distance based expansion algorithm is invoked to adjust the box to e
 \section{Implementation}
 \label{Implementation}
 
-\subsection{Software Architecture}
+\subsection{System Architecture}
+We use web-based architecture, the raw data to be annotated is located in server. The end user can start working with a web browser and don't have to download the data set beforehand. The web server is implemented in Python and relies on CherryPy web framework\cite{cherrypy}. For front-end relies on \texttt{WebGL} library Three.js\cite{threejs}.
+
+In server, the raw data is organized by scenes, the directory structure is as in Fig.\ref{fig:data-dir}.
+
+\begin{figure}
+
+\dirtree{%
+	.1 data.
+	.2 scene1.
+	  .3 lidar.
+	     .4 frame0000.pcd.
+	     .4 ....
+	  .3 image.
+	    .4 left-camera.
+	      .5 frame0000.png.
+	      .5 ....
+	    .4 front.
+	      .5 frame0000.png.
+	      .5 ....
+	    .4 ....
+	  .3 calib.
+	    .4 left-camera.json.
+	    .4 front.json.
+	    .4 ....
+	  .3 label.
+	    .5 frame0000.json.
+	    .5 ....
+	.2 scene2.
+	   .3 ....
+	.2 ....
+}
+\caption{Raw data organization. The `label` folder is used to store annotation result. the `calib` folder stores lidar-camera calibration parameters, which is optional but requrired for 3d-2d fusion features. We list 3 cameras as an example, more cameras are also supported.}
+\label{fig:data-dir}
+\end{figure}
+
+
 
 \subsection{Semi-auto annotation algorithm}
 
