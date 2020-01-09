@@ -40,7 +40,7 @@
 \usepackage{dirtree}
 
 \title{\LARGE \bf
-SUSTech Points: An Efficient 3D Point Clouds Labelling Tool
+SUSTech Points: An Efficient 3D Point Cloud Annotation Tool
 }
 
 \author{E Li$^{1}$, Chengyang Li$^{1}$,Shuaijun Wang$^{1,2}$, Xiangbin Wu$^{3}$, and Qi Hao$^{1,*}$% <-this % stops a space
@@ -62,7 +62,7 @@ Southern University of Science and Technology, Shenzhen, Guangdong, China, 51805
 \pagestyle{empty}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-The major challenges of labeling the 3D objects lie in reasonable structure annotation results, flexible tool, and high-precision annotation. This paper presents a novel annotation framework (i.e. SUSTech Points), which can successfully process the trade-off between time-consuming and dataset quality. The novelty of this work includes three-folds: (1) developing a flexible operation annotation tool for 3D point clouds; (2) developing a semi-autonomous method to annotate the same objects in the consecutive frames; (3) developing an intelligent plug-in being used to count the number and type of labeled objects. The method is tested with the online annotation under various scenes. And the experimental results have demonstrated the robust performance of the proposed method.
+The major challenges of labeling the 3D objects lie in reasonable structure annotation results, flexible tool, and high-precision annotation. This paper presents a novel annotation toolbox (i.e. SUSTech Points), which can successfully process the trade-off between time-consuming and dataset quality. The novelty of this work includes three-folds: (1) developing a flexible operation annotation tool for 3D point clouds; (2) developing a semi-autonomous method to annotate the same objects in the consecutive frames; (3) developing an intelligent plug-in being used to count the number and type of labeled objects. The method is tested with the online annotation under various scenes. And the experimental results have demonstrated the robust performance of the proposed method.
 \end{abstract}
 
 
@@ -162,7 +162,7 @@ note that this feature needs the calibration data to be available.
 \subsubsection{coloring}
 All boxes and points inside are colored according to their types, and selected object are colored differently.
 
-\subsection{Box editing}
+\subsection{Editing}
 In this section we describe the basic editing operation, some advanced algorithm-assisted editing are introduced later.
 
 
@@ -198,17 +198,17 @@ All operations can also be performed by keyboard, and they are summarized in Tab
 			\hline
 			\textbf{Key} & \textbf{Function}\\			
 			\hline
-			A & move left\\
+			a & move left\\
 			\hline
-			S & move down\\
+			s & move down\\
 			\hline
-			D & move right\\
+			d & move right\\
 			\hline
-			W & move up\\
+			w & move up\\
 			\hline
-			Q & rotate left\\
+			q & rotate left\\
 			\hline
-			E & rotate right\\
+			e & rotate right\\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -244,6 +244,10 @@ All operations can also be performed by keyboard, and they are summarized in Tab
 			\hline
 			Ctrl+c & copy reference box (semi-auto annotation \ref{semi-auto-anno})\\
 			\hline
+			Ctrl+z & undo\\
+			\hline
+			Ctrl+y & redo\\
+			\hline
 		\end{tabular}
 	\end{center}
 \end{table}
@@ -269,9 +273,11 @@ When annotate an object we normally perform the following 2 steps iteratively:
 	\item adjust rotation	
 \end{itemize}
 
-When we rotate the box, some interior points may go outside, but we want interior points being kept interior while the dimension and/or position being auto-adjusted. We emphasize that with this feature, to annotate an object is as easy as to enclose all points first and then rotate once.
+When we rotate the box, some interior points may go outside(Fig.\ref{fig:boundary-aware-rotation}), obviously it's better keep these points interior while adjust the dimension and/or position automatically, such that we don't have to adjust the dimension and/or position again. We emphasize that \emph{with this feature, to annotate an object is as easy as to enclose all points first and then rotate once}.
+
 
 \begin{figure}[ht]
+	\centering
 	\begin{subfigure}[t]{0.2\linewidth}
 		\includegraphics[height=4cm]{./figures/points-enclosed}
 		\caption{}
@@ -300,7 +306,7 @@ When we rotate the box, some interior points may go outside, but we want interio
 we use popup context menu to start annotating a new object, when user click object type name, a box is placed at the clicked position (center part of\ref{hptb}), the dimension is set according to the object type, and the heading direction(z-axis rotation) is set upward along the main view (better if the main view is rotated properly beforehand).
 A euclidean distance based expansion algorithm is invoked to adjust the box to enclose all points of the same object. By this way the initial bounding box is almost ready.
 
-\subsubsection{Calibration tuning}
+\subsubsection{Calibration fine-tuning}
 
 \section{Implementation}
 \label{Implementation}
@@ -348,6 +354,48 @@ In server, the raw data is organized by scenes, the directory structure is as in
 Semi-auto annotation of our tool is roughly a method to transfer annotation between frames, more accurately than naive paste or liner interpolation. The user need to first select (copy) a reference box, then paste it in appropriate position in target frame. A registration algorithm is invoked to compute the relative transform relation between the reference and target object, the target box is adjusted by the same transform relation. Note that the user need only to paste the box on the roughly right position.
 
 
+\begin{figure}[htpb]
+	\centering
+	\begin{subfigure}[t]{0.18\linewidth}
+		\includegraphics[height=3cm]{./figures/reg-ref-3d}\\ 
+		\caption{}\label{fig:box-ref}
+	\end{subfigure}\hfill
+	~
+	\begin{subfigure}[t]{0.18\linewidth}
+		\includegraphics[height=3cm]{./figures/reg-input-3d}\\ 
+		\caption{}\label{fig:box-source}
+	\end{subfigure}\hfill
+	~
+	\begin{subfigure}[t]{0.18\linewidth}
+		\includegraphics[height=3cm]{./figures/reg-result-3d}\\ 
+		\caption{}\label{fig:box-output}
+	\end{subfigure}\hfill
+	
+	\begin{subfigure}[t]{0.18\linewidth}
+		\includegraphics[height=3cm]{./figures/reg-input}\\ 
+		\caption{}\label{fig:reg-input}
+	\end{subfigure}\hfill
+	~
+	\begin{subfigure}[t]{0.18\linewidth}
+		\includegraphics[height=3cm]{./figures/reg-tran}\\ 
+		\caption{}\label{fig:reg-tran}
+	\end{subfigure}\hfill
+	~
+	\begin{subfigure}[t]{0.18\linewidth}
+		\includegraphics[height=3cm]{./figures/reg-result}\\ 
+		\caption{}\label{fig:reg-output}
+	\end{subfigure}\hfill
+
+	
+	\caption{Registration based bounding box transfer. \ref{fig:box-ref} is the reference object and its bounding box, \ref{fig:box-source} is the object in another frame with a initial  bounding box, \ref{fig:box-output} is the effect of box being adjusted.}
+\end{figure}
+
+
+Given source and target objects (denoted by $s,t$ respectively)and their bounding boxes ($b_s,b_t$), a registration algorithm finds the transform matrix $T$ to match $s$ with $t$ , satisfying
+$$T(s)=t$$
+where we represent $s$ and $t$ in the corresponding bounding box coordinates $B_s$ and $B_t$.
+obviously $b_s,b_t$ should have the same relation
+$$T(b_s)=b_t$$
 
 \subsection{Boundary-aware rotation}
 
