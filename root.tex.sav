@@ -92,24 +92,19 @@ Recently, 3D environment understanding is gaining the attention in the research 
 The resolution of 3D point clouds is a formidable limitation for 3D annotation. Each frame point clouds obtained by LiDAR, like Velodyne, RoboSense, etc., has at least 10K 3D points. The measurement radius of  LiDAR is larger than 150 meters. So there are quite a few objects with a small number of points, extremely fewer than 10 points. These low-resolution 3D objects are even beyond the perception ability of humans. Another limitation is how to improve the annotation efficiency of the same object in consecutive frames, especially when the objects being farthest away from the sensor are with low-resolution 3D points.
 
 \begin{table*}[]
-\begin{tabular}{c||c|c|c|c||c|c|c|c}
+\begin{tabular}{c||c|c|c|c||c|c|c|c|c}
 \hline
 \hline
-\multirow{2}{*}{} & \multicolumn{4}{c||}{Intelligent Function}                         & \multicolumn{4}{c}{Projective view}                 \\ 
-  \cline{2-9}     & Frame Navigation & Box information & Camera Switch & Auto-follow & Auto-shrink & Focus mode & Object color & Fine-tune \\ \hline
-PointAtMe         & $\times$         &   $\times$      &   $\times$    &  $\times$   &             &            &              &    +       \\ \hline
-LabelMe3D         & $\times$         &   $\times$      &   $\times$    &  $\times$   &             &            &              &   ++       \\ \hline
-Riccardo          & $\times$         &   $\times$      &   $\times$    &  $\times$   &             &            &              &   ++       \\ \hline
-PolygonRNN        & $\times$         &   $\times$      &   $\times$    &  $\times$   &             &            &              &  +++        \\ \hline
-3D BAT            & $\times$         &                 &   $\times$    &  $\times$   &             &            &              &    +        \\ \hline
-Latte             & $\surd$          &   $\surd$       &   $\times$    &  $\surd$    &             &            &              &   ++        \\ \hline
-Ours              & $\surd$          &   $\surd$       &   $\surd$     &  $\surd$    &   $\surd$   &   $\surd$  &   $\surd$    &  +++        \\ \hline \hline
+\multirow{2}{*}{} & \multicolumn{4}{c}{Intelligent Function}                         & \multicolumn{5}{c}{Projective view}              \\ \hline
+                  & Frame Navigation & Box information & Camera Switch & Auto-follow & Auto-shrink & Rotate & Resize & Move & Fine-tune \\ \hline
+PointAtMe         &   # \surd #                &                 &               &             &             &        &        &      &           \\ \hline
+LabelMe3D         &   # \surd #                &                 &               &             &             &        &        &      &           \\ \hline
+Riccardo          &   # \surd #                &                 &               &             &             &        &        &      &           \\ \hline
+PolygonRNN        &   # \surd #                &                 &               &             &             &        &        &      &           \\ \hline
+3D BAT            &   # \surd #                &                 &               &             &             &        &        &      &           \\ \hline
+Latte             &   # \surd #                &                 &               &             &             &        &        &      &           \\ \hline
+Ours              &   # \surd #                &                 &               &             &             &        &        &      &           \\ \hline \hline
 \end{tabular}
- \begin{tabular}{p{17cm}}
-    The symbol ``$\#$ agents'' means the number of agents and the robot in all test cases is under invisible to the agent next state. The average min separation distance and frequency are used to indicate the policy performance of each method. For the time-out cases, our proposed method still reach the goal without any collision if the robot was given enough execution time, like 30 seconds. Due to the limitation of the simulator, the case with 25 agents cannot be successfully executed many times for validation.
-    % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
-  \end{tabular}
-  \label{tab:expanda}
 \end{table*}
 
 An flexible annotation tool can improve the annotation efficiency and dataset quality. A considerable amount of research has been done on how to annotate 3D point clouds, like PointAtMe~\cite{pointatme}, LabelMe3D~\cite{LabelMe3D}, etc., during the last decade. The flexible annotation tool should be with easily applicable, intelligible and favorable visibility, as shown in the Fig.~\ref{fig:arch}. The intelligible plug-in of the annotation toolkit can promote the speed of the annotation process. The favorable visibility can raise the quality of the dataset, specifically in balancing the number of objects.
