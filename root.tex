@@ -35,7 +35,7 @@
 \usepackage{diagbox}
 %\usepackage{biblatex}
 %\usepackage{textcomp}
-\usepackage{xargs}    
+\usepackage{xargs}
 \usepackage[pdftex,dvipsnames,table]{xcolor}
 \usepackage{dirtree}
 
@@ -70,15 +70,16 @@ The major challenges of labeling the 3D objects lie in reasonable structure anno
 \section{INTRODUCTION}
 %3D environment understanding plays an important role in the autonomous driving. There are many ways to build the 3D environment, which can be divided into 2 categories, including sensor-based and algorithm-based.
 Recently, 3D environment understanding is gaining the attention in the research areas and industrial applications, like autonomous driving, etc. The 3D environment is often represented as point clouds. And the density of the point clouds reflects the quality of the 3D environment. The methods of obtaining 3D point clouds can be divided into 2 categories: sensor-based and algorithm-based. The sensor-based method means that the point clouds are acquired by the sensors, like LiDAR, etc. The algorithm-based method means that the point clouds are obtained by the computer vision-based algorithms, like stereo vision methods, structure-from-motion (SFM), SLAM, etc. However, the labeling process of the point clouds obtained by these 2 categories methods have to deal with the following limitations/challenges:
-\begin{figure}[ht]
+\begin{figure}[htbp]
  \centering
  % Requires \usepackage{graphicx}
  %\resizebox{\linewidth}{!}{
- \includegraphics[width=0.9\linewidth]{./figures/main_ui}\\ %\vspace{-0.3cm}
-  \caption{An illustration of our annotation platform. The yellow fonts at the left-top of the label scene shows the detail information of the object. The 4 sub-windows at the left side are over-head view, front view, side view and corresponding camera image, respectively. The context component shows the flexible operations.}
+ \includegraphics[width=0.45\textwidth]{./figures/arch}\\ %\vspace{-0.3cm}
+  \caption{An illustration of our annotation platform. Our annotation procedure includes 3 modules, which are pre-processing, visualization and operation, respectively. The pre-processing module is used to obtain the sensor calibration information, filter the noises in data, and initialize AI method-based annotation results. The visualization module is utilized to assist data annotation. And the operation module implements the 3D bounding box annotation in the point clouds with algorithm assistance and also checks the annotation error.}
      \label{fig:main_ui}
-     %\vspace{-0.2cm}
+     \vspace{-0.3cm}
 \end{figure}
+
 \begin{enumerate}
   \item Irregular density point cloud. In practical, the density of point clouds depends on distance between the sensor and measured objects, sensor type, and reflectivity of the measured objects, etc. Therefore, how to solve the different density of point clouds, including sparse and dense, becomes crucial.
   \item High-precision annotation. Compared with 2D image annotation, the annotation information of 3D point clouds becomes more complexity. It includes scale at each dimensionality axis, and heading angle of the object. How to obtain the accurate annotation information becomes important.
@@ -124,7 +125,7 @@ These 2 limitations increase the time consuming and decrease the annotation qual
 \subsection{The framework of annotation method}
 The framework of annotation method includes explorer-based and software-based. The explorer-based framework is flexible to users for labeling 3D objects, which is based on the elements of the Web page. Therefore, the annotation framework, like LabelMe3D~\cite{LabelMe3D}, our proposed method, etc., can adaptively perform at any computer without additional operations. The software-based methods, like AppoloSuite[], also need additional component that can ensure to execute. And it is difficult to synchronously and instantly update, which maybe cause the inconsistency of data, or other unpredictable results.
 
-In this work, our proposed method directly annotate the objects at the 3D point clouds layer with the explorer-based framework. Our proposed method can successfully process the trade-off between time-consuming and data-quality. 
+In this work, our proposed method directly annotate the objects at the 3D point clouds layer with the explorer-based framework. Our proposed method can successfully process the trade-off between time-consuming and data-quality.
 \section{3D annotation tool}
 \label{3D annotation tool}
 
@@ -149,7 +150,7 @@ We provide a focus mode to facilitate detail check, as shown in Fig.\ref{fig:foc
 
 \begin{figure}[thpb]
 	\centering	
-	\includegraphics[width=0.9\linewidth]{./figures/focus-mode}\\ 
+	\includegraphics[width=0.9\linewidth]{./figures/focus-mode}\\
 	\caption{Focus mode}
 	\label{fig:focus-mode}
 \end{figure}
@@ -171,22 +172,22 @@ A box can be created with context menu(triggered by right click), the box dimens
 \begin{figure}[thpb]
 	\centering
 	\begin{subfigure}{0.3\linewidth}
-		\includegraphics[height=2.5cm]{./figures/box-move}\\ 
+		\includegraphics[height=2.5cm]{./figures/box-move}\\
 		\caption{move}
 	\end{subfigure}
 	\begin{subfigure}{0.3\linewidth}
-		\includegraphics[height=2.5cm]{./figures/box-rotate}\\ 
+		\includegraphics[height=2.5cm]{./figures/box-rotate}\\
 		\caption{rotate}
 	\end{subfigure}	
 	\begin{subfigure}{0.3\linewidth}
-		\includegraphics[height=2.5cm]{./figures/box-resize}\\ 
+		\includegraphics[height=2.5cm]{./figures/box-resize}\\
 		\caption{resize}
 	\end{subfigure}
 	\caption{Box editing in perspective view}
 	\label{fig:box-mouse-edit}
 \end{figure}
 
-Edit in main view is inconvenient, sometimes you have to change viewpoint for better operation. Actually the annotation is easily and should be checked in the side sub-views, thus we enable editing directly on side sub-views to make a better editing experience. when an object is selected and mouse enters one of the sub-views, the editing is activated automatically on this sub-view. user can drag dotted lines to rotate, resize or move the box, as can be seen in Fig.\ref{fig:box-rotate-in-subview}. 
+Edit in main view is inconvenient, sometimes you have to change viewpoint for better operation. Actually the annotation is easily and should be checked in the side sub-views, thus we enable editing directly on side sub-views to make a better editing experience. when an object is selected and mouse enters one of the sub-views, the editing is activated automatically on this sub-view. user can drag dotted lines to rotate, resize or move the box, as can be seen in Fig.\ref{fig:box-rotate-in-subview}.
 
 All operations can also be performed by keyboard, and they are summarized in Table \ref{table_keyboard_subview}.
 
@@ -261,7 +262,7 @@ In autonomous driving scenario, data sets are often organized by scenes\cite{Cae
 
 \subsubsection{Auto-shrink}
 
-Due to the unavoidable granularity of adjustment operations (of both keyboard and mouse), it's hard to determine precisely the border of a bounding box, our tool solves this problem by automatically shrink the borders to nearest inner points. 
+Due to the unavoidable granularity of adjustment operations (of both keyboard and mouse), it's hard to determine precisely the border of a bounding box, our tool solves this problem by automatically shrink the borders to nearest inner points.
 
 The user can drag the border or corner of a box to enclose all points of the object, after releasing the mouse key, the borders will automatically shrink to best positions.
 
@@ -296,7 +297,7 @@ When we rotate the box, some interior points may go outside(Fig.\ref{fig:boundar
 		\includegraphics[height=4cm]{./figures/rotate-success}
 		\caption{}
 	\end{subfigure}\hfill
-	\caption{For box in (a), which encloses all points of a car (easily done with auto-shrink operation), if we rotate it counter-clockwise to adjust the heading direction(b), part of the object will go outside(c), our tool can automatically adjust the dimension of the box as shown in (d)} 
+	\caption{For box in (a), which encloses all points of a car (easily done with auto-shrink operation), if we rotate it counter-clockwise to adjust the heading direction(b), part of the object will go outside(c), our tool can automatically adjust the dimension of the box as shown in (d)}
 	\label{fig:boundary-aware-rotation}
 \end{figure}
 
@@ -357,32 +358,32 @@ Semi-auto annotation of our tool is roughly a method to transfer annotation betw
 \begin{figure}[htpb]
 	\centering
 	\begin{subfigure}[t]{0.18\linewidth}
-		\includegraphics[height=3cm]{./figures/reg-ref-3d}\\ 
+		\includegraphics[height=3cm]{./figures/reg-ref-3d}\\
 		\caption{}\label{fig:box-ref}
 	\end{subfigure}\hfill
 	~
 	\begin{subfigure}[t]{0.18\linewidth}
-		\includegraphics[height=3cm]{./figures/reg-input-3d}\\ 
+		\includegraphics[height=3cm]{./figures/reg-input-3d}\\
 		\caption{}\label{fig:box-source}
 	\end{subfigure}\hfill
 	~
 	\begin{subfigure}[t]{0.18\linewidth}
-		\includegraphics[height=3cm]{./figures/reg-result-3d}\\ 
+		\includegraphics[height=3cm]{./figures/reg-result-3d}\\
 		\caption{}\label{fig:box-output}
 	\end{subfigure}\hfill
 	
 	\begin{subfigure}[t]{0.18\linewidth}
-		\includegraphics[height=3cm]{./figures/reg-input}\\ 
+		\includegraphics[height=3cm]{./figures/reg-input}\\
 		\caption{}\label{fig:reg-input}
 	\end{subfigure}\hfill
 	~
 	\begin{subfigure}[t]{0.18\linewidth}
-		\includegraphics[height=3cm]{./figures/reg-tran}\\ 
+		\includegraphics[height=3cm]{./figures/reg-tran}\\
 		\caption{}\label{fig:reg-tran}
 	\end{subfigure}\hfill
 	~
 	\begin{subfigure}[t]{0.18\linewidth}
-		\includegraphics[height=3cm]{./figures/reg-result}\\ 
+		\includegraphics[height=3cm]{./figures/reg-result}\\
 		\caption{}\label{fig:reg-output}
 	\end{subfigure}\hfill
 
@@ -398,7 +399,7 @@ where we represent points of $\mathcal{S,T}$ in their corresponding bounding box
 Assume point $s \in \mathcal{S}$ corresponds to $t \in \mathcal{T}$ after registration, then
 
 
-\begin{align} 
+\begin{align}
 T s^{B_s} &= t^{B_t}\\
 T B_s^{-1}s &= t^{B_t} \label{eq:eq1}
 \end{align}
