@@ -38,6 +38,7 @@
 \usepackage{xargs}
 \usepackage[pdftex,dvipsnames,table]{xcolor}
 \usepackage{dirtree}
+\usepackage{multirow}
 
 \title{\LARGE \bf
 SUSTech Points: An Efficient 3D Point Cloud Annotation Tool
@@ -75,9 +76,9 @@ Recently, 3D environment understanding is gaining the attention in the research 
  % Requires \usepackage{graphicx}
  %\resizebox{\linewidth}{!}{
  \includegraphics[width=0.45\textwidth]{./figures/arch}\\ %\vspace{-0.3cm}
-  \caption{An illustration of our annotation platform. Our annotation procedure includes 3 modules, which are pre-processing, visualization and operation, respectively. The pre-processing module is used to obtain the sensor calibration information, filter the noises in data, and initialize AI method-based annotation results. The visualization module is utilized to assist data annotation. And the operation module implements the 3D bounding box annotation in the point clouds with algorithm assistance and also checks the annotation error.}
-     \label{fig:main_ui}
-     \vspace{-0.3cm}
+ \caption{An illustration of our annotation platform. Our annotation procedure includes 3 modules, which are pre-processing, visualization and operation, respectively. The pre-processing module is used to obtain the sensor calibration information, filter the noises in data, and initialize AI method-based annotation results. The visualization module is utilized to assist data annotation. And the operation module implements the 3D bounding box annotation in the point clouds with algorithm assistance and also checks the annotation error.}
+ \label{fig:arch}
+ \vspace{-0.3cm}
 \end{figure}
 
 \begin{enumerate}
@@ -90,7 +91,29 @@ Recently, 3D environment understanding is gaining the attention in the research 
 
 The resolution of 3D point clouds is a formidable limitation for 3D annotation. Each frame point clouds obtained by LiDAR, like Velodyne, RoboSense, etc., has at least 10K 3D points. The measurement radius of  LiDAR is larger than 150 meters. So there are quite a few objects with a small number of points, extremely fewer than 10 points. These low-resolution 3D objects are even beyond the perception ability of humans. Another limitation is how to improve the annotation efficiency of the same object in consecutive frames, especially when the objects being farthest away from the sensor are with low-resolution 3D points.
 
-An flexible annotation tool can improve the annotation efficiency and dataset quality. A considerable amount of research has been done on how to annotate 3D point clouds, like PointAtMe~\cite{pointatme}, LabelMe3D~\cite{LabelMe3D}, etc., during the last decade. The flexible annotation tool should be with easily applicable, intelligible and favorable visibility, as shown in the Fig.~\ref{fig:main_ui}. The intelligible plug-in of the annotation toolkit can promote the speed of the annotation process. The favorable visibility can raise the quality of the dataset, specifically in balancing the number of objects.
+\begin{table*}[]
+\begin{tabular}{c||c|c|c|c||c|c|c|c}
+\hline
+\hline
+\multirow{2}{*}{} & \multicolumn{4}{c||}{Intelligent Function}                         & \multicolumn{4}{c}{Projective view}                 \\
+  \cline{2-9}     & Frame play & Box information & Camera switch & Auto-follow & Auto-shrink & Focus mode & Object color & Fine-tune \\ \hline
+PointAtMe~\cite{pointatme}         & $\times$         &   $\times$      &   $\times$    &  $\times$   &      +      &   $\times$ &   $\times$   &    +       \\ \hline
+LabelMe3D~\cite{LabelMe3D}         & $\times$         &   $\times$      &   $\times$    &  $\times$   &     ++      &   $\times$ &   $\times$   &   ++       \\ \hline
+Riccardo~\cite{monica2017multi}          & $\times$         &   $\times$      &   $\times$    &  $\times$   &             &   $\times$ &   $\times$   &   ++       \\ \hline
+Poly-RNN++~\cite{PolyRNN++}        & $\times$         &   $\times$      &   $\times$    &  $\times$   &     +++     &   $\times$ &   $\surd$    &  +++        \\ \hline
+3D BAT~\cite{Zimmer20193DBA}            & $\times$         &                 &   $\times$    &  $\times$   &             &   $\times$ &   $\times$   &    +        \\ \hline
+LATTE~\cite{Wang2019LATTEAL}           & $\surd$          &   $\surd$       &   $\times$    &  $\surd$    &     ++      &   $\times$ &   $\times$   &   ++        \\ \hline
+\textbf{SUSTech Points}              & $\surd$          &   $\surd$       &   $\surd$     &  $\surd$    &      +++      &   $\surd$  &   $\surd$    &  +++        \\ \hline \hline
+\end{tabular}
+ \begin{tabular}{p{17cm}}
+    The symbol ``$\surd$'' and $\times$ mean the method being with/without the corresponding feature or function module, respectively. The number of ``$\textbf{+}$''s represent the favorable performance of data processing, that is to say, the more the better. The ``Frame play'' means the annotation tool can play the data as a video. The ``Box information'' means that the bounding box can show the detail information of annotated object, such as turn left or right, \textit{etc.} The ``Camera switch''  means that the annotation tool can adaptively switch the observation angle of object, which is acquired by multiple cameras. The ``Auto-follow'' means that the annotated object can be tracked within a continuous frame, which can improve the annotation speed. The ``Focus mode''  means that the object is automatically zoomed and centered at the projective view, when the object is being annotated. The ``Object color''  means the same class of objects being with the same color. This table lists the important factors which can improve the quality and speed of data annotation. For the sake of simplicity, this table does not list these common functions, like MOVE, RESIZE, and ROTATE, \textit{etc.} This table only concentrates on 3D objects annotation in point clouds, other than Poly-RNN++, which is an best 2D image annotation tool and as a function benchmark.
+    % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+  \end{tabular}
+  \label{tab:expanda}
+   \vspace{-0.5cm}
+\end{table*}
+
+An flexible annotation tool can improve the annotation efficiency and dataset quality. A considerable amount of research has been done on how to annotate 3D point clouds, like PointAtMe~\cite{pointatme}, LabelMe3D~\cite{LabelMe3D}, etc., during the last decade. The flexible annotation tool should be with easily applicable, intelligible and favorable visibility, as shown in the Fig.~\ref{fig:arch}. The intelligible plug-in of the annotation toolkit can promote the speed of the annotation process. The favorable visibility can raise the quality of the dataset, specifically in balancing the number of objects.
 
 In this paper, we propose an efficient 3D point clouds annotation tool, with flexible operation, semi-autonomous annotation, and rapid deployment, to improve the annotation efficiency and assure the dataset quality. The contribution of this work as shown in the following.
 \begin{itemize}
@@ -116,7 +139,18 @@ Another kind of methods directly operates at the layer of 3D point clouds.
 The method proposed by Yu \textit{et al.}~\cite{yu2012efficient} selects some points around the 2D projection of the object in 3D environment, which can approximately annotate the 3D object according to the structure-aware information. The cluster-based methods and segmentation-based method stand for the semi-autonomous and fully autonomous annotation method.
 These methods outperform the VR-based annotation methods. However, these methods are with higher time consuming and computation complexity~\cite{pointatme}. It is worth noting that the method~\cite{monica2017multi} is the only one seriously evaluating the speed of their annotation tool. And we also adopt the metric~\cite{monica2017multi} to evaluate the speed of our label tool.
 \subsection{VR-based annotation method}
+\begin{figure}[htp]
+ \centering
+   \vspace{-0.1cm}
+ % Requires \usepackage{graphicx}
+ %\resizebox{\linewidth}{!}{
+ \includegraphics[width=1.0\linewidth]{./figures/system-modules}\\ %\vspace{-0.3cm}
+  \caption{Details on our annotation platform. Our platform obtains the initialization results with the help of AI methods. The infrastructure module means the backend server, which is used to process data and provide network services.}
+     \label{fig:main_ui}
+     \vspace{-0.3cm}
+\end{figure}
 VR equipment is helpful for the 3D environment understanding. It can afford the immersion experience during wearing VR equipment, which can directly show the real environment before the practitioners. Taking advantages of VR, VR-based methods for 3D annotation are proposed in quite a few works~\cite{pointatme,wilkes20123dVR,coffey2011interactiveVR}. These methods use the 6 degree-of-freedom (DoF) device and VR buttons to replace the 2D screen-based or the smartphone functionality-based operations. And these method also acquire the satisfied results. However, the annotated objects by these methods are too coarse to afford the requirements of the practical applications. The VR-based methods depends on the hand gestures and 2 controllers to tune the bounding box of the 3D objects. During the trade-off between efficiency and quality, it is difficult to implement fine-tuning the attitude, size and angle.  The labelled bounding box by the VR-based methods are with bigger errors than that of the VR-free methods.
+
 
 Another limitation of VR-based methods is the point clouds subject to the same object within an appropriate bounding box.
 It needs multiple repeat operations to select the proper boundary points.
@@ -126,6 +160,12 @@ These 2 limitations increase the time consuming and decrease the annotation qual
 The framework of annotation method includes explorer-based and software-based. The explorer-based framework is flexible to users for labeling 3D objects, which is based on the elements of the Web page. Therefore, the annotation framework, like LabelMe3D~\cite{LabelMe3D}, our proposed method, etc., can adaptively perform at any computer without additional operations. The software-based methods, like AppoloSuite[], also need additional component that can ensure to execute. And it is difficult to synchronously and instantly update, which maybe cause the inconsistency of data, or other unpredictable results.
 
 In this work, our proposed method directly annotate the objects at the 3D point clouds layer with the explorer-based framework. Our proposed method can successfully process the trade-off between time-consuming and data-quality.
+\begin{figure}[!th]
+	\centering	
+	\includegraphics[width=0.9\linewidth]{./figures/focus-mode}\\
+	\caption{Focus mode}
+	\label{fig:focus-mode}
+\end{figure}
 \section{3D annotation tool}
 \label{3D annotation tool}
 
@@ -142,25 +182,16 @@ We follow the principles listed below to create our tool:
 \subsubsection{Sub-views}
 We split the main window into 1 main view and 5 sub-views, as shown in Fig.~\ref{fig:main_ui}. As in \cite{Zimmer20193DBA, more..}, the top/side/front projective views is provided to easily check the box alignment, different from \cite{Zimmer20193DBA} we hide environment points in these views to make it clean. we also provide an extra focused fusion view (bottom left sub-view in \ref{fig:main_ui}) to help check image details easily, otherwise a user will have to zoom in/out the context image.
 
-\subsubsection{fast-toolbox}
+\subsubsection{Fast-toolbox}
 When an object is selected (by mouse click, or navigate key shortcut), a floating fast-tool-box shows next to it, as shown in Fig.\ref{fig:main_ui}. A user can change object type, tracking id, activate focus mode, among others.
 
-\subsubsection{focus-mode}
+\subsubsection{Focus-mode}
 We provide a focus mode to facilitate detail check, as shown in Fig.\ref{fig:focus-mode}. When activated through fast toolbox,the target object is automatically centered and zoomed in, most background hidden, while all editing features still applicable. Without this feature a user has to pan,  zoom and rotate the main view often, which we think is a lot operations and thus laborious.
-
-\begin{figure}[thpb]
-	\centering	
-	\includegraphics[width=0.9\linewidth]{./figures/focus-mode}\\
-	\caption{Focus mode}
-	\label{fig:focus-mode}
-\end{figure}
-
-
-\subsubsection{camera auto-switch}
+\subsubsection{Camera auto-switch}
 it's common to have multiple cameras and corresponding images to annotate, \cite{Zimmer20193DBA} displays all them on top of the main view, while \cite{} display one of them, we choose the latter way but with an automatic image switching feature. Specifically when an object is selected, the most relevant camera image is displayed, while manual selection is also possible.
 note that this feature needs the calibration data to be available.
 
-\subsubsection{coloring}
+\subsubsection{Coloring}
 All boxes and points inside are colored according to their types, and selected object are colored differently.
 
 \subsection{Editing}
@@ -169,8 +200,9 @@ In this section we describe the basic editing operation, some advanced algorithm
 
 A box can be created with context menu(triggered by right click), the box dimension is initialized by object category. In main view(Fig.\ref{fig:main_ui}), click a box to select it, click again (or click edit button in fast toolbox) to show/switch the operation handlers (Fig.\ref{fig:box-mouse-edit}), drag the handlers to resize,rotate or move the box, click empty place (or press ESC key) to hide operation handlers or un-select the box.
 
-\begin{figure}[thpb]
+\begin{figure}[th]
 	\centering
+ \resizebox{\linewidth}{!}{
 	\begin{subfigure}{0.3\linewidth}
 		\includegraphics[height=2.5cm]{./figures/box-move}\\
 		\caption{move}
@@ -183,6 +215,7 @@ A box can be created with context menu(triggered by right click), the box dimens
 		\includegraphics[height=2.5cm]{./figures/box-resize}\\
 		\caption{resize}
 	\end{subfigure}
+}
 	\caption{Box editing in perspective view}
 	\label{fig:box-mouse-edit}
 \end{figure}
@@ -191,7 +224,7 @@ Editing in main view is inconvenient, sometimes you have to change viewpoint for
 
 All operations can also be performed by keyboard, and they are summarized in Table \ref{table_keyboard_subview}.
 
-\begin{table}[h]
+\begin{table}[ht]
 	\caption{Keyboard Operations on sub-view}
 	\label{table_keyboard_subview}
 	\begin{center}
@@ -215,7 +248,7 @@ All operations can also be performed by keyboard, and they are summarized in Tab
 	\end{center}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
 	\caption{Keyboard Operations on main-view}
 	\label{table_keyboard_mainview}
 	\begin{center}
@@ -254,31 +287,9 @@ All operations can also be performed by keyboard, and they are summarized in Tab
 \end{table}
 
 \subsection{Assistant algorithms}
-
-\subsubsection{Semi-auto annotation}
-\label{semi-auto-anno}
-In autonomous driving scenario, data sets are often organized by scenes\cite{Caesar2019nuScenesAM,Patil2019TheHD,lyft2019}, a scene is a sequence of frames shot at one continuous period of time. There are much similarities between neighboring frames, which makes it possible to transfer annotations among them. \cite{Zimmer20193DBA} copies annotations to next frame directly and let user do the adjustment.\cite{Wang2019LATTEAL} uses box estimation algorithm to automatically adjust the box, reusing previous annotated object size if appropriate. Our tool takes this way further by invoking registration algorithm \cite{Yang2016GoICPAG} to automatically adjust the position and rotation, reusing both the size and rotation previously annotated. In most cases our method produces  accurate enough annotation result.
-
-
-\subsubsection{Auto-shrink}
-
-Due to the unavoidable granularity of adjustment operations (of both keyboard and mouse), it's hard to determine precisely the border of a bounding box, our tool solves this problem by automatically shrink the borders to nearest inner points.
-
-The user can drag the border or corner of a box to enclose all points of the object, after releasing the mouse key, the borders will automatically shrink to best positions.
-
-\subsubsection{Boundary-aware rotation}
-
-When annotate an object we normally perform the following 2 steps iteratively:
-\begin{itemize}
-	\item adjust position and/or scale
-	\item adjust rotation	
-\end{itemize}
-
-When we rotate the box, some interior points may go outside(Fig.\ref{fig:boundary-aware-rotation}), obviously it's better keep these points interior while adjust the dimension and/or position automatically, such that we don't have to adjust the dimension and/or position again. We emphasize that \emph{with this feature, to annotate an object is as easy as to enclose all points first and then rotate once}.
-
-
 \begin{figure}[ht]
 	\centering
+
 	\begin{subfigure}[t]{0.2\linewidth}
 		\includegraphics[height=4cm]{./figures/points-enclosed}
 		\caption{}
@@ -299,9 +310,28 @@ When we rotate the box, some interior points may go outside(Fig.\ref{fig:boundar
 	\end{subfigure}\hfill
 	\caption{For box in (a), which encloses all points of a car (easily done with auto-shrink operation), if we rotate it counter-clockwise to adjust the heading direction(b), part of the object will go outside(c), our tool can automatically adjust the dimension of the box as shown in (d)}
 	\label{fig:boundary-aware-rotation}
+\vspace{-0.3cm}
 \end{figure}
+\subsubsection{Semi-auto annotation}
+\label{semi-auto-anno}
+In autonomous driving scenario, data sets are often organized by scenes\cite{Caesar2019nuScenesAM,Patil2019TheHD,lyft2019}, a scene is a sequence of frames shot at one continuous period of time. There are much similarities between neighboring frames, which makes it possible to transfer annotations among them. \cite{Zimmer20193DBA} copies annotations to next frame directly and let user do the adjustment.\cite{Wang2019LATTEAL} uses box estimation algorithm to automatically adjust the box, reusing previous annotated object size if appropriate. Our tool takes this way further by invoking registration algorithm \cite{Yang2016GoICPAG} to automatically adjust the position and rotation, reusing both the size and rotation previously annotated. In most cases our method produces  accurate enough annotation result.
 
 
+\subsubsection{Auto-shrink}
+
+Due to the unavoidable granularity of adjustment operations (of both keyboard and mouse), it's hard to determine precisely the border of a bounding box, our tool solves this problem by automatically shrink the borders to nearest inner points.
+
+The user can drag the border or corner of a box to enclose all points of the object, after releasing the mouse key, the borders will automatically shrink to best positions.
+
+\subsubsection{Boundary-aware rotation}
+
+When annotate an object we normally perform the following 2 steps iteratively:
+\begin{itemize}
+	\item adjust position and/or scale
+	\item adjust rotation	
+\end{itemize}
+
+When we rotate the box, some interior points may go outside(Fig.\ref{fig:boundary-aware-rotation}), obviously it's better keep these points interior while adjust the dimension and/or position automatically, such that we don't have to adjust the dimension and/or position again. We emphasize that \emph{with this feature, to annotate an object is as easy as to enclose all points first and then rotate once}.
 \subsubsection{Prototype-based box initialization}
 
 we use popup context menu to start annotating a new object, when user click object type name, a box is placed at the clicked position (center part of\ref{hptb}), the dimension is set according to the object type, and the heading direction(z-axis rotation) is set upward along the main view (better if the main view is rotated properly beforehand).
@@ -355,7 +385,7 @@ In server, the raw data is organized by scenes, the directory structure is as in
 Semi-auto annotation of our tool is roughly a method to transfer annotation between frames, more accurately than naive paste or liner interpolation. The user need to first select (copy) a reference box, then paste it in appropriate position in target frame. A registration algorithm is invoked to compute the relative transform relation between the reference and target object, the target box is adjusted by the same transform relation. Note that the user need only to paste the box on the roughly right position.
 
 
-\begin{figure}[htpb]
+\begin{figure}[ht]
 	\centering
 	\begin{subfigure}[t]{0.18\linewidth}
 		\includegraphics[height=3cm]{./figures/reg-ref-3d}\\
