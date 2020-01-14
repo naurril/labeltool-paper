@@ -181,7 +181,10 @@ Section~\ref{result} provides the experiment results and discussions. Section~\r
 		\hline
 		\hline
 		\multirow{2}{*}{} & \multicolumn{4}{c||}{Intelligent Function}                         & \multicolumn{4}{c}{Projective view}                 \\
-		\cline{2-9}     & Frame play & Box information & Camera switch & Auto-follow & Auto-shrink & Focus mode & Object color & Fine-tune \\ \hline
+		
+		\cline{2-9}     & Frame play & Box information & Camera switch & Auto-follow & Auto-shrink & Focus mode & Object color & Fine-tune \\ 
+		
+		\hline
 		PointAtMe~\cite{pointatme}         & $\times$         &   $\times$      &   $\times$    &  $\times$   &      +      &   $\times$ &   $\times$   &    +       \\ \hline
 		LabelMe3D~\cite{LabelMe3D}         & $\times$         &   $\times$      &   $\times$    &  $\times$   &     ++      &   $\times$ &   $\times$   &   ++       \\ \hline
 		Riccardo~\cite{monica2017multi}          & $\times$         &   $\times$      &   $\times$    &  $\times$   &             &   $\times$ &   $\times$   &   ++       \\ \hline
@@ -203,7 +206,7 @@ Section~\ref{result} provides the experiment results and discussions. Section~\r
 \label{Realtedwork}
 According to the types of annotation equipment, much of the research in the 3D annotation area in recent years can be classified as 2D-screen based and VR (virtual-reality) based methods.
 \subsection{2D-screen based annotation method}
-VR-free methods can assure the 3D annotation quality  and are without additional equipments to finish specific annotation tasks.
+2D-screen based methods can assure the 3D annotation quality  and are without additional equipment to finish specific annotation tasks.
 Details on VR-free methods include the 2D-3D fusion-based and pure 3D-based annotation.
 2D-3D fusion-based methods need the accurate spatial transformation relationship between 2D cameras and 3D sensors.
 The spatial transformation relationship is calibrated by the stereo-vision algorithms, including Zhang's method~\cite{zhangzhegnyou}, Camera-LiDAR calibration~\cite{roadCalibration}, etc.
@@ -304,69 +307,7 @@ When an object is selected (by mouse click, or navigate key shortcut), a floatin
 \subsubsection{Edit in projective sub-views}
 Editing in perspective view is actually inconvenient, sometimes you have to change viewpoint for better operation. Actually the annotation is easily and should be checked in the side sub-views, thus we enable editing directly on these sub-views to make a better editing experience. when an object is selected and mouse enters one of the sub-views, the editing is activated automatically on this sub-view. user can drag dotted lines to rotate, resize or move the box, as can be seen in Fig.~\ref{fig:box-rotate-in-subview}.
 
-All operations can also be performed by keyboard, and they are summarized in Table \ref{table_keyboard_subview}.
-
-\begin{table}[ht]
-	\caption{Keyboard Operations on sub-view}
-	\label{table_keyboard_subview}
-	\begin{center}
-		\begin{tabular}{|c|l|}
-			\hline
-			\textbf{Key} & \textbf{Function}\\			
-			\hline
-			a & move left\\
-			\hline
-			s & move down\\
-			\hline
-			d & move right\\
-			\hline
-			w & move up\\
-			\hline
-			q & rotate left\\
-			\hline
-			e & rotate right\\
-			\hline
-		\end{tabular}
-	\end{center}
-\end{table}
-
-\begin{table}[ht]
-	\caption{Keyboard Operations on main-view}
-	\label{table_keyboard_mainview}
-	\begin{center}
-		\begin{tabular}{|c|l|}
-			\hline
-			\textbf{Key} & \textbf{Function}\\
-			\hline
-			1 & select previous object in current frame\\
-			\hline
-			2 & select next object in current frame\\
-			\hline
-			3 & previous frame\\
-			\hline
-			4 & next frame\\
-			\hline
-			r & rotate box in conter-clockwise(yaw angle)\\
-			\hline
-			f & rotate box in clockwise(yaw angle)\\
-			\hline
-			t & reset box\\
-			\hline
-			g & reverse box direction (yaw angle)\\
-			\hline
-			v & switch editing mode(Fig.~\ref{fig:box-mouse-edit})\\
-			\hline
-			Ctrl+s & save\\
-			\hline
-			Ctrl+c & copy reference box (semi-auto annotation \ref{semi-auto-anno})\\
-			\hline
-			Ctrl+z & undo\\
-			\hline
-			Ctrl+y & redo\\
-			\hline
-		\end{tabular}
-	\end{center}
-\end{table}
+All operations are summarized in Appendix \ref{app:operations}.
 
 
 
@@ -619,13 +560,14 @@ A conclusion section is not required. Although a conclusion may review the main 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{comment}
+
 \section*{APPENDIX}
 
+\subsection{Raw data orgnization}
 In server, the raw data is organized by scenes, the directory structure is as in Fig.~\ref{fig:data-dir}.
 
-\begin{figure}[h]
-	
+\begin{figure}
+
 	\dirtree{%
 		.1 data.
 		.2 scene1.
@@ -656,9 +598,113 @@ In server, the raw data is organized by scenes, the directory structure is as in
 \end{figure}
 
 
+\subsection{Operation summary}
+\label{app:operations}
+Table~\ref{table:keyboard_mainview} shows operations applicable in main view, Table~\ref{table:keyboard_subview} show operations applicable in side sub-views.
+
+\begin{table}[h]
+	\caption{Operations on main-view}
+	\label{table:keyboard_mainview}
+	\begin{center}
+		\begin{tabular}{|c|l|}
+			\hline
+			\textbf{Key} & \textbf{Function}\\
+			\hline
+			1 & select previous object\\
+			\hline
+			2 & select next object\\
+			\hline
+			3 & previous frame\\
+			\hline
+			4 & next frame\\
+			\hline
+			r & rotate counterclockwise(yaw)\\
+			\hline
+			f & rotate clockwise(yaw)\\
+			\hline
+			t & reset box\\
+			\hline
+			g & reverse direction (yaw angle)\\
+			\hline
+			v & switch editing mode(Fig.~\ref{fig:box-mouse-edit})\\
+			\hline
+			Ctrl+s & save\\
+			\hline
+			Ctrl+c & copy reference box (\ref{semi-auto-anno})\\
+			\hline
+			Ctrl+z & undo\\
+			\hline
+			Ctrl+y & redo\\
+			\hline
+			Left drag & rotate view\\
+			\hline
+			Right drag & pan view\\
+			\hline
+			Wheel up & zoom in\\
+			\hline
+			Wheel down & zoom out\\
+			\hline
+			Ctrl+Left Drag (on main view)& mark points\\
+			\hline
+			Ctrl+Left click (on photo context)& draw polygon\\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+
+\begin{table}[h]
+	\caption{Operations on sub-views}
+	\label{table:keyboard_subview}
+	\begin{center}
+		\begin{tabular}{|c|l|c|l|}
+			\hline
+			\textbf{Key} & \textbf{Function}\\			
+			\hline
+			a & move left\\
+			\hline
+			s & move down\\
+			\hline
+			d & move right\\
+			\hline
+			w & move up\\
+			\hline
+			q & rotate left\\
+			\hline
+			e & rotate right\\
+			\hline
+			q & rotate left\\
+			\hline
+			e & rotate right\\
+			\hline				
+			Ctrl-q & rotate left with boundary aware\\
+			\hline
+			Ctrl-e & rotate right with boundary aware\\
+			\hline
+			Drag box border/corner & resizing box\\
+			\hline
+			Drag direction line & rotate box\\
+			\hline
+			Drag box border/corner with Ctrl hold & resizing box with auto-shrink\\
+			\hline
+			Drag direction line with Ctrl hold& rotate box with boundary aware\\
+			\hline
+			Drag box center & move box\\
+			\hline
+			Double click box border/corner & auto-shrinking\\
+			\hline
+			Double click box center & auto-shrinking all borders\\
+			\hline
+			Double click direction line& rotate upside-down (180 degree)\\
+			\hline
+		\end{tabular}
+	
+		 {\raggedright Note that all operation effects are relative to current sub-view.\par}
+		 
+	\end{center}
+\end{table}
 \section*{ACKNOWLEDGMENT}
 
-\end{comment}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
