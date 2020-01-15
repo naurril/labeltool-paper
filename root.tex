@@ -292,6 +292,21 @@ All boxes and points inside are colored according to their types, and selected o
 
 \subsection{Basic 3D Box Editing}
 
+\subsubsection{Creating a box}
+
+A user can create a new box by right clicking on the object  and then select object type on popup context menu. Our tool provide the following features to help create box easily:
+
+\begin{enumerate}
+	\item The initial box direction (yaw) is upright along the main view
+	\item A prototype (in accordance with the object type) box is placed on mouse position
+	\item A growing algorithm is invoked to include all points belong to the object
+	\item Auto-shrink algorithm is used to shrink the box in case there is too large margin between the box and the object
+\end{enumerate}
+
+Note that for most cases, the annotation is almost done with one operation.
+
+Compared to "one-click-annotation" of LATTE~\cite{pointatme}, our method uses prototype to overcome difficulties when the points is too sparse for a growing algorithm to work.
+
 \subsubsection{Edit in perspective view}
 A box can be created with context menu(triggered by right click), the box dimension is initialized by object category. In main view(Fig.~\ref{fig:main_ui}), click a box to select it, click again (or click edit button in fast toolbox) to show/switch the operation handlers (Fig.~\ref{fig:box-mouse-edit}), drag the handlers to resize,rotate or move the box, click empty place (or press ESC key) to hide operation handlers or un-select the box.
 
@@ -323,19 +338,6 @@ Editing in perspective view is actually inconvenient, sometimes you have to chan
 
 All operations are summarized in Appendix \ref{app:operations}.
 
-
-\subsubsection{Initial box generation}
-
-A user can create a new box by right clicking on the object  and then select object type on popup context menu. Our tool provide the following features to help create box easily:
-
-\begin{enumerate}
-	\item the initial box direction is upright along the main view, 
-	\item ...
-\end{enumerate}
-
-
-When a user create a new box by context menu to start annotating a new object, when user click object type name, a box is placed at the clicked position (center part of\ref{hptb}), the dimension is set according to the object type, and the heading direction(z-axis rotation) is set upward along the main view (better if the main view is rotated properly beforehand).
-A euclidean distance based expansion algorithm is invoked to adjust the box to enclose all points of the same object. By this way the initial bounding box is almost ready.
 
 
 
@@ -479,7 +481,7 @@ A naive implementation is to recalculate the dimension of all original interior 
 The evaluation consists of 3 parts, corresponding to 3 requirements we proposed in Section \ref{intro-requirements}.
 
 \subsection{Detail Checking}
-For this part, we use examples from KITTI 3D Object Detection data \cite{Geiger2012CVPR} set to demonstrate the effectiveness of checking annotation accuracy with our tool. We choose the same scene as show in  Fig. 5 of \cite{pointatme}.
+For detail check evaluation, we use examples from KITTI 3D Object Detection data \cite{Geiger2012CVPR} set to demonstrate the effectiveness of checking annotation accuracy with our tool. We choose the same scene as show in  Fig. 5 of \cite{pointatme}.
 
 Note although our tool supports all 9 degrees of freedom for 3D box, only 7 are labeled in KITTI data set, with pitch and tilt ignored, so in our evaluation we also ignore these 2 angles for fairness.
 
@@ -510,7 +512,7 @@ Tracking IDs can also be easily checked with the help of auto-follow  and stream
 
 Annotation efficiency can be evaluated by annotation time and accuracy\cite{pointatme} \cite{Zimmer20193DBA}. The time shall be minimized and accuracy maximized. \cite{Zimmer20193DBA} counts interpolated annotations in so the time per object is extremely small, for fairness we use \cite{pointatme} as the baseline to compare our tool with.
 
-As described in \cite{pointatme} and also indicated in previous section, the original KITTI labels is not suited for ground truth of our benchmarks. So we carefully annotated some scenes and use the result as ground truth, 3 users are employed to annotate the same set of data, with a few hours of training beforehand. We choose the same scene as used in \cite{pointatme}. For ground truth annotation the average time used per object is about 30 seconds (need edit).
+As described in \cite{pointatme} and also indicated in previous section, the original KITTI labels is not suited as ground truth for our benchmarks. So we carefully annotated some scenes and use the result as ground truth, 3 users are employed to annotate the same set of data, with a few hours of training beforehand. We choose the same scene as used in \cite{pointatme}. For ground truth annotation the average time used per object is less than 20 seconds.
 
 For accuracy evaluation we follow the criteria  described in \cite{pointatme}, all points belonging to an object should be inside the bounding box and all points not belonging to it should be outside.
 
@@ -523,15 +525,15 @@ For accuracy evaluation we follow the criteria  described in \cite{pointatme}, a
 		\textbf{Method} & \textbf{Ours} & \textbf{PointAtME\cite{pointatme}} \\
 		\hline
 		\hline
-		Time/Object (sec.) & xx & xx\\
+		Time/Object (sec.) & 18 & 55.2 $\pm$ 12.1\\
 		\hline
-		Undo/Object & xx & xx\\
+		Undo/Object & - & 0.42 $\pm$ 0.43\\
 		\hline
-		Errors (Points/Object) & xx & xx\\
+		Errors (Points/Object) & $<$0.5 & 28.7 $\pm$ 5.1\\
 		\hline
-		FP ratio / Object & xx & xx\\
+		FP ratio / Object &  $<$0.5 & 7.16\%\\
 		\hline
-		FN ratio / Object & xx & xx\\
+		FN ratio / Object & - & 3.27\%\\
 		\hline
 	\end{tabular}
 \end{table}
