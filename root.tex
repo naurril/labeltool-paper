@@ -97,7 +97,7 @@ visualization and manual operation impose a great deal of technical challenges:
 
 2D/3D box-based units for editing 
 
-Visulization methods are developed to improve VR
+Visualization methods are developed to improve VR
 
 automation tools are developed for scalability and extension 
 
@@ -245,7 +245,7 @@ In this work, our proposed method directly annotate the objects at the 3D point 
 	  \vspace{-0.1cm}
 	% Requires \usepackage{graphicx}
 	%\resizebox{\linewidth}{!}{
-	\includegraphics[width=1.0\linewidth]{./figures/system-modules}\\ %\vspace{-0.3cm}
+	\includegraphics[width=1.0\linewidth]{./arch_layer}\\ %\vspace{-0.3cm}
 	 \caption{Details on our annotation platform. Our platform obtains the initialization results with the help of AI methods. The infrastructure module means the backend server, which is used to process data and provide network services.}
 		\label{fig:main_ui}
 		\vspace{-0.3cm}
@@ -258,7 +258,15 @@ Visualization is important for both 3D box editing and reviewing. We describe vi
 
 \subsubsection{Sub-views}
 \label{section:sub-views}
-We split the main window into 1 main view and 5 sub-views, as shown in Fig.~\ref{fig:main_ui}. As in \cite{Zimmer20193DBA, more..}, the top/side/front projective views is provided to easily check the box alignment, different from \cite{Zimmer20193DBA} we hide environment points in these views to make it clean. we also provide an extra focused fusion view (bottom left sub-view in \ref{fig:main_ui}) to help check image details easily, otherwise a user will have to zoom in/out the context image.
+We split the main window into 1 main view and 5 sub-views, as shown in Fig.~\ref{fig:main_ui}. As in \cite{Zimmer20193DBA, Playment, SUPERVISELY}, the top,side and front projective views are provided with background hidden. Beside context photo view on the top, an extra focused fusion view is also provided(bottom left sub-view).
+
+\begin{figure}[!t]
+	\centering	
+	\includegraphics[width=0.9\linewidth]{./figures/main_ui}\\
+	\caption{Main UI}
+	\label{fig:main-ui}
+\end{figure}
+
 
 \subsubsection{Focus-mode}
 We provide a focus mode to facilitate detail check, as shown in Fig.~\ref{fig:focus-mode}. When activated through fast toolbox,the target object is automatically centered and zoomed in, most background hidden, while all editing features still applicable. Without this feature a user has to pan,  zoom and rotate the main view often, which we think is a lot operations and thus laborious.
@@ -292,12 +300,6 @@ Compared to "one-click-annotation" of LATTE~\cite{pointatme}, our method uses pr
 \subsubsection{Edit in perspective view}
 A box can be created with context menu(triggered by right click), the box dimension is initialized by object category. In main view(Fig.~\ref{fig:main_ui}), click a box to select it, click again (or click edit button in fast toolbox) to show/switch the operation handlers (Fig.~\ref{fig:box-mouse-edit}), drag the handlers to resize,rotate or move the box, click empty place (or press ESC key) to hide operation handlers or un-select the box.
 
-\begin{figure}[!th]
-	\centering	
-	\includegraphics[width=0.9\linewidth]{./figures/focus-mode}\\
-	\caption{Focus mode}
-	\label{fig:focus-mode}
-\end{figure}
 
 When an object is selected (by mouse click, or navigate key shortcut), a floating \emph{fast-tool-box} shows next to it, as shown in Fig.~\ref{fig:main_ui}. A user can change object type, tracking id, activate focus mode, among others.
 
