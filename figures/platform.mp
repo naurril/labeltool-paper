@@ -4,13 +4,20 @@ input boxes;
 
 beginfig(0);
 
+boxh = .5cm;
+margin = 0.3cm;
+offset = 0.1cm;
 
-boxjoin(a.sw=b.nw+(0,2a.dy); a.se=b.ne+(0,2a.dy));
+boxjoin(a.sw=b.nw+(0,margin); a.se=b.ne+(0,margin));
 boxit.a(btex Preprocessing etex);
 boxit.b(btex Data cleaning etex);
 boxit.c(btex Pre-annotation etex);
 boxit.d(btex Pre-annotation etex);
 
+a.n-a.s=(0,boxh); a.offset=offset;
+b.n-b.s=(0,boxh);
+c.n-c.s=(0,boxh);
+d.n-d.s=(0,boxh);
 
 drawunboxed(a);
 drawboxed(b);
@@ -80,7 +87,7 @@ drawdblarrow middle.c--right.c  cutbefore bpath middle cutafter bpath right;
 boxjoin();
 boxit.bottom(btex data managements etex);
 bottom.nw = left.sw - (0,6a.dx);
-bottom.ne = right.se - (0,6a.dx);;
+
 
 %drawunboxed(upper);
 drawboxed(bottom);
