@@ -190,26 +190,26 @@ Section~\ref{result} provides the experiment results and discussions. Section~\r
 \begin{table*}[ht]
 	\caption{A brief summary on 3D point clouds annotation methods}
 	\resizebox{1.0\textwidth}{!}{
-		\begin{tabular}{c||c|c|c|p{1.5cm}<{\centering}|p{1.5cm}<{\centering}|c||c|p{2cm}<{\centering}|p{2cm}<{\centering}|p{2cm}<{\centering}|p{2cm}<{\centering}}
+		\begin{tabular}{c||c|c|c|p{1.5cm}<{\centering}|p{1.5cm}<{\centering}|c||c|p{2cm}<{\centering}|p{2cm}<{\centering}|p{2cm}<{\centering}}
 		\hline
 		\hline
-		\multirow{2}{*}{} & \multicolumn{6}{c||}{Visualization}                         & \multicolumn{5}{c}{Operation}                 \\
-		\cline{2-12}                        & Stream play  & Focus mode & Object color  & Box information & Camera switch & Auto-tracking & Auto box Initialization& Multi-view operation & Box Fitting  & Annotation Transfer 
+		\multirow{2}{*}{} & \multicolumn{6}{c||}{Visualization}                         & \multicolumn{4}{c}{Operation}                 \\
+		\cline{2-11}                        & Stream play  & Focus mode & Object color  & Box information & Camera switch & Auto-tracking & Auto box Initialization& Multi-view operation & Box Fitting  & Annotation Transfer 
 		\\  \hline
-		PointAtMe~\cite{pointatme}         & $\times$    &   $\times$ &   $\times$    &   $\times$      &   $\times$    &  $\times$   &      +       &    +     &    +     &    +     &    +       \\ \hline
-		LabelMe3D~\cite{LabelMe3D}         & $\times$    &   $\times$ &   $\times$    &   $\times$      &   $\times$    &  $\times$   &     ++       &   ++     &   ++     &   ++     &   ++       \\ \hline
-		Riccardo~\cite{monica2017multi}    & $\times$    &   $\times$ &   $\times$    &   $\times$      &   $\times$    &  $\times$   &              &   ++     &   ++     &   ++     &   ++       \\ \hline
-		Poly-RNN++~\cite{PolyRNN++}        & $\times$    &   $\times$ &   $\surd$     &   $\times$      &   $\times$    &  $\times$   &     +++      &  +++     &  +++     &  +++     &  +++       \\ \hline
-		3D BAT~\cite{Zimmer20193DBA}       & $\times$    &   $\times$ &   $\times$    &                 &   $\times$    &  $\times$   &              &    +     &    +     &    +     &    +       \\ \hline
-		LATTE~\cite{Wang2019LATTEAL}       & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     &   ++       \\ \hline
+		PointAtMe~\cite{pointatme}         & $\times$    &   $\times$ &   $\times$    &   $\times$      &   $\times$    &  $\times$   &      +       &    +     &    +     &    +     \\ \hline
+		LabelMe3D~\cite{LabelMe3D}         & $\times$    &   $\times$ &   $\times$    &   $\times$      &   $\times$    &  $\times$   &     ++       &   ++     &   ++     &   ++     \\ \hline
+		Riccardo~\cite{monica2017multi}    & $\times$    &   $\times$ &   $\times$    &   $\times$      &   $\times$    &  $\times$   &              &   ++     &   ++     &   ++     \\ \hline
+		Poly-RNN++~\cite{PolyRNN++}        & $\times$    &   $\times$ &   $\surd$     &   $\times$      &   $\times$    &  $\times$   &     +++      &  +++     &  +++     &  +++     \\ \hline
+		3D BAT~\cite{Zimmer20193DBA}       & $\times$    &   $\times$ &   $\times$    &                 &   $\times$    &  $\times$   &              &    +     &    +     &    +     \\ \hline
+		LATTE~\cite{Wang2019LATTEAL}       & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     \\ \hline
 		
-		Supervise.ly~\cite{SUPERVISELY}      & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     &   ++       \\ \hline
+		Supervise.ly~\cite{SUPERVISELY}      & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     \\ \hline
 		
-		Playment.io~\cite{Playment}       & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     &   ++       \\ \hline
+		Playment.io~\cite{Playment}       & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     \\ \hline
 		
-		scale.ai~\cite{scale}       & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     &   ++       \\ \hline
+		scale.ai~\cite{scale}       & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     \\ \hline
 		
-		\textbf{SUSTech Points}            & $\surd$     &   $\surd$  &   $\surd$     &   $\surd$       &   $\surd$     &  $\surd$    &     +++      &  +++     &  +++     &  +++     &  +++       \\ \hline \hline
+		\textbf{SUSTech Points}            & $\surd$     &   $\surd$  &   $\surd$     &   $\surd$       &   $\surd$     &  $\surd$    &     +++      &  +++     &  +++     &  +++          \\ \hline \hline
 	\end{tabular}
 	}
 	\begin{tabular}{p{17.5cm}}
@@ -250,9 +250,10 @@ In this work, our proposed method directly annotate the objects at the 3D point 
 \section{Architecture and Features}
 
 \subsection{System Architecture}
-We use web-based architecture, the raw data to be annotated is located in server. The end user can start working with a web browser and don't have to download the data set beforehand. The web server is implemented in Python and relies on CherryPy web framework\cite{cherrypy}. For front-end relies on \texttt{WebGL} library Three.js\cite{threejs}.
+We use web-based architecture. A annotator works with a web browser. The raw data shall be put on server beforehand. 
 
-
+The web server is implemented in Python and relies on CherryPy\cite{cherrypy} web framework. The frontend relies on \texttt{WebGL} library Three.js\cite{threejs}. The backend mainly serves data managements functions, the frontend implements almost all features described in this section.
+\begin{comment} Fig.~\ref{fig:arch_layer} depicts the overview of the architecture.
 
 \label{3D annotation tool}
 \begin{figure}[htp]
@@ -261,40 +262,52 @@ We use web-based architecture, the raw data to be annotated is located in server
 	% Requires \usepackage{graphicx}
 	%\resizebox{\linewidth}{!}{
 	\includegraphics[width=1.0\linewidth]{./arch_layer}\\ %\vspace{-0.3cm}
-	 \caption{Details on our annotation platform. Our platform obtains the initialization results with the help of AI methods. The infrastructure module means the backend server, which is used to process data and provide network services.}
-		\label{fig:main_ui}
+	 \caption{Layered architecture of our annotation platform.}
+		\label{fig:arch_layer}
 		\vspace{-0.3cm}
    \end{figure}
-
+\end{comment}
 
 \subsection{Visualization}
 
-Visualization is important for both 3D box editing and reviewing. We describe visualization related features in this section.
-
-\subsubsection{Sub-views}
-\label{section:sub-views}
-We split the main window into 1 main view and 5 sub-views, as shown in Fig.~\ref{fig:main_ui}. As in \cite{Zimmer20193DBA, Playment, SUPERVISELY}, the top,side and front projective views are provided with background hidden. Beside context photo view on the top, an extra focused fusion view is also provided(bottom left sub-view).
+Visualization is important for both 3D box editing and reviewing. Fig.~\ref{fig:main-ui} shows the main user interface of our platform. We describe details of visualization features in following subsections.
 
 \begin{figure}[!t]
 	\centering	
-	\includegraphics[width=0.9\linewidth]{./figures/main_ui}\\
-	\caption{Main UI}
+	\includegraphics[width=\linewidth]{./figures/main-ui}\\
+	\caption{Main UI, \textcircled{1} is perspective view, \textcircled{2} is photo context, which is resizable and can automatically switch among multiple camera images, \textcircled{3} is top view, \textcircled{4} is front view, \textcircled{5} is side view, \textcircled{6} is focused photo context which follows selected object automatically. \textcircled{7} is context menu, \textcircled{8} is floating fast toolbox.}
 	\label{fig:main-ui}
 \end{figure}
 
+\subsubsection{Sub-views}
+\label{section:sub-views}
+We split the main window into 1 main view and 5 sub-views, as shown in Fig.~\ref{fig:main-ui}. The top,side and front projective views are shown on left side with background hidden. Beside context photo view on the top, an extra focused fusion view is also provided(bottom left sub-view).
+
+
+
 
 \subsubsection{Focus-mode}
-We provide a focus mode to facilitate detail check, as shown in Fig.~\ref{fig:focus-mode}. When activated through fast toolbox,the target object is automatically centered and zoomed in, most background hidden, while all editing features still applicable. Without this feature a user has to pan,  zoom and rotate the main view often, which we think is a lot operations and thus laborious.
+We provide a focus mode to help check object details. When activated through fast toolbox(\textcircled{8} in Fig.~\ref{fig:main-ui}),the target object is automatically centered and zoomed in, most background hidden, while all editing features still applicable. Without this feature a user has to pan,  zoom and rotate the main view often, which we think is laborious.
 
 \subsubsection{Camera auto-switching}
-it's common to have multiple cameras and corresponding images to annotate, \cite{Zimmer20193DBA} displays all them on top of the main view, while \cite{} display one of them, we choose the latter way but with an automatic image switching feature. Specifically when an object is selected, the most relevant camera image is displayed, while manual selection is also possible.
-note that this feature needs the calibration data to be available.
+It's common to have multiple cameras in nowadays autonomous driving car setup, \cite{Zimmer20193DBA} displays all of them on top of the main view, some displays only one \cite{scale}. we choose the latter way but with an automatic camera switching feature. Specifically when an object is selected in point cloud, the most relevant camera image is displayed. Manual camera selection is also possible. Note that this feature needs the calibration data to be available.
 
 \subsubsection{Object Coloring}
-All boxes and points inside are colored according to their types, and selected object are colored differently.
+All boxes and object points can be colored by categories. Selected object (object under editing) are highlighted with a different color.
 
 \subsubsection{Navigation}
 \label{section:navigation}
+The user can navigate in 3D space, or in time by navigating previous or next frame. 
+
+\subsubsection{Stream Play}
+The user can play the data (by scenes) like a video.
+
+\subsubsection{Object locking}
+When playing, selected object are locked (\textit{i}.\textit{e}. selected in all frames).
+
+\subsubsection{Box information}
+Box details (scene, frame, object category, coordinates, dimension, direction and points number) are shown on top of the main window.
+ 
 \subsection{Basic 3D Box Editing}
 
 \subsubsection{Creating a box}
@@ -308,16 +321,16 @@ A user can create a new box by right clicking on the object  and then select obj
 	\item Auto-shrink algorithm is used to shrink the box in case there is too large margin between the box and the object
 \end{enumerate}
 
-Note that for most cases, the annotation is almost done with one operation.
+Note that for most cases, the annotation is almost done with this single operation.
 
 Compared to "one-click-annotation" of LATTE~\cite{pointatme}, our method uses prototype to overcome difficulties when the points is too sparse for a growing algorithm to work.
 
 \subsubsection{Edit in perspective view}
-A box can be created with context menu(triggered by right click), the box dimension is initialized by object category. In main view(Fig.~\ref{fig:main_ui}), click a box to select it, click again (or click edit button in fast toolbox) to show/switch the operation handlers (Fig.~\ref{fig:box-mouse-edit}), drag the handlers to resize,rotate or move the box, click empty place (or press ESC key) to hide operation handlers or un-select the box.
 
+When an object is selected, a floating \emph{fast-tool-box} shows next to it, as shown in Fig.~\ref{fig:main-ui}. A user can change object type, tracking id, activate focus mode, among others.
 
-When an object is selected (by mouse click, or navigate key shortcut), a floating \emph{fast-tool-box} shows next to it, as shown in Fig.~\ref{fig:main_ui}. A user can change object type, tracking id, activate focus mode, among others.
-
+A user can click a selected object to enable box editing, drag the handlers as show in Fig.~\ref{fig:box-mouse-edit} to resize,rotate or move the box.
+ 
 
 \begin{figure}[t]
 	\centering
@@ -339,11 +352,28 @@ When an object is selected (by mouse click, or navigate key shortcut), a floatin
 	\label{fig:box-mouse-edit}
 \end{figure}
 
+
+\begin{figure}[t]
+	\centering
+	\resizebox{\linewidth}{!}{
+		\begin{subfigure}{0.45\linewidth}
+			\includegraphics[height=2.cm]{./figures/subview-rotate}\\
+			\caption{move}
+		\end{subfigure}
+		~
+		\begin{subfigure}{0.45\linewidth}
+			\includegraphics[height=2.cm]{./figures/subview-resize}\\
+			\caption{rotate}
+		\end{subfigure}	
+	}
+	\caption{Box editing in projective sub-view}
+	\label{fig:box-mouse-edit-subview}
+\end{figure}
+
 \subsubsection{Edit in projective sub-views}
-Editing in perspective view is actually inconvenient, sometimes you have to change viewpoint for better operation. Actually the annotation is easily and should be checked in the side sub-views, thus we enable editing directly on these sub-views to make a better editing experience. when an object is selected and mouse enters one of the sub-views, the editing is activated automatically on this sub-view. user can drag dotted lines to rotate, resize or move the box, as can be seen in Fig.~\ref{fig:box-rotate-in-subview}.
+Editing in perspective view is inconvenient, sometimes a user has to change viewpoint for better operation. As shown in Fig.~\ref{fig:main-ui} the annotation is clearly shown in the sub-views, thus we enable editing directly on these sub-views to make a better editing experience. When an object is selected and the mouse enters one of the sub-views, the editing is activated automatically. A user can drag dotted lines to rotate, resize or move the box, as can be seen in Fig.~\ref{fig:box-mouse-edit-subview}.
 
-All operations are summarized in Appendix \ref{app:operations}.
-
+All operations can also be done with keyboard shortcuts.
 
 
 
@@ -352,11 +382,11 @@ All operations are summarized in Appendix \ref{app:operations}.
 
 \subsubsection{Semi-auto box fitting}
 
-When a box is being resized or rotated, the tool helps fit the box to the object automatically. Specifically,  given rotation and all points, the box dimension and center position is calculated and set automatically. For those objects with few points, the box need to be larger than fitted, it can be adjusted manually.
+When a box is being resized or rotated, the tool helps fit the box to the object automatically. Specifically,  given rotation and all points, the box dimension and center position are calculated and set automatically.This is done by finding the minimal box enclosing all points. For those objects with few points, the box need to be larger than fitted, it can be adjusted manually. Fig.~\ref{fig:boundary-aware-rotation} shows box fitting at rotating. 
 
-A direct implementation is to recalculate the dimension of all points and adjust the box accordingly, but it may fail when ground plane is present. One solution is to remove ground plane, but it's not reliable when the ground is not smooth (as can be seen often in KITTI data set\cite{Geiger2012CVPR} where many cars park on roadside).
+Note that a direct manner to find the minimal box may fail when ground plane is present. As shown in Fig.~\ref{fig:box-before-rotate}, if the ground plane is counted in, a new fitted box after rotation will be too large. One solution is to remove ground plane, but it's not reliable when the ground is not smooth (as can be seen often in KITTI data set\cite{Geiger2012CVPR} where many cars park on roadside).
 
-We use a simple yet effective method to solve this problem. Specifically, we  ignore the most bottom part (0.2m by default) of the object when calculating the box dimension. Since a user is annotating the object, the pose of the object must be already roughly correct, so the  ground points can be removed effectively with this methods. In traffic scenarios almost all objects are much higher than 0.2m, so the estimation of dimension along x and y axes is  not affected, for z axis, we compensate the 0.2m part after the calculation. A demonstration of this method is shown in Fig.~\ref{fig:boundary-aware-rotation}.
+We use a simple yet effective method to solve this problem. Specifically, we  ignore the most bottom part (0.2m by default) of the object when calculating the box dimension (x-y plane). Since a user is annotating the object, the pose of the object must be already roughly correct, so the  ground points can be removed effectively with this method. In traffic scenarios almost all objects are much higher than 0.2m, so the estimation of dimension is  not affected. For object height we compensate the 0.2m part after the calculation. 
 
 
 \begin{figure}[t]
@@ -365,7 +395,7 @@ We use a simple yet effective method to solve this problem. Specifically, we  ig
 	\begin{subfigure}[t]{0.2\linewidth}
 		\includegraphics[height=4cm]{./figures/points-enclosed}
 		\caption{}
-		
+		\label{fig:box-before-rotate}
 	\end{subfigure}\hfill
 	\begin{subfigure}[t]{0.2\linewidth}
 		\includegraphics[height=4cm]{./figures/adjust-naively}
@@ -388,12 +418,14 @@ We use a simple yet effective method to solve this problem. Specifically, we  ig
 
 \subsubsection{Annotation transfer among related frames}
 \label{semi-auto-anno}
-In autonomous driving scenario, data sets are often organized by scenes\cite{Caesar2019nuScenesAM,Patil2019TheHD,lyft2019}, a scene is a sequence of frames shot at one continuous period of time. There are much similarities between neighboring frames, which makes it possible to transfer annotations among them. \cite{Zimmer20193DBA} copies annotations to next frame directly and let user do the adjustment.\cite{Wang2019LATTEAL} uses box estimation algorithm to automatically adjust the box, reusing previous annotated object size if appropriate. Our tool takes this way further by invoking registration algorithm \cite{Yang2016GoICPAG} to automatically adjust the position and rotation, reusing both the size and rotation previously annotated. In most cases our method produces  accurate enough annotation result.
+In autonomous driving scenario, data sets are often organized by scenes\cite{Caesar2019nuScenesAM,Patil2019TheHD,lyft2019}. A scene is a sequence of frames shot at one continuous period of time. There are much similarities between neighboring frames, which makes it possible to transfer annotations among them. \cite{Zimmer20193DBA} copies annotations to next frame directly and let user do the adjustment.\cite{Wang2019LATTEAL} uses box estimation algorithm to automatically adjust the box, reusing previous annotated object size if appropriate. Our tool takes this way further by invoking registration algorithm \cite{Yang2016GoICPAG} to automatically adjust the position and rotation, reusing both the size and rotation previously annotated. In most cases our method produces  accurate enough annotation result.
 
- The user need to first select (copy) a reference box, then paste it in appropriate position in target frame. A registration algorithm is invoked to compute the relative transform relation between the reference and target object, the target box is adjusted accordingly.
+The user need to first select (copy) a reference box, then paste it in appropriate position in target frame. A registration algorithm is invoked to compute the relative transform relation between the reference and target object, then the box in the target frame is adjusted accordingly.
+
+The reference and target objects are cropped out at a 1.2 scale ratio and all points are transformed to their corresponding box coordinates system before given to registration algorithm. Fig.~\ref{fig:annotation-transfer} shows an transfer example.
 
 
-\begin{figure}[ht]
+\begin{figure}[t]
 	\centering
 	\begin{subfigure}[t]{0.18\linewidth}
 		\includegraphics[height=4cm]{./figures/reg-ref-3d}\\
@@ -427,11 +459,12 @@ In autonomous driving scenario, data sets are often organized by scenes\cite{Cae
 	\end{subfigure}\hfill
 	\end{comment}
 	
-	\caption{Registration based bounding box transfer. \ref{fig:box-ref} is the reference object and its bounding box, \ref{fig:box-source} is the object in another frame with a initial  bounding box, \ref{fig:box-output} is the effect of box being adjusted.}
+	\caption{Registration based bounding box transfer. \ref{fig:box-ref} is the reference object and its bounding box, \ref{fig:box-source} is the object in another frame with a initial  bounding box, \ref{fig:box-output} is the effect of box being adjusted.\ref{fig:reg-input} is the corresponding registration input after coordinates transformed.}
+	\label {fig:annotation-transfer}
 \end{figure}
 
 
-Given source and target objects (denoted by $\mathcal{S,T}$ respectively)and their bounding boxes ($b_s,b_t$), a registration algorithm finds the transform matrix $T$ to match $\mathcal{S}$ with $\mathcal{T}$ , minimizing a distance function $dist$,
+We briefly describes the box transformation procedure in the remaining part of this subsection. Given source and target objects (denoted by $\mathcal{S,T}$ respectively)and their bounding boxes ($b_s,b_t$), a registration algorithm finds the transform matrix $T$ to match $\mathcal{S}$ with $\mathcal{T}$ , minimizing a distance function $dist$,
 $$dist(T(\mathcal{S}),\mathcal{T})$$
 where we represent points of $\mathcal{S,T}$ in their corresponding bounding box coordinates $B_s$ and $B_t$, the world coordinate system is denoted as $B_w$,
 
@@ -440,17 +473,20 @@ Assume point $s \in \mathcal{S}$ corresponds to $t \in \mathcal{T}$ after regist
 
 \begin{align}
 T s^{B_s} &= t^{B_t}\\
-T B_s^{-1}s &= t^{B_t} \label{eq:eq1}
+T B_s^{-1}s^{B_w} &= t^{B_t} \label{eq:eq1}
 \end{align}
 
-where $s^{B_s}$ means s represented in $B_s$ coordinate system, $s$ without upper index means default world coordinate system.
+where $s^{B_s}$ means s represented in $B_s$ coordinate system.
 
 If we denote the new coordinate system of $\mathcal{S}$ as $B'_s$, then
-\begin{equation} \label{eq:eq2}
-s^{B'_s} = t^{B_t}
-\end{equation}
+\begin{align} 
+s^{B'_s} &= t^{B_t}\\
+(B_s)^{-1}s^{B_w} &= t^{B_t} \label{eq:eq2}
+\end{align}
+
 
 by Eq.~\eqref{eq:eq1} and Eq.~\eqref{eq:eq2}, we have
+
 \begin{align}
 {B'_s} & = (T B_s^{-1})^{-1}\\
        & = B_s T^{-1} \label{eq:eq5}
