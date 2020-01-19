@@ -247,9 +247,11 @@ The framework of annotation method includes explorer-based and software-based. T
 
 In this work, our proposed method directly annotate the objects at the 3D point clouds layer with the explorer-based framework. Our proposed method is with a convenience visualization module and intelligent operation module, as shown in table~\ref{tab:annotationMethods}, which can successfully process the trade-off between time-consuming and data-quality.
 
-\section{Architecture and Features}
+\section{System Architecture and Features}
 
 \subsection{System Architecture}
+Our platform focus on 3D bounding box and tracking ID annotation. 
+
 We use web-based architecture. A annotator works with a web browser. The raw data shall be put on server beforehand. 
 
 The web server is implemented in Python and relies on CherryPy\cite{cherrypy} web framework. The frontend relies on \texttt{WebGL} library Three.js\cite{threejs}. The backend mainly serves data managements functions, the frontend implements almost all features described in this section.
@@ -290,7 +292,7 @@ We split the main window into 1 main view and 5 sub-views, as shown in Fig.~\ref
 We provide a focus mode to help check object details. When activated through fast toolbox(\textcircled{8} in Fig.~\ref{fig:main-ui}),the target object is automatically centered and zoomed in, most background hidden, while all editing features still applicable. Without this feature a user has to pan,  zoom and rotate the main view often, which we think is laborious.
 
 \subsubsection{Camera auto-switching}
-It's common to have multiple cameras in nowadays autonomous driving car setup, \cite{Zimmer20193DBA} displays all of them on top of the main view, some displays only one \cite{scale}. we choose the latter way but with an automatic camera switching feature. Specifically when an object is selected in point cloud, the most relevant camera image is displayed. Manual camera selection is also possible. Note that this feature needs the calibration data to be available.
+It's common to have multiple cameras in nowadays autonomous driving car setup, \cite{Zimmer20193DBA} displays all camera images on top of the main view, some displays only one \cite{scale}. we choose the latter way but with an automatic camera switching feature. Specifically when an object is selected in point cloud, the most relevant camera image is displayed. Manual camera selection is also possible. Note that this feature needs the calibration data to be available.
 
 \subsubsection{Object Coloring}
 All boxes and object points can be colored by categories. Selected object (object under editing) are highlighted with a different color.
@@ -311,25 +313,31 @@ Box details (scene, frame, object category, coordinates, dimension, direction an
 \subsection{Basic 3D Box Editing}
 
 \subsubsection{Creating a box}
-
+\label{section:create-box}
 A user can create a new box by right clicking on the object  and then select object type on popup context menu. Our tool provide the following features to help create box easily:
 
 \begin{enumerate}
-	\item The initial box direction (yaw) is upright along the main view
+	\item The initial box direction (yaw) is upright along the main view. Given that most vehicles have similar or reverse directions in one scene, adjust the view angle of the main view properly can save a lot time.
 	\item A prototype (in accordance with the object type) box is placed on mouse position
 	\item A growing algorithm is invoked to include all points belong to the object
-	\item Auto-shrink algorithm is used to shrink the box in case there is too large margin between the box and the object
+	\item An auto-fitting algorithm is used to shrink the box in case there is too large margin between the box and the object
 \end{enumerate}
 
-Note that for most cases, the annotation is almost done with this single operation.
+Note that \emph{for most cases, the annotation is almost done with this single operation}.
 
-Compared to "one-click-annotation" of LATTE~\cite{pointatme}, our method uses prototype to overcome difficulties when the points is too sparse for a growing algorithm to work.
+Different from "one-click-annotation" of LATTE~\cite{pointatme}, which uses growing algorithm to find points of the object under clicking, our method uses prototype to overcome difficulties when the points is too sparse for a growing algorithm to work.
+
+A user can also create a new box by drawing a rectangle on main view,  enclosing relevant points. The box is created by setting direction  and fitted to enclosed pionts as described above.
+
 
 \subsubsection{Edit in perspective view}
 
-When an object is selected, a floating \emph{fast-tool-box} shows next to it, as shown in Fig.~\ref{fig:main-ui}. A user can change object type, tracking id, activate focus mode, among others.
+When an object is selected, a floating \emph{fast toolbox} shows next to it, as shown in Fig.~\ref{fig:main-ui}. A user can change object type, tracking id, activate focus mode, among others.
 
-A user can click a selected object to enable box editing, drag the handlers as show in Fig.~\ref{fig:box-mouse-edit} to resize,rotate or move the box.
+For tracking ID, A user  can input or select existing value in fast toolbox, or select 'auto' item  letting the platform to generate a new ID unique in the scene.
+
+
+A user can click a selected object or the button on fast toolbox to enable box editing, drag the handlers as show in Fig.~\ref{fig:box-mouse-edit} to resize,rotate or move the box. Corresponding keyboard shortcuts are also provided.
  
 
 \begin{figure}[t]
@@ -358,12 +366,12 @@ A user can click a selected object to enable box editing, drag the handlers as s
 	\resizebox{\linewidth}{!}{
 		\begin{subfigure}{0.45\linewidth}
 			\includegraphics[height=2.cm]{./figures/subview-rotate}\\
-			\caption{move}
+			\caption{rotate}
 		\end{subfigure}
 		~
 		\begin{subfigure}{0.45\linewidth}
 			\includegraphics[height=2.cm]{./figures/subview-resize}\\
-			\caption{rotate}
+			\caption{resize}
 		\end{subfigure}	
 	}
 	\caption{Box editing in projective sub-view}
@@ -371,8 +379,7 @@ A user can click a selected object to enable box editing, drag the handlers as s
 \end{figure}
 
 \subsubsection{Edit in projective sub-views}
-Editing in perspective view is inconvenient, sometimes a user has to change viewpoint for better operation. As shown in Fig.~\ref{fig:main-ui} the annotation is clearly shown in the sub-views, thus we enable editing directly on these sub-views to make a better editing experience. When an object is selected and the mouse enters one of the sub-views, the editing is activated automatically. A user can drag dotted lines to rotate, resize or move the box, as can be seen in Fig.~\ref{fig:box-mouse-edit-subview}.
-
+Editing in perspective view is inconvenient, often a user has to change viewpoint for better operation. As shown in Fig.~\ref{fig:main-ui} the annotation is clearly shown in the sub-views, thus we enable editing directly on these sub-views to make a better editing experience. When an object is selected and the mouse enters one of the sub-views, the editing is activated automatically. A user can rotate, resize or move the box by mouse operatoin, as shown in Fig.~\ref{fig:box-mouse-edit-subview}.
 All operations can also be done with keyboard shortcuts.
 
 
@@ -382,11 +389,11 @@ All operations can also be done with keyboard shortcuts.
 
 \subsubsection{Semi-auto box fitting}
 
-When a box is being resized or rotated, the tool helps fit the box to the object automatically. Specifically,  given rotation and all points, the box dimension and center position are calculated and set automatically.This is done by finding the minimal box enclosing all points. For those objects with few points, the box need to be larger than fitted, it can be adjusted manually. Fig.~\ref{fig:boundary-aware-rotation} shows box fitting at rotating. 
+When a box is being resized or rotated, our platform can fit the box to the object automatically. This is done by finding the minimal box enclosing all points. For those objects with few points, the box need to be larger than fitted, it can be adjusted manually. Fig.~\ref{fig:boundary-aware-rotation} shows box fitting at rotating, note all points of the object are kept inside after rotated. With this feature, \emph{to annotate a new object is as easy as to enclose all pionts first and rotate once (\ref{section:create-box})} in most cases.
 
-Note that a direct manner to find the minimal box may fail when ground plane is present. As shown in Fig.~\ref{fig:box-before-rotate}, if the ground plane is counted in, a new fitted box after rotation will be too large. One solution is to remove ground plane, but it's not reliable when the ground is not smooth (as can be seen often in KITTI data set\cite{Geiger2012CVPR} where many cars park on roadside).
+Note that a direct manner to find the minimal box may fail when ground plane is present. As an example, in Fig.~\ref{fig:box-before-rotate}, if the ground plane is counted in, a new fitted box after rotation will be too large. One solution is to remove ground plane with algorithms, but it's not reliable when the ground is not smooth (as can be seen often in KITTI data set\cite{Geiger2012CVPR} where many cars park on roadside).
 
-We use a simple yet effective method to solve this problem. Specifically, we  ignore the most bottom part (0.2m by default) of the object when calculating the box dimension (x-y plane). Since a user is annotating the object, the pose of the object must be already roughly correct, so the  ground points can be removed effectively with this method. In traffic scenarios almost all objects are much higher than 0.2m, so the estimation of dimension is  not affected. For object height we compensate the 0.2m part after the calculation. 
+We use a simple yet effective method to solve this problem. Specifically, we  ignore the most bottom part (0.2m by default) of the object when calculating the box dimension (x-y plane). Since a user is annotating the object, the pose of the object must be already roughly correct, so the  ground points can be removed effectively with this method. In traffic scenarios almost all objects are much higher than 0.2m, so the estimation of dimension is  seldom affected. For object height we compensate the 0.2m part after the calculation. 
 
 
 \begin{figure}[t]
@@ -422,8 +429,9 @@ In autonomous driving scenario, data sets are often organized by scenes\cite{Cae
 
 The user need to first select (copy) a reference box, then paste it in appropriate position in target frame. A registration algorithm is invoked to compute the relative transform relation between the reference and target object, then the box in the target frame is adjusted accordingly.
 
-The reference and target objects are cropped out at a 1.2 scale ratio and all points are transformed to their corresponding box coordinates system before given to registration algorithm. Fig.~\ref{fig:annotation-transfer} shows an transfer example.
+The reference and target objects are cropped out at a 1.2 scale ratio and all points are transformed to their corresponding box coordinates system before input to registration algorithm. Fig.~\ref{fig:annotation-transfer} shows an transfer example.
 
+The performance of this function depends on the registration algorithm.  Empirically it works well when the reference object and the target object have similar view angles. Several adjustments may be requered if the initial position is deviated too much.
 
 \begin{figure}[t]
 	\centering
@@ -464,9 +472,10 @@ The reference and target objects are cropped out at a 1.2 scale ratio and all po
 \end{figure}
 
 
-We briefly describes the box transformation procedure in the remaining part of this subsection. Given source and target objects (denoted by $\mathcal{S,T}$ respectively)and their bounding boxes ($b_s,b_t$), a registration algorithm finds the transform matrix $T$ to match $\mathcal{S}$ with $\mathcal{T}$ , minimizing a distance function $dist$,
+We describe the box transformation procedure in the remaining part of this section. 
+Given source and target objects (denoted by $\mathcal{S,T}$ respectively)and their bounding boxes ($b_s,b_t$), a registration algorithm finds the transform matrix $T$ to match $\mathcal{S}$ with $\mathcal{T}$ , minimizing a distance function $dist$,
 $$dist(T(\mathcal{S}),\mathcal{T})$$
-where we represent points of $\mathcal{S,T}$ in their corresponding bounding box coordinates $B_s$ and $B_t$, the world coordinate system is denoted as $B_w$,
+where we represent points of $\mathcal{S,T}$ in their corresponding bounding box coordinates $B_s$ and $B_t$, the world coordinate system is denoted as $B_w$. Note that the box itself is identical to box coordinates system (\textit{i}.\textit{e}. $b_s$ is identical to $B_s$) since we concern only the rotation (correspond to 3 axes) and position (correspond to the origin point) of the box.
 
 Assume point $s \in \mathcal{S}$ corresponds to $t \in \mathcal{T}$ after registration, then
 
@@ -501,12 +510,12 @@ If we use the reference object as target, object under annotation as source, Eq.
 
 The evaluation consists of 3 parts:
 \begin{enumerate}
-	\item Evaluation of review efficiency, we show that errors or inaccuracies is easy to identify through the visualization functionalities.
+	\item Evaluation of review efficiency, we show that errors or inaccuracies are easy to identify through the visualization functionalities.
 	\item Evaluation of annotation efficiency, we show that annotation time and accuracy is better compared to other available tools.
 	\item Evaluatoin of transfer annotation, we show that transfer annotation generate accurate enough results.
 \end{enumerate}
 
-\subsection{Detail Checking}
+\subsection{Review Efficiency}
 For detail check evaluation, we use examples from KITTI 3D Object Detection data \cite{Geiger2012CVPR} set to demonstrate the effectiveness of checking annotation accuracy with our tool. We choose the same scene as show in  Fig. 5 of \cite{pointatme}.
 
 Note although our tool supports all 9 degrees of freedom for 3D box, only 7 are labeled in KITTI data set, with pitch and tilt ignored, so in our evaluation we also ignore these 2 angles for fairness.
@@ -541,11 +550,11 @@ Annotation efficiency can be measured by annotation time and accuracy\cite{point
 As described in \cite{pointatme} and also indicated in previous section, the original KITTI labels is not suited as ground truth for our benchmarks. So we carefully annotated some scenes and use the result as ground truth, 3 users are employed to annotate the same set of data, with a few hours of training beforehand. We choose the same scene as used in \cite{pointatme}. For ground truth annotation the average time used per object is less than 20 seconds.
 
 For accuracy evaluation we follow the criteria  described in \cite{pointatme}, all points belonging to an object should be inside the bounding box and all points not belonging to it should be outside.
-
+The test result is show in Table~\ref{tab:annotation-evaluation}.
 \begin{table}[h]
 	\centering
 	\caption{Results compared with baseline}
-	\label{tab:metrics}
+	\label{tab:annotation-evaluation}
 	\begin{tabular}{|l|c|c|c|c||c|c|c|c|}
 		\hline
 		\textbf{Method} & \textbf{Ours} & \textbf{PointAtME\cite{pointatme}} \\
@@ -566,31 +575,41 @@ For accuracy evaluation we follow the criteria  described in \cite{pointatme}, a
 
 
 \subsection{Annotation transfer}
-For annotation transfer we mainly evaluate the accuracy. We  transfer annotations between frames that have 0.5 to 2.5 second difference in time, with our self-collected data set.
+For annotation transfer we evaluate the accuracy. We  transfer annotations between frames that have 0.5 to 2.5 second difference in time, with our self-collected data set. The result is shown in Table~\ref{tab:transfer-evaluation}
 
 
 
 \begin{table}[h]
 	\centering
 	\caption{Accuracy of transfer annotations}
-	\label{tab:metrics}
-	\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+	\label{tab:transfer-evaluation}
+	\begin{tabular}{|c|r|c|c|c|c|c|}
 		\hline
-		&Ref. Obj.&0.5s & 1s &1.5s&2.5s \\
+		 & \textbf{Obj Type} & \textbf{Ref. Obj.}&\textbf{0.5s} & \textbf{1s} & \textbf{1.5s}& \textbf{2.5s} \\
 		\hline
-		 Car &-/1958& 15/1372 & 25/910 & 19/658 &  1/388\\
 		\hline
-  		 Rider &-/329& 0/240 & 0/190 & 0149/658 &  0/94\\
+		 1 & Car &-/1958& 15/1372 & 25/910 & 19/658 &  1/388\\
 		\hline
-  		 Bus &-/2327& 5/1208 & 3/656 & 1/396 &  0/244\\
+  		 2 & Rider &-/329& 0/240 & 0/190 & 0149/658 &  0/94\\
+		\hline
+  		 3 & Bus &-/2327& 5/1208 & 3/656 & 1/396 &  0/244\\
 \hline
 	\end{tabular}
+
+\begin{tabular}{p{\linewidth}}
+	The content is Error/Total points. `Ref. Obj.` means reference object (i.e. manually annotated object)
+\end{tabular}
+
+
 \end{table}
 
 
 \section{CONCLUSIONS}
 \label{conclusions}
-A conclusion section is not required. Although a conclusion may review the main points of the paper, do not replicate the abstract as the conclusion. A conclusion might elaborate on the importance of the work or suggest applications and extensions.
+
+We introduced a novel 3D object annotation platform, focusing on efficiency improving through well designed visualization, operations and assisting algorithms. We demonstrated with tests that our platform can improve annotation accuracy with greater efficiency compared to other tools. The future direction will be to integrate more algorithms, for example, to integrate object tracking algorithm to work with our novel annotation transfer method to make our platform more efficient.
+
+
 
 \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens
