@@ -13,17 +13,17 @@ circleit.b();
 circleit.c();
 circleit.d();
 
-a.c=(111bp, 578bp);
+a.c=(109bp, 562bp);
 a.dx = a.dy = circlesize;
 
-b.c=(264bp, 578bp);
+b.c=(264bp, 562bp);
 b.dx = b.dy = circlesize;
 
-c.c=(69bp, 371bp);
+c.c=(63bp, 346bp);
 c.dx = c.dy/3 = circlesize;
 
 
-d.c=(207bp, 205bp);
+d.c=(211bp, 170bp);
 d.dx/3 = d.dy = circlesize;
 
 pickup pencircle scaled 3pt
@@ -43,6 +43,7 @@ circleit.a();
 circleit.b();
 circleit.c();
 circleit.d();
+circleit.e();
 
 a.c=(180bp, 512bp);
 a.dx = a.dy = 2circlesize;
@@ -57,11 +58,15 @@ c.c=(140bp, 856bp);
 d.c=(117bp, 510bp);
 2d.dx = 0.5d.dy = circlesize;
 
+e.c=(0bp,0bp);
+e.dx = 0.5e.dy = circlesize;
+
 pickup pencircle scaled 3pt
 draw bpath(a) withcolor red;
 draw bpath(b) withcolor red;
 draw bpath(c) withcolor red;
 draw bpath(d) withcolor red;
+draw bpath(e) rotated 45 shifted (268bp, 329bp) withcolor red;
 
 endfig;
 
