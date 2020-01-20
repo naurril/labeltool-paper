@@ -190,30 +190,45 @@ Section~\ref{result} provides the experiment results and discussions. Section~\r
 \begin{table*}[ht]
 	\caption{A brief summary on 3D point clouds annotation tools}
 	\resizebox{1.0\textwidth}{!}{
-		\begin{tabular}{c||c|c|c|p{1.5cm}<{\centering}|p{1.5cm}<{\centering}|c||c|p{2cm}<{\centering}|p{2cm}<{\centering}|p{2cm}<{\centering}}
-		\hline
-		\hline
-		\multirow{2}{*}{} & \multicolumn{6}{c||}{Visualization}                         & \multicolumn{4}{c}{Operation}                 \\
-		\cline{2-11}                        & Stream play  & Focus mode & Object color  & Box information & Camera switch & Auto-tracking & Auto box Initialization& Multi-view operation & Box Fitting  & Annotation Transfer 
-		\\  \hline
-		PointAtMe~\cite{pointatme}         & $\times$    &   $\times$ &   $\times$    &   $\times$      &   $\times$    &  $\times$   &      +       &    +     &    +     &    +     \\ \hline
-		LabelMe3D~\cite{LabelMe3D}         & $\times$    &   $\times$ &   $\times$    &   $\times$      &   $\times$    &  $\times$   &     ++       &   ++     &   ++     &   ++     \\ \hline
-		Riccardo~\cite{monica2017multi}    & $\times$    &   $\times$ &   $\times$    &   $\times$      &   $\times$    &  $\times$   &              &   ++     &   ++     &   ++     \\ \hline
-		Poly-RNN++~\cite{PolyRNN++}        & $\times$    &   $\times$ &   $\surd$     &   $\times$      &   $\times$    &  $\times$   &     +++      &  +++     &  +++     &  +++     \\ \hline
-		3D BAT~\cite{Zimmer20193DBA}       & $\times$    &   $\times$ &   $\times$    &                 &   $\times$    &  $\times$   &              &    +     &    +     &    +     \\ \hline
-		LATTE~\cite{Wang2019LATTEAL}       & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     \\ \hline
-		
-		Supervise.ly~\cite{SUPERVISELY}      & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     \\ \hline
-		
-		Playment.io~\cite{Playment}       & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     \\ \hline
-		
-		scale.ai~\cite{scale}       & $\surd$     &   $\times$ &   $\times$    &   $\surd$       &   $\times$    &  $\surd$    &     ++       &   ++     &   ++     &   ++     \\ \hline
-		
-		\textbf{SUSTech Points}            & $\surd$     &   $\surd$  &   $\surd$     &   $\surd$       &   $\surd$     &  $\surd$    &     +++      &  +++     &  +++     &  +++          \\ \hline \hline
+	\begin{tabular}{c||p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}
+			||p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}}
+		\hline \hline
+		\multirow{2}{*}{} & \multicolumn{8}{c||}{Visualization}                         & \multicolumn{5}{c}{Operation}                 \\
+		\cline{2-14}                       &3D Space/ Time Navigation & Main View Focus Mode   & Box \& Object Coloring & Top/Side/ Front Views  &Photo Context with 3D-2D Fusion  &Focused Context & Multi Camera w/~Auto Switching & Stream Play with Object Locking    & Box Degrees of Freedom & Auto box Initialization& Sub-view editing & Semi Auto Fitting  & Annotation Transfer \\  \hline
+		PointAtMe~\cite{pointatme}         &                 $\surd$  & $\times$               &  $\times$              &  -                     & $\surd$*                        &  $\times$      &  $\times$                       &  $\times$                       & 9                      &     -                    &   n/a            &   -                 &   -            \\ \hline
+		3D BAT~\cite{Zimmer20193DBA}       &                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$*              & $\surd$                         &  $\times$      &  $\surd$*                       &  $\times$                       & 9                      &     -                    &   -              &   -                 &   ++            \\ \hline
+		LATTE~\cite{Wang2019LATTEAL}       &                 $\surd$  & $\times$               &  $\times$              &  $\times$              & $\surd$*                        &  $\times$      &  $\times$                       &  $\times$                       & 5                      &     ++                   &   -              &   -                 &   ++            \\ \hline
+		Supervise.ly~\cite{SUPERVISELY}    &                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$               & $\surd$                         &  $\times$      &  $\times$*                      &  $\times$                       & 9                      &     -                    &   ++             &   -                 &   unknwon       \\ \hline
+		scale.ai~\cite{scale}              &                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$               & $\surd$                         &  $\times$      &  $\surd$*                       &  $\times$                       & 7                      &     unknown              &   unknown        &   -                 &   unknown       \\ \hline
+		Playment.io~\cite{Playment}        &                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$               & $\surd$                         &  $\times$      &  -                              &  $\surd$                        & -                      &     -                    &   ++             &   -                 &   ++            \\ \hline
+		\textbf{SUSTech Points}            &                 $\surd$  & $\surd$                &  $\surd$               &  $\surd$               & $\surd$                         &  $\surd$       &  $\surd$                        &  $\surd$                        & 9                      &     +++                  &  +++             &  +++                &  +++            \\ \hline \hline
 	\end{tabular}
 	}
 	\begin{tabular}{p{17.5cm}}
-		The symbol ``$\surd$'' and ``$\times$'' mean the method being with/without the corresponding feature or function module, respectively. The number of ``$\textbf{+}$''s represent the performance of the operation, the more the better. The ``Stream play'' means playing the data as a video. The ``Box information'' means details (dimension, angle, \textit{etc.}) of a box can be displayed on screen. The ``Camera switch''  means the  tool can automatically switch the photo context when an object is selected. The ``Auto-tracking'' means that an object can be tracked in video, which can used to detect tracking ID error easily. The ``Focus mode''  means an object can be automatically zoomed and centered for detail checking. The ``Object color''  means objects can be colored by category.  For the sake of simplicity, this table does not list those common functions, like MOVE, RESIZE, and ROTATE, \textit{etc.} This table only concentrates on 3D objects annotation in point clouds, other than Poly-RNN++, which is an best 2D image annotation tool and as the function benchmark.
+		The symbol ``$\surd$'' means the tool has the feature, ``$\times$'' otherwise, ``$\surd$*'' indicates partial support. The number of ``$\textbf{+}$''s represent the performance of the feature, the more the better, ``-'' means lacking of the feature. We briefly introduces features below:
+		
+		\begin{enumerate}
+			\item ``Main View Focus Mode": a selected object can be zoomed in and centered in main view with one click.
+			
+			\item ``Stream play'': the data can be played as a video
+			\item ``Object Locking": an object can be selected automatically in all frames at stream  playing. 
+			
+			\item ``Focused context'': The part of photo context focusing on current object under editing is displayed in a single sub-view
+			
+			\item ``Camera Auto-Switching'': photo context can be automatically switched among multiple cameras when navigating objects. 
+			
+			\item ``Auto box initialization": box can be fitted automatically to the object at creating.
+			
+			\item ``Sub-view editing": editing box on projective sub-views.
+			
+			\item ``Semi Auto Fitting": the box can be fitted  automatically  to object when editing (\textit{e}.\textit{g}. rotating and resizing).
+			
+			\item ``Annotation Transfer": to transfer annotation across frames by an automatic or semi-automatic way.
+			
+		\end{enumerate}
+
+		All other feature shall be clear by the name itself.
+		
 		% after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
 	\end{tabular}
 	\label{tab:annotationMethods}
