@@ -63,6 +63,8 @@ Southern University of Science and Technology, Shenzhen, Guangdong, China, 51805
 \pagestyle{empty}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
+
+
 The major challenges of developing 3D object annotation platforms for autonomous driving datasets 
 include efficient operations on geometric data units, convenient user interfaces and scalable annotation tools, This paper presents a novel annotation platform (i.e. SUSTech POINTS), which contains a set of efficient annotation tools (operations) and user-friendly interfaces to help achieve high-quality data annotations with high efficiency.
 The novelty of this work includes threefolds: 
@@ -82,26 +84,28 @@ compared with using other open-source platforms.
 
 \section{INTRODUCTION}
 
-Accurately annotated autonomous driving datasets are important for training and verification of various perception algorithms.
-There are three main components for antonomous driving dataset annotation: (1) pre-process, (2) visulization, and (3) operation, as shown in Fig. 1.
 
-In the preprocessing, various AI algorithms are used to ...
-
-Visulization requires ...
-
-Manual operation are still needed for correction, . 
+Building accurately annotated autonomous driving datasets is critical for training and verification of various perception and data fusion algorithms. There are three major components for antonomous driving dataset annotations: (1) data pre-processing, (2) data visualizations, and (3) manual operations, which are enabled by a data management system and a user interaction platform, as shown in Fig. 1. In the data pre-processing, intrinsic/extrinsic sensor parameters are estimated first; only those data frames consistent to calibration parameters, useful for algorithms training and verification are selected; then a set of algorithms including detection, segmentation, and 2D/3d fusion are used to annotate the dataset initially. The data visualizations usually provide helpful spatial/temporal navigation tools for users, distinguish data of different objects, and show multiple views of each object from different perspectives. The most useful manual data operations include labels editing in multiple views, automatically adjusting the size of 2D/3D boxes to fit the data of one object, and automatically extending annotations of the same objects to different frames (modalities).
 
 
-Tools are required to develop 
 
-
-Many efforts have been used to develop AI-based pre-propress, however
-visualization and manual operation impose a great deal of technical challenges:
+Despite efforts and successes in developing AI-based pre-processing techniques, data visualizations and manual operations also impose various technical challenges for developing an efficient data annotation platform, including
 \begin{enumerate}
-\item  Fast Error Checking. Data involve 2D and 3D, multiple perspectives, it is necessary to guarantee their consistency with fast speed.
-\item  Easy Human-Computer interface, The great number of objects being both with irregular data and the large field of view, it is necessary to afford an easy human-computer interactive interface. 
-\item  Flexible for extension. There are a lot correlations among frames, areas, modality, so the annotation platform should be scalable and extensible.
+	\item Fast Error Checking.  Given those 2D and 3D multiple perspectives data frames, it is necessary to guarantee their consistency with each other in a high speed.
+	\item Easy human-data interactions. Each frame of data usually contains a great number of objects with irregular measurement data in a large field of view, hence it is necessary to develop an convenient human-computer interface to enable users to check data annotations and perform corresponding operations.
+	\item Flexible annotation extension. There are a lot correlations among data frames, observation areas, and sensing modalities, so the annotations of the same objects should be scalable and extensible among different frames, areas and modalities.
 \end{enumerate}
+
+\begin{figure}[tp]
+	\centering
+	% Requires \usepackage{graphicx}
+	%\resizebox{\linewidth}{!}{
+	\includegraphics[width=0.45\textwidth]{./platform}\\ %\vspace{-0.3cm}
+	\caption{Annotation platform}
+	\label{fig:main-arch}
+	\vspace{-0.3cm}
+\end{figure}
+
 
 2D/3D box-based units for editing 
 
@@ -131,15 +135,6 @@ The contributions of this work include
 The rest of this paper is organized as follows. Section
 
 
-\begin{figure}[tp]
-	\centering
-	% Requires \usepackage{graphicx}
-	%\resizebox{\linewidth}{!}{
-	\includegraphics[width=0.45\textwidth]{./platform}\\ %\vspace{-0.3cm}
-	\caption{Annotation platform}
-	\label{fig:main-arch}
-	\vspace{-0.3cm}
-\end{figure}
 
 
 
