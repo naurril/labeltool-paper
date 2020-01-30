@@ -41,7 +41,8 @@
 \usepackage{multirow}
 \usepackage{verbatim}
 \title{\LARGE \bf
-SUSTech POINTS: An Efficient 3D Point Cloud Annotation Platform
+SUSTech POINTS: A Portable 3D Point Cloud Interactive Annotation Platform System
+
 }
 
 \author{E Li$^{1}$,Shuaijun Wang$^{1,2}$,  Chengyang Li$^{1}$, Dachuan Li$^{1}$,Xiangbin Wu$^{3}$, and Qi Hao$^{1,*}$% <-this % stops a space
@@ -65,15 +66,15 @@ Southern University of Science and Technology, Shenzhen, Guangdong, China, 51805
 \begin{abstract}
 
 
-The major challenges of developing 3D object annotation platforms for autonomous driving datasets 
-include efficient operations on geometric data units, convenient user interfaces and scalable annotation tools, This paper presents a novel annotation platform (i.e. SUSTech POINTS), which contains a set of efficient annotation tools (operations) and user-friendly interfaces to help achieve high-quality data annotations with high efficiency.
+The major challenges of developing 3D point cloud annotation systems for autonomous driving datasets include convenient user-data interfaces, efficient operations on geometric data units,  and scalable annotation tools, This paper presents a Portable pOint-cloud Interactive aNnotation plaTform System (i.e. SUSTech POINTS), which contains a set of user-friendly interfaces and efficient annotation tools to help achieve high-quality data annotations with high efficiency. 
 The novelty of this work includes threefolds: 
-(1) developing a set of visulization functionalities for convenient user-data interactions;
-(2) developing a set of efficient operations for labelling 3D point clouds and 2D images; 
-(3) developing a transfer annotation method to label the same objects in related frames. 
-The developed platform is tested with the KITTI, nuScenes, and a self-collected dataset. 
-The experimental results show that the developed platform can improve the annotation efficiency and accuracy pretty much 
-compared with using other open-source platforms.
+(1) developing a set of visulization modules for fast annotation error localization and convenient user-data interactions; 
+(2) developing a set of interactive tools for labelling 3D point clouds and 2D images in high speeds;
+(3) developing a transfer annotation method to label the same objects in different data frames. 
+The developed POINTS system is tested with public datasets such as KITTI and nuScenes, and a private dataset (SUSTech SCAPES). 
+The experiment results show that the developed platform can help improve the annotation accuracy and efficiency pretty much compared with using other open-source annotation platforms.
+
+
 \end{abstract}
 
 
@@ -84,101 +85,40 @@ compared with using other open-source platforms.
 
 \section{INTRODUCTION}
 
+Building accurately annotated autonomous driving (AD) datasets is critical for training and verification of siutation perception and data fusion algorithms. While 3D points clouds can provide high-accuracy geometric relations among the ego-vehicle, objects and the environment, 2D images contain high-resolution information of objects and the environment. Recent AD datasets take advantages of high-resolution, multi-perspective 2D data to improve the annotation quality of 3D data based on their underlying correlations. There are three major components for intelligent AD dataset annotation system: (1) data pre-processing, (2) data visualizations, and (3) interactive operations, which are enabled by a data management system and a user-data interaction interface, as shown in Fig.~\ref{fig:main-arch}. 
 
-Building accurately annotated autonomous driving datasets is critical for training and verification of various perception and data fusion algorithms. There are three major components for antonomous driving dataset annotations: (1) data pre-processing, (2) data visualizations, and (3) manual operations, which are enabled by a data management system and a user interaction platform, as shown in Fig. 1. In the data pre-processing, intrinsic/extrinsic sensor parameters are estimated first; only those data frames consistent to calibration parameters, useful for algorithms training and verification are selected; then a set of algorithms including detection, segmentation, and 2D/3d fusion are used to annotate the dataset initially. The data visualizations usually provide helpful spatial/temporal navigation tools for users, distinguish data of different objects, and show multiple views of each object from different perspectives. The most useful manual data operations include labels editing in multiple views, automatically adjusting the size of 2D/3D boxes to fit the data of one object, and automatically extending annotations of the same objects to different frames (modalities).
+In the data pre-processing stage, intrinsic/extrinsic sensor parameters are estimated first; only those data frames consistent to calibration parameters, useful for algorithms training and verification are selected; then a set of algorithms including detection, segmentation, and 2D\&3D fusion are used to annotate the dataset initially. The data visualization modules usually provide helpful temporal/spatial navigation tools for users, distinguish data of different objects, and show multiple views of each object from different perspectives. The most useful interactive data operations include editing labels in multiple views, automatically adjusting the size of 2D/3D boxes to fit the data of each object, and automatically extending (transferring) annotations of the same objects from one frame (modality) to different frames (modalities).
 
-
-
-Despite efforts and successes in developing AI-based pre-processing techniques, data visualizations and manual operations also impose various technical challenges for developing an efficient data annotation platform, including
-\begin{enumerate}
-	\item Fast Error Checking.  Given those 2D and 3D multiple perspectives data frames, it is necessary to guarantee their consistency with each other in a high speed.
-	\item Easy human-data interactions. Each frame of data usually contains a great number of objects with irregular measurement data in a large field of view, hence it is necessary to develop an convenient human-computer interface to enable users to check data annotations and perform corresponding operations.
-	\item Flexible annotation extension. There are a lot correlations among data frames, observation areas, and sensing modalities, so the annotations of the same objects should be scalable and extensible among different frames, areas and modalities.
-\end{enumerate}
+Despite many efforts and successes in developing AI-based pre-processing techniques, data visualizations and interactive operations also impose a number of technical challenges upon developing an efficient data annotation platform, including
+1) Fast Error Checking.  Given the initial annotation results of 2D and 3D data, it is required to help users quickly localize those annotation errors via a series of data visualizaton modules.
+2) Easy user-data interactions. Each frame of data usually contains a great number of objects with irregular measurement data in a large field of view (FOV), hence it is necessary to develop an convenient human-computer interface to enable users to easily perform corrective operations upon annotation errors.
+3) Flexible annotation extension. There are a lot correlations among data frames, FOVs, and sensing modalities, so the annotations of the same objects should be scalable and extensible among different frames, areas and modalities.
 
 \begin{figure}[tp]
 	\centering
 	% Requires \usepackage{graphicx}
 	%\resizebox{\linewidth}{!}{
 	\includegraphics[width=0.45\textwidth]{./platform}\\ %\vspace{-0.3cm}
-	\caption{Annotation platform}
+	\caption{An illustration of intelligent annotation systems for autonomous driving datasets.}
 	\label{fig:main-arch}
 	\vspace{-0.3cm}
 \end{figure}
 
+Current AD dataset annonation systems have developed temporal and spatial navigation tools to help users quickly review annotation results of each object  \cite{Playment,SUPERVISELY,Wang2019LATTEAL,Zimmer20193DBA}(scale?), assigning different colors to annotation boxes to distinguish objects \cite{SUPERVISELY,Zimmer20193DBA,Playment,scale}, providing various perspective/projective views and multi-camera photo contexts of 3D data to help localize annotation errors \cite{SUPERVISELY,Playment,Zimmer20193DBA}, and supporting data stream playing and object locking in data streams to check out the temporal consistency ammong annotation results \cite{Playment}. However,  more visualization modules such as background removal, object based coloring, and modality/spatial/temporal consistency checking should be further developed to improve the error checking efficiency. On the other hand, interactive operations such as high degrees-of-freedom (DOFs) and multi-view editing, box initalization (one-click annotation) and automatic fitting have also been developed \cite{pointatme,Zimmer20193DBA,Wang2019LATTEAL,SUPERVISELY,Playment}; but all need further refinement to increase annotation speeds.  Besides, several transfer annotation methods have been developed to achieve annotation extensions to multiple frames \cite{Playment,Wang2019LATTEAL,Zimmer20193DBA}, but no registration-based method has been proposed yet, which can provide more accuracy and higher annotation speeds.
 
-2D/3D box-based units for editing 
+In this paper, we present a comprehensive web-based AD dataset annotation platform systems, which provide more advanced functionalities in visualization modules, interactive tools, and trasnfer annotation. The contributions of this work include
+1) developing an open-source portable 3D point cloud annotation platform with well-designed visualization modules and high-efficiency interactive tools.
+2) developing a series of enhanced data visulization modules such as stream playing, object locking, background removal, object based coloring, multi-camera swiching, and photo context adjusting to enable fast error checking.
+3) developing a series of new interactive tools such as boundary-aware rotation, smart box initialization and auto-fitting to enable fast and accurate 3D data annotating.
+4) developing a novel registration-based inter-frame annotation transfer method, which can extend annotation results from one frame to the whole data stream with high accuracy and speeds.
 
-Visualization methods are developed to improve VR
-
-automation tools are developed for scalability and extension 
-
-room for improvement: 
-
-This paper presents 
-\begin{enumerate}
-	
-	\item.
-	\item.
-	\item.
-	
-\end{enumerate}
-
-The contributions of this work include
-\begin{enumerate}
-
-	\item developing an open-source 3D point annotation platform featuring  well-designed visualization and convenient operations.
-	\item developing a series of functions such as auto-shrink, boundary-aware rotation and smart box initialization etc. to enable fast and accurate 3D box annotating.
-	\item developing a novel registration-based inter-frame annotation transfer method.
-\end{enumerate}
-
-The rest of this paper is organized as follows. Section
+The rest of this paper is organized as follows. 
+Section II reviews the state-of-the-art AD dataset annotation systems and highlights the novelty of our system.
+Section III describes the system architecture and major functionalities of the proposed POINTS system.
+Section IV provides the experiment results and related discussions.
+Section V concludes the paper and outlines future work.
 
 
-
-
-
-
-\begin{comment}
-
-
-
-%3D environment understanding plays an important role in the autonomous driving. There are many ways to build the 3D environment, which can be divided into 2 categories, including sensor-based and algorithm-based.
-Recently, 3D environment understanding is gaining the attention in the research areas and industrial applications, like autonomous driving, etc. The 3D environment is often represented as point clouds. And the density of the point clouds reflects the quality of the 3D environment. A common method of obtaining 3D point clouds is by laser scanners, like LiDAR, etc. The labeling process of the point clouds have to deal with the following limitations/challenges:
-\begin{figure}[htbp]
- \centering
- % Requires \usepackage{graphicx}
- %\resizebox{\linewidth}{!}{
- \includegraphics[width=0.45\textwidth]{./figures/arch}\\ %\vspace{-0.3cm}
- \caption{An illustration of our annotation platform. Our annotation procedure includes 3 modules, which are pre-processing, visualization and operation, respectively. The pre-processing module is used to obtain the sensor calibration information, filter the noises in data, and initialize AI method-based annotation results. The visualization module is utilized to assist data annotation. And the operation module implements the 3D bounding box annotation in the point clouds with algorithm assistance and also checks the annotation error.}
- \label{fig:arch}
- \vspace{-0.3cm}
-\end{figure}
-
-\begin{enumerate}
-  \item Irregular density point cloud. In practical, the density of point clouds depends on distance between the sensor and measured objects, sensor type, and reflectivity of the measured objects, etc. Therefore, how to solve the different density of point clouds, including sparse and dense, becomes crucial.
-  \item High-precision annotation. Compared with 2D image annotation, the annotation information of 3D point clouds becomes more complexity. It includes scale at each dimensionality axis, and heading angle of the object. How to obtain the accurate annotation information becomes important.
-  \item Rich categories of object. The data-driven-based methods can distill the knowledge from the rich categories of the dataset, so that these methods can keep the favorable performance. The number of these objects is numerous. How to quickly annotate and balance these objects is also a critical issue.
-  \item Reasonable data structure. The reasonable annotation data structure can efficiently decrease the store space and boost the speed of access.
-  \item Flexible tool. Labeling the 3D objects is an enormous work, which includes annotation large amounts of objects and operation instructions for users. Therefore, developing a flexible labeling tool is much more important.
-\end{enumerate}
-
-The resolution of 3D point clouds is a formidable limitation for 3D annotation. Each frame point clouds obtained by LiDAR, like Velodyne, RoboSense, etc., has at least 10K 3D points. The measurement radius of  LiDAR is larger than 150 meters. So there are quite a few objects with a small number of points, extremely fewer than 10 points. These low-resolution 3D objects are even beyond the perception ability of humans. Another limitation is how to improve the annotation efficiency of the same object in consecutive frames, especially when the objects being farthest away from the sensor are with low-resolution 3D points.
-
-An flexible annotation tool can improve the annotation efficiency and dataset quality. A considerable amount of research has been done on how to annotate 3D point clouds, like PointAtMe~\cite{pointatme}, LabelMe3D~\cite{LabelMe3D}, etc., during the last decade. The flexible annotation tool should be with easily applicable, intelligible and favorable visibility, as shown in the Fig.~\ref{fig:arch}. The intelligible plug-in of the annotation toolkit can promote the speed of the annotation process. The favorable visibility can raise the quality of the dataset, specifically in balancing the number of objects.
-
-In this paper, we propose an efficient 3D point clouds annotation tool, with flexible operation, semi-autonomous annotation, and rapid deployment, to improve the annotation efficiency and assure the dataset quality. The contribution of this work as shown in the following.
-\begin{itemize}
-  \item Developing a flexible operation annotation tool for 3D point clouds;
-  \item Developing a semi-autonomous method to annotate the same objects in the consecutive frames;
-  \item Developing an intelligent plug-in being used to count the number and type of labeled objects.
-\end{itemize}
-
-The rest of this paper is organized as follows. Section~\ref{Realtedwork} introduces the related work on 3D objects annotation methods.
-Section~\ref{setup-statement} describes the system setup and problem statement. Section~\ref{Approach} presents the proposed method.
-Section~\ref{result} provides the experiment results and discussions. Section~\ref{conclusions} concludes this paper and outlines future work. To facilitate future research, the code has been released at "\url{http://www.baidu.com}".
-
-\end{comment}
 
 
 
@@ -287,7 +227,7 @@ Visualization is important for both 3D box editing and reviewing. Fig.~\ref{fig:
 \begin{figure}[!t]
 	\centering	
 	\includegraphics[width=\linewidth]{./figures/main-ui}\\
-	\caption{Main UI, \textcircled{1} is perspective view, \textcircled{2} is photo context, which is resizable and can automatically switch among multiple camera images, \textcircled{3} is top view, \textcircled{4} is front view, \textcircled{5} is side view, \textcircled{6} is focused photo context which follows selected object automatically. \textcircled{7} is context menu, \textcircled{8} is floating fast toolbox.}
+	\caption{Main UI, \textcircled{1} perspective view, \textcircled{2}  photo context, which is resizable and can automatically switch among multiple camera images, \textcircled{3}  top view, \textcircled{4}  front view, \textcircled{5}  side view, \textcircled{6}  focused photo context which follows selected object automatically. \textcircled{7}  context menu, \textcircled{8}  floating fast toolbox.}
 	\label{fig:main-ui}
 \end{figure}
 
@@ -342,7 +282,7 @@ Different from "one-click-annotation" of LATTE~\cite{pointatme}, which uses clus
 A user can also create a new box by drawing a rectangle on main view,  enclosing relevant points. The box is created by setting direction  as described above and fitted to enclosed points. The object type is automatically set by simply matching the object dimension to prototypes.
 
 
-\subsubsection{Edit in perspective view}
+\subsubsection{Editing in perspective view}
 
 When an object is selected, a floating \emph{fast toolbox} shows next to it, as shown in Fig.~\ref{fig:main-ui}. A user can change object type, tracking id, activate focus mode, among others.
 
@@ -395,7 +335,7 @@ A user can click a selected object or the button on fast toolbox to enable box e
 	\label{fig:box-mouse-edit-subview}
 \end{figure}
 
-\subsubsection{Edit in projective sub-views}
+\subsubsection{Editing in projective sub-views}
 Editing in perspective view is inconvenient,  a user has to change viewpoint often for better operation. As shown in Fig.~\ref{fig:main-ui} the annotation is clearly shown in the sub-views, thus we enable editing directly on these sub-views to make a better editing experience. A user can rotate, resize or move the box by mouse operation, as shown in Fig.~\ref{fig:box-mouse-edit-subview}.
 All operations can also be done with keyboard shortcuts.
 
