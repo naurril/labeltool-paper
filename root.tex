@@ -491,7 +491,7 @@ From Eq. (2) and Eq. (4), we have
 & = B_t T^{-1} \label{eq:eq5}
 \end{align}
 
-The annonation transfer algorithm and crop and transform algorithms are summarized in Algorithm~\ref{alg:anno-trans}.
+The annonation transfer algorithm and an object crop and transform algorithm are summarized in Algorithm~\ref{alg:anno-trans} and Algorithm~\ref{alg:crop-trans}.
 
 \begin{algorithm}
 	\caption{Annotation Transfer Algorithm.}
@@ -513,11 +513,11 @@ The annonation transfer algorithm and crop and transform algorithms are summariz
 	
 \end{algorithm}
 \begin{algorithm}
-	\caption{Crop and Transform Algorithm.}
+	\caption{Object Crop and Transform Algorithm.}
 	\label{alg:crop-trans}
 	
 	\SetAlgoLined
-	\KwIn{point cloud $\mathcal{P} \in \mathcal{R}^{n \times 3}$; box $b=(p,s,r)$ where $p,s,r \in \mathbb{R}^3$ means  position, scale and rotation, respectively, rotation is represented by Euler angles.}
+	\KwIn{point cloud $\mathcal{P} \in \mathbb{R}^{n \times 3}$; box $b=(p,s,r)$ where $p,s,r \in \mathbb{R}^3$ means  position, scale and rotation, respectively, rotation is represented by Euler angles.}
 	\KwOut{ set of points $R \in \mathbb{R}^{m \times 3}$ in box $b$, represented in $b$'s box coordinate system.}
 	\nl initialize $R = \emptyset $ \;
 	\nl \For {point $x$ in $\mathcal{P}$}{
@@ -629,29 +629,6 @@ It can be seen that POINTS can really help unexperienced users to achieve high a
 
 
 \subsection{Annotation Transfer Quality}
-Our private dataset (SUSTech SCAPES) is used to evaluate the annotation transfer quality among five frames at 0s, 0.5s, 1s, 1.5s, and 2.5s.  
-We choose three scenarios with different object types: 
-1) scenario 1: a car moving away from the ego-car along a straight line while the ego-car waiting for the red light, 
-2) scenario 2: a rider crossing the road while the ego-car approaching to the rider, and 
-3) scenario 3: a bus and the ego-car both moving forward on the same road with reverse directions. 
-The frame at 0s is chosen as the reference frame, and hence reference objects have the largest number of points. 
-Table III shows that the distance between the ego-car and the target object increases as the time goes by, 
-because the numbers of 3D data points of those objects decrease accordingly. 
-For example, in scenario 3, the bus only has 173 data points in the frame of 2.5s, 7.4\% of the reference object's 2327 data points in the frame of 0s.
-Elaborate annotation results of those scenarios are chosen as the ground truth.
-The Error Points Per Object and the relative FN points number per object are used to evaluate the annotation transfer quality.
-
-The results of transfer annotation are shown in Table~\ref{tab:transfer-evaluation} and Fig.~\ref{fig:anno-transfer}.
-It can be seen that 
-for scenario 1, the annotation transfer errors of the car are less than 2.7\%, with the relative number of FN points of 1.7\%;
-for scenario 2, the annotation transfer errors of the rider are 0, with the relative number of FN points of 0\%;
-for scenario 3, the annotation transfer errors of the bus are less than 0.5\%, with the relative number of FN points of 0.28\%  
-Compared with Table II, it can be seen that the accuracy of transfer annotation is lower than manual annotations, 
-but still higher than baseline (although we used a different dataset).
-With the help of such a annotation transfer technique, each object in a data stream needs only almost once manual annotation at the begining. 
-Such a technique can also help solve the problem of distant or occluded objects when the number of data points are very sparse. 
-We believe that this technique is complementary to other existing annotation transfer algorithms, such as direct pasting and linear interpolation, 
-and if integrated with tracking algorithms POINTS could improve the annotation efficiency further.
 
 
 \begin{table}[h]
@@ -659,26 +636,26 @@ and if integrated with tracking algorithms POINTS could improve the annotation e
 	\caption{Annotation transfer results among five frames for three scenarios using POINTS with the SUSTech SCAPES dataset.}
 	\label{tab:transfer-evaluation}
 	\resizebox{1.0\linewidth}{!}{
-	\begin{tabular}{|c|r|c|c|c|c|c|c|c|}
-		\hline
-		 \#& \textbf{Type} & \textbf{Ref. Obj.}&\textbf{0.5s} & \textbf{1s} & \textbf{1.5s}& \textbf{2.5s} &\textbf{Err/Obj} & \textbf{FN Ratio}\\
-		\hline
-		\hline
-		 1 & Car &-/1958& 15/1387 & 25/935 & 19/677 &  1/389 & 15 & 1.7\% \\
-		\hline
-  		 2 & Rider &-/329& 0/240 & 0/190 & 0/149 &  0/94 & 0 & 0\\
-		\hline
-  		 3 & Bus &-/2327& 5/1208 & 3/656 & 1/396 &  0/173 & 2.25& 0.28\%\\
-\hline
-	\end{tabular}
+		\begin{tabular}{|c|r|c|c|c|c|c|c|c|}
+			\hline
+			\#& \textbf{Type} & \textbf{Ref. Obj.}&\textbf{0.5s} & \textbf{1s} & \textbf{1.5s}& \textbf{2.5s} &\textbf{Err/Obj} & \textbf{FN Ratio}\\
+			\hline
+			\hline
+			1 & Car &-/1958& 15/1387 & 25/935 & 19/677 &  1/389 & 15 & 1.7\% \\
+			\hline
+			2 & Rider &-/329& 0/240 & 0/190 & 0/149 &  0/94 & 0 & 0\\
+			\hline
+			3 & Bus &-/2327& 5/1208 & 3/656 & 1/396 &  0/173 & 2.25& 0.28\%\\
+			\hline
+		\end{tabular}
 	}
-\begin{tabular}{p{\linewidth}}
-	The value is in the form of Error points/Total points. “Ref. Obj.” means the reference object (i.e. the manually annotated object). 
-	The “Err/Obj” and “FN” are the same as in Table II.	
-\end{tabular}
+	\begin{tabular}{p{\linewidth}}
+		The value is in the form of Error points/Total points. “Ref. Obj.” means the reference object (i.e. the manually annotated object). 
+		The “Err/Obj” and “FN” are the same as in Table II.	
+	\end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[th]
 	\centering
 	\begin{subfigure}{0.16\linewidth}
 		\includegraphics[scale=0.12]{./figures/transfer/car-ref}
@@ -694,7 +671,7 @@ and if integrated with tracking algorithms POINTS could improve the annotation e
 		\includegraphics[scale=0.12]{./figures/transfer/car-2}
 		\caption{}
 	\end{subfigure}
-		~
+	~
 	\begin{subfigure}{0.16\linewidth}
 		\includegraphics[scale=0.12]{./figures/transfer/car-3}
 		\caption{}
@@ -704,7 +681,7 @@ and if integrated with tracking algorithms POINTS could improve the annotation e
 		\includegraphics[scale=0.12]{./figures/transfer/car-5}
 		\caption{}
 	\end{subfigure}
-
+	
 	\begin{subfigure}{0.16\linewidth}
 		\includegraphics[scale=0.12]{./figures/transfer/rider-ref}
 		\caption{}
@@ -755,9 +732,36 @@ and if integrated with tracking algorithms POINTS could improve the annotation e
 		\includegraphics[scale=0.12]{./figures/transfer/bus-5}
 		\caption{}
 	\end{subfigure}
-	\caption{Annotation transfer results among five frames for three scenarios using POINTS with the SUSTech SCAPES dataset. The three rows correspond to 3 scenarios. The left column (a,f,k) are references frames whose bounding boxes are annotated manually, the remaining columns are frames of 0.5s, 1s, 1.5s and 2.5s, respectively, whose bounding boxes are generated by the annotation transfer algorithm of POINTS. For scenarios 1 and 2 (a-j), the top, front, side views and photo context are shown, for scenario 3 (k-o) only top, front, side views are shown. In scenario 1 (a-e), the back part (b-d) and the front mirror (e) of the car are out of the bounding box. In scenario 2 (f-j), there is no errors. In scenario 3 (k-o), the back part (l, m) and the front mirror (m, n) of the bus are out of the bounding box.}
+	\caption{Annotation transfer results among five frames for three scenarios using POINTS with the SUSTech SCAPES dataset. The three rows correspond to three scenarios. The left column (a,f,k) are references frames whose bounding boxes are annotated manually, the remaining columns are frames of 0.5s, 1s, 1.5s and 2.5s, respectively, whose bounding boxes are generated by the annotation transfer algorithm of POINTS. For scenarios 1 and 2 (a-j), the top, front, side views and photo context are shown, for scenario 3 (k-o) only top, front, side views are shown. In scenario 1 (a-e), the back part (b-d) and the front mirror (e) of the car are out of the bounding box. In scenario 2 (f-j), there is no errors. In scenario 3 (k-o), the back part (l, m) and the front mirror (m, n) of the bus are out of the bounding box.}
 	\label{fig:anno-transfer}
 \end{figure}
+
+
+Our private dataset (SUSTech SCAPES) is used to evaluate the annotation transfer quality among five frames at 0s, 0.5s, 1s, 1.5s, and 2.5s.  
+We choose three scenarios with different object types: 
+1) scenario 1: a car moving away from the ego-car along a straight line while the ego-car waiting for the red light, 
+2) scenario 2: a rider crossing the road while the ego-car approaching to the rider, and 
+3) scenario 3: a bus and the ego-car both moving forward on the same road with reverse directions. 
+The frame at 0s is chosen as the reference frame, and hence reference objects have the largest number of points. 
+Table III shows that the distance between the ego-car and the target object increases as the time goes by, 
+because the numbers of 3D data points of those objects decrease accordingly. 
+For example, in scenario 3, the bus only has 173 data points in the frame of 2.5s, 7.4\% of the reference object's 2327 data points in the frame of 0s.
+Elaborate annotation results of those scenarios are chosen as the ground truth.
+The Error Points Per Object and the relative FN points number per object are used to evaluate the annotation transfer quality.
+
+The results of transfer annotation are shown in Table~\ref{tab:transfer-evaluation} and Fig.~\ref{fig:anno-transfer}.
+It can be seen that 
+for scenario 1, the annotation transfer errors of the car are less than 2.7\%, with the relative number of FN points of 1.7\%;
+for scenario 2, the annotation transfer errors of the rider are 0, with the relative number of FN points of 0\%;
+for scenario 3, the annotation transfer errors of the bus are less than 0.5\%, with the relative number of FN points of 0.28\%.  
+Compared with Table II, it can be seen that the accuracy of transfer annotation is lower than manual annotations, 
+but still higher than baseline (although we used a different dataset).
+With the help of such a annotation transfer technique, each object in a data stream needs only almost once manual annotation at the begining. 
+Such a technique can also help solve the problem of distant or occluded objects when the number of data points are very sparse. 
+We believe that this technique is complementary to other existing annotation transfer algorithms, such as direct pasting and linear interpolation, 
+and if integrated with tracking algorithms POINTS could improve the annotation efficiency further.
+
+
 
 
 \section{CONCLUSION}
