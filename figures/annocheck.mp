@@ -27,10 +27,10 @@ d.c=(211bp, 170bp);
 d.dx/3 = d.dy = circlesize;
 
 pickup pencircle scaled 3pt
-draw bpath(a) withcolor red;
-draw bpath(b) withcolor red;
-draw bpath(c) withcolor red;
-draw bpath(d) withcolor red;
+draw bpath(a) withcolor yellow;
+draw bpath(b) withcolor yellow;
+draw bpath(c) withcolor yellow;
+draw bpath(d) withcolor yellow;
 
 endfig;
 
@@ -62,11 +62,11 @@ e.c=(0bp,0bp);
 e.dx = 0.5e.dy = circlesize;
 
 pickup pencircle scaled 3pt
-draw bpath(a) withcolor red;
-draw bpath(b) withcolor red;
-draw bpath(c) withcolor red;
-draw bpath(d) withcolor red;
-draw bpath(e) rotated 45 shifted (268bp, 329bp) withcolor red;
+draw bpath(a) withcolor yellow;
+draw bpath(b) withcolor yellow;
+draw bpath(c) withcolor yellow;
+draw bpath(d) withcolor yellow;
+draw bpath(e) rotated 45 shifted (268bp, 329bp) withcolor yellow;
 
 endfig;
 
@@ -88,8 +88,8 @@ b.c=(210bp, 550bp);
 b.dx = b.dy = circlesize;
 
 pickup pencircle scaled 3pt
-draw bpath(a) withcolor red;
-draw bpath(b) withcolor red;
+draw bpath(a) withcolor yellow;
+draw bpath(b) withcolor yellow;
 
 endfig;
 
