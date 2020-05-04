@@ -69,12 +69,12 @@ The major challenges of developing 3D point cloud annotation systems for autonom
 convenient user-data interfaces, efficient operations on geometric data units, and scalable annotation tools. 
 This paper presents a {Portable pOint-cloud Interactive aNnotation plaTform System} (i.e. SUSTech POINTS), 
 which contains a set of user-friendly interfaces and efficient annotation tools to help achieve high quality data annotations with high efficiency. 
-The novelty of this work includes threefolds: 
+The novelty of this work is threefolds: 
 (1) developing a set of visulization modules for fast annotation error localization and convenient annotator-data interactions; 
 (2) developing a set of interactive tools for annonators labelling 3D point clouds and 2D images in high speeds;
 (3) developing an annotation transfer method to label the same objects in different data frames. 
 The developed POINTS system is tested with public datasets such as KITTI and a private dataset (SUSTech SCAPES). 
-The experiment results show that the developed platform can help improve the annotation accuracy and efficiency pretty much 
+The experimental results show that the developed platform can help improve the annotation accuracy and efficiency 
 compared with using other open-source annotation platforms.
 
 
@@ -128,25 +128,25 @@ Despite many efforts and successes in developing AI-based pre-processing techniq
 	\caption{A comparison of 3D point cloud annotation systems in terms of visualization modules and interactive operations}
 	\label{tab:comparison}
 	\resizebox{1.0\textwidth}{!}{
-		\begin{tabular}{c||p{1.1cm}<{\centering}|p{0.7cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{0.9cm}<{\centering}|p{1cm}<{\centering}|p{0.7cm}<{\centering}|p{1cm}<{\centering}
-				||p{1cm}<{\centering}|p{1cm}<{\centering}|p{0.9cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}}
-			\hline \hline
-			\multirow{2}{*}{} & \multicolumn{9}{c||}{Visualization}                         & \multicolumn{5}{c}{Operation}                 \\
-			\cline{2-15}                       &3D Spatial/ Temporal Navigation & Main View Focus Mode   & Box \& Object Coloring & Top/Side/ Front Views  &Photo Context with 3D-2D Fusion  &Focused Context & Mult-Camera Switching & Stream Play & Object Locking    & Box Degrees of Freedom & Auto Box Initialization& Sub-View Editing &Interactive Box Fitting  & Annotation Transfer \\  \hline
-			PointAtMe~\cite{pointatme}         &                 $\surd$  & $\times$               &  $\times$              &  n/a                     & $\surd$*                        &  $\times$      &  $\times$                       &  $\times$    &  $\times$                       & 9                      &     -                    &   n/a            &   -                 &   -            \\ \hline
-			3D BAT~\cite{Zimmer20193DBA}       &                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$*              & $\surd$                         &  $\times$      &  $\surd$*                       &  $\times$    &  $\times$                       & 9                      &     -                    &   -              &   -                 &   ++            \\ \hline
-			LATTE~\cite{Wang2019LATTEAL}       &                 $\surd$  & $\times$               &  $\times$              &  $\times$              & $\surd$*                        &  $\times$      &  $\times$                       &  $\times$    &  $\times$                       & 5                      &     ++                   &   -              &   -                 &   ++            \\ \hline
-			Supervise.ly~\cite{SUPERVISELY}    &                 $\surd$  & $\times$               &                        &  $\surd$               & $\surd$                         &  $\times$      &  $\times$                      &              &                                 & 9                      &     -                    &   ++             &   -                 &                  \\ \hline
-			scale.ai~\cite{scale}              &                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$               & $\surd$                         &  $\times$      &  $\surd$*                       &              &                                 & 7                      &                          &                  &   -                 &                 \\ \hline
-			Playment.io~\cite{Playment}        &                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$               & $\surd$                         &  $\times$      &  -                              &  $\surd*$    &  $\surd$                        & -                      &     -                    &   ++             &   -                 &   ++            \\ \hline
-			\textbf{Ours (POINTS)}                      &                 $\surd$  & $\surd$                &  $\surd$               &  $\surd$               & $\surd$                         &  $\surd$       &  $\surd$                        &  $\surd$    &  $\surd$                        & 9                      &     +++                  &  +++             &  +++                &  +++            \\ \hline \hline
+		\begin{tabular}{c||p{0.5cm}<{\centering}||p{1.1cm}<{\centering}|p{0.7cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}|p{0.9cm}<{\centering}|p{1cm}<{\centering}|p{0.7cm}<{\centering}|p{1cm}<{\centering}||p{1cm}<{\centering}|p{1cm}<{\centering}|p{0.9cm}<{\centering}|p{1cm}<{\centering}|p{1cm}<{\centering}}
+			\hline 
+			%\hline
+			\multirow{2}{*}{}&\multicolumn{1}{c||}{} & \multicolumn{9}{c||}{Visualization}                         & \multicolumn{5}{c}{Operation}                 \\
+			\cline{2-16}                       &Open Source&3D Spatial/ Temporal Navigation & Main View Focus Mode   & Box \& Object Coloring & Top/Side/ Front Views  &Photo Context with 3D-2D Fusion  &Focused Context & Mult-Camera Switching & Stream Play & Object Locking    & Box Degrees of Freedom & Auto Box Initialization& Sub-View Editing &Interactive Box Fitting  & Annotation Transfer \\  \hline
+			PointAtMe~\cite{pointatme}         &$\surd$&                 $\surd$  & $\times$               &  $\times$              &  $\times$                     & $\surd$*                        &  $\times$      &  $\times$                       &  $\times$    &  $\times$                     & 9                      &     $\times$             &   $\times$     &   $\times$         &   $\times$            \\ \hline
+			3D BAT~\cite{Zimmer20193DBA}       &$\surd$&                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$*              & $\surd$                         &  $\times$      &  $\surd$*                       &  $\times$    &  $\times$                       & 9                      &     $\times$             &   $\times$     &   $\times$         &   ++            \\ \hline
+			LATTE~\cite{Wang2019LATTEAL}       &$\surd$&                 $\surd$  & $\times$               &  $\times$              &  $\times$              & $\surd$*                        &  $\times$      &  $\times$                       &  $\times$    &  $\times$                       & 5                      &     ++                   &   $\times$     &   $\times$         &   ++            \\ \hline
+			Supervise.ly~\cite{SUPERVISELY}    &$\surd$&                 $\surd$  & $\times$               &      -                 &  $\surd$               & $\surd$                         &  $\times$      &  $\times$                       & -            &  -                              & 9                      &     $\times$             &   ++           &   $\times$         &  -               \\ \hline
+			scale.ai~\cite{scale}              &$\times$&                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$               & $\surd$                         &  $\times$      &  $\surd$*                       & -           &  -                              & 7                      &     -                    &   -            &   $\times$         &  -              \\ \hline
+			Playment.io~\cite{Playment}        &$\times$&                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$               & $\surd$                         &  $\times$      &  $\times$                       &  $\surd*$    &  $\surd$                       & -                      &     $\times$             &   ++           &   $\times$         &   ++            \\ \hline
+			\textbf{Ours (POINTS)}             &$\times$&                 $\surd$  & $\surd$                &  $\surd$               &  $\surd$               & $\surd$                         &  $\surd$       &  $\surd$                        &  $\surd$    &  $\surd$                        & 9                      &     +++                  &  +++           &  +++               &  +++            \\ \hline \hline
 		\end{tabular}
 	}
 	\begin{tabular}{p{17.5cm}}
 		
 		
-		The symbol ``$\surd$'' means that the system supports the functionality, ``$\times$'' means does not support,  and ``$\surd$*'' means partially supports. 
-		The number of ``$\textbf{+}$''s represents the performance of a specific funcationality, more ``$\textbf{+}$''s means better performance, and ``-'' means a lack of that functionality. Some functionalities are explained as below:
+		The symbol ``$\surd$'' means that the system supports the functionality, ``$\times$'' means does not support,  ``$\surd$*'' means partially supports, and ``-'' means unknown.
+		The number of ``$\textbf{+}$''s represents the performance of a specific funcationality, more ``$\textbf{+}$''s means better performance. Some functionalities are explained as below:
 
 		\begin{enumerate}
 			\item ``Main View Focus Mode'': to zoom in and center a selected object in the main view with one click.
@@ -265,7 +265,7 @@ and use its experiment results as the baseline to compare with.
 
 The web-based POINTS focuses on developing visualization modules and interative tools for 3D bounding box and tracking ID annotation.
 The platform web server manages all the data, programmed with the CherryPy \cite{cherrypy} web application development framework.
-The platform fronend provides almost all the module functionalities, programmed with the \texttt{WebGL} library Three.js \cite{threejs}.
+The platform frontend provides almost all the module functionalities, programmed with the \texttt{WebGL} library Three.js \cite{threejs}.
 Fig.~\ref{fig:arch_layer} shows the system architecture of POINTS.
 In the data pre-processing stage, intrinsic/extrinsic sensor parameters are estimated first; only those data frames consistent to calibration parameters, useful for algorithms training and verification are selected; then a set of AI algorithms including detection, segmentation, and 2D\&3D fusion are used to annotate the dataset initially. The data visualization modules provide helpful temporal/spatial navigation tools for users, distinguish data of different objects, and show multiple views of each object from different perspectives. The interactive data operations include editing labels in multiple views, automatically adjusting the size of 2D/3D boxes to fit the data of each object, and automatically extending (transferring) annotations of the same objects from one frame (modality) to different frames (modalities).
 
@@ -292,7 +292,7 @@ Fig.~\ref{fig:main-ui} shows the main user interface (UI) of POINTS, from which 
 The main UI contains the following functionalites: 
 \textbf{Sub-views}. The main window is divided into one main view (\textcircled{1} in Fig.~\ref{fig:main-ui}) and five sub-views,  and the top, front and side projective views of the selected object are displayed on the left side (\textcircled{3},\textcircled{4},\textcircled{5} in Fig.~\ref{fig:main-ui})with the background hidden. The context photo of the selected object is displayed in the top middle sub-view (\textcircled{2} in Fig.~\ref{fig:main-ui}) and an extra focused context is displayed in the bottom left sub-view (\textcircled{6} in Fig.~\ref{fig:main-ui}); the 3D annotation box of the selected object is projected onto these two sub-views.
 \textbf{Focus-mode}. A focus mode is provided to help check the details of the selected object. When the mode is activated through the fast toolbox (\textcircled{8}) in Fig.~\ref{fig:main-ui}), the selected object will be automatically centered in the main view and zoomed in with most of the background hidden.
-\textbf{Camera auto-switching}. Multiple camera images can be all displayed on the top of the main view \cite{Zimmer20193DBA}, or only one of them displayed to provide more focus \cite{scale,Wang2019LATTEAL,pointatme}, which requires automatic switching to the most relevant camera for a selected object. Manual camera selection should also be provided. Note that this functionality needs accurate calibration parameters of sensors.
+\textbf{Camera auto-switching}. Multiple camera images can all be displayed on the top of the main view \cite{Zimmer20193DBA}, or only one of them displayed to provide more focus \cite{scale,Wang2019LATTEAL,pointatme}, which requires automatic switching to the most relevant camera for a selected object. Manual camera selection should also be provided. Note that this functionality needs accurate calibration parameters of sensors.
 \textbf{Object coloring}. All boxes and points can be colored by their categories. A selected object will be highlighted with a different color. 
 \textbf{Navigation}. \label{sec:navigation} A user can quickly check the annotation results in the 3D space, or along the time axis, by changing the point of view, selected objects and the no. of frames.
 \textbf{Stream play}. \label{sec:streamplay} A user can play the sequential data in terms of scenes like a video.
@@ -597,7 +597,7 @@ Three metrics are used: 1) the number of error points per object,
 
 As shown in Table~\ref{tab:annotation-evaluation}, the annotated accuracy obtained by those unexperienced users using POINTS are very close to the ground truth,
 much higher than using PointAtMe (baseline) with less than half of the annotation time. 
-The success should attribute to the developed techniques such as smart box initialization, interactive box fitting and convenient visualization modules. 
+The success can be attributed to the developed techniques such as smart box initialization, interactive box fitting and convenient visualization modules. 
 Users only need to ensure the points of one object are all inside one 2D rectangle initially, and do not need to refine the 3D bounding box by themselves, 
 reducing many human errors. 
 Meanwhile, the annotation speed is also improved by more than two times compared to the baseline. 
@@ -771,7 +771,7 @@ In this paper, we have presented a framework for developing portable 3D point cl
 A number of important data visualization modules and interative operation tools, as well as supporting algorithms, have been specifically introduced.
 The major contributions of this work include developing a series of enhanced data visulization modules, new interactive tools, and a registration-based annotation transfer method to acheve high-accuracy and high-efficiency human-in-the-loop 3D data annotation.
 The source codes of the developed SUSTech POINTS are available on Github for public access.
-Compred with PointAtMe, the proposed POINTS can achieve much lower annotation errors in shorter annotation time, tested with KITTI, nuScenes, and SUSTech SCAPES datasets. 
+Compred with PointAtMe, the proposed POINTS can achieve much lower annotation errors in shorter annotation time, tested with KITTI and SUSTech SCAPES datasets. 
 The developed annotation transfer method can tranfer annotations from one frame to multiple frames with errors of no more than 3\%.
 The future work includes integrating more AI-based algorithms, such as 3D object tracking algorithms, with our annotation platform (POINTS) to achieve more automatic annontation functionalities with high quality.
 
