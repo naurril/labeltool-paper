@@ -67,7 +67,7 @@ Southern University of Science and Technology, Shenzhen, Guangdong, China, 51805
 
 The major challenges of developing 3D point cloud annotation systems for autonomous driving datasets include
 convenient user-data interfaces, efficient operations on geometric data units, and scalable annotation tools. 
-This paper presents a {Portable pOint-cloud Interactive aNnotation plaTform System} (i.e. SUSTech POINTS), 
+This paper presents a {Portable pOint-cloud Interactive aNnotation plaTform System} (\textit{i}.\textit{e}. SUSTech POINTS), 
 which contains a set of user-friendly interfaces and efficient annotation tools to help achieve high quality data annotations with high efficiency. 
 The novelty of this work is threefolds: 
 (1) developing a set of visulization modules for fast annotation error localization and convenient annotator-data interactions; 
@@ -136,10 +136,10 @@ Despite many efforts and successes in developing AI-based pre-processing techniq
 			PointAtMe~\cite{pointatme}         &$\surd$&                 $\surd$  & $\times$               &  $\times$              &  $\times$                     & $\surd$*                        &  $\times$      &  $\times$                       &  $\times$    &  $\times$                     & 9                      &     $\times$             &   $\times$     &   $\times$         &   $\times$            \\ \hline
 			3D BAT~\cite{Zimmer20193DBA}       &$\surd$&                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$*              & $\surd$                         &  $\times$      &  $\surd$*                       &  $\times$    &  $\times$                       & 9                      &     $\times$             &   $\times$     &   $\times$         &   ++            \\ \hline
 			LATTE~\cite{Wang2019LATTEAL}       &$\surd$&                 $\surd$  & $\times$               &  $\times$              &  $\times$              & $\surd$*                        &  $\times$      &  $\times$                       &  $\times$    &  $\times$                       & 5                      &     ++                   &   $\times$     &   $\times$         &   ++            \\ \hline
-			Supervise.ly~\cite{SUPERVISELY}    &$\surd$&                 $\surd$  & $\times$               &      -                 &  $\surd$               & $\surd$                         &  $\times$      &  $\times$                       & -            &  -                              & 9                      &     $\times$             &   ++           &   $\times$         &  -               \\ \hline
+			Supervise.ly~\cite{SUPERVISELY}    &$\times$&                 $\surd$  & $\times$               &      -                 &  $\surd$               & $\surd$                         &  $\times$      &  $\times$                       & -            &  -                              & 9                      &     $\times$             &   ++           &   $\times$         &  -               \\ \hline
 			scale.ai~\cite{scale}              &$\times$&                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$               & $\surd$                         &  $\times$      &  $\surd$*                       & -           &  -                              & 7                      &     -                    &   -            &   $\times$         &  -              \\ \hline
 			Playment.io~\cite{Playment}        &$\times$&                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$               & $\surd$                         &  $\times$      &  $\times$                       &  $\surd*$    &  $\surd$                       & -                      &     $\times$             &   ++           &   $\times$         &   ++            \\ \hline
-			\textbf{Ours (POINTS)}             &$\times$&                 $\surd$  & $\surd$                &  $\surd$               &  $\surd$               & $\surd$                         &  $\surd$       &  $\surd$                        &  $\surd$    &  $\surd$                        & 9                      &     +++                  &  +++           &  +++               &  +++            \\ \hline \hline
+			\textbf{Ours (POINTS)}             &$\surd$&                 $\surd$  & $\surd$                &  $\surd$               &  $\surd$               & $\surd$                         &  $\surd$       &  $\surd$                        &  $\surd$    &  $\surd$                        & 9                      &     +++                  &  +++           &  +++               &  +++            \\ \hline \hline
 		\end{tabular}
 	}
 	\begin{tabular}{p{17.5cm}}
@@ -267,7 +267,7 @@ The web-based POINTS focuses on developing visualization modules and interative 
 The platform web server manages all the data, programmed with the CherryPy \cite{cherrypy} web application development framework.
 The platform frontend provides almost all the module functionalities, programmed with the \texttt{WebGL} library Three.js \cite{threejs}.
 Fig.~\ref{fig:arch_layer} shows the system architecture of POINTS.
-In the data pre-processing stage, intrinsic/extrinsic sensor parameters are estimated first; only those data frames consistent to calibration parameters, useful for algorithms training and verification are selected; then a set of AI algorithms including detection, segmentation, and 2D\&3D fusion are used to annotate the dataset initially. The data visualization modules provide helpful temporal/spatial navigation tools for users, distinguish data of different objects, and show multiple views of each object from different perspectives. The interactive data operations include editing labels in multiple views, automatically adjusting the size of 2D/3D boxes to fit the data of each object, and automatically extending (transferring) annotations of the same objects from one frame to different frames.
+In the data pre-processing stage, intrinsic/extrinsic sensor parameters are estimated first; only those data frames consistent to calibration parameters, useful for algorithms training and verification are selected; then optionaly a set of AI algorithms including detection, tracking, and 2D\&3D fusion are used to generate initial annotation results. The data visualization modules provide helpful temporal/spatial navigation tools for users, distinguish data of different objects, and show multiple views of each object from different perspectives. The interactive data operations include editing labels in multiple views, automatically adjusting the size of 2D/3D boxes to fit the data of each object, and automatically extending (transferring) annotations of the same objects from one frame to different frames.
 
 \subsection {Data Visualization Modules}
 \label{sec:visualization}
@@ -469,18 +469,17 @@ before feeding them into the registration algorithm.
 Fig.~\ref{fig:annotation-transfer} illustrates an example of annotaton transfer, whose performance relies on the effectiveness of the registration algorithm. 
 The registration works well when the orientations of reference and target objects have small deviations.
 
-Given the reference and target objects (denoted by $\mathcal{R}$ and $\mathcal{T}$, respectively) and their bounding boxes ($b_r$; $b_t$), a registration algorithm aims to find the transform $T$ to match $\mathcal{T}$ with $\mathcal{R}$, minimizing a distance function $dist(T(\mathcal{T}); \mathcal{R} )$.
+Given the reference and target objects (denoted by $\mathcal{R}$ and $\mathcal{T}$, respectively) and their bounding boxes ($b_r$; $b_t$), a registration algorithm aims to find the transform $T$ to match $\mathcal{T}$ with $\mathcal{R}$, minimizing a distance function $dist(T(\mathcal{T}); \mathcal{R} )$. For brevity we derive the formula for cases where only rotation is needed (\textit{i}.\textit{e}. zero translation).
 
-We describe the points of $\mathcal{R}$; $\mathcal{T}$ in their corresponding bounding box coordinate systems, $B_r$ and $B_t$, and the world coordinate system, $B_w$. 
-Note that the box is identical to the box coordinates system (i.e. $b_r$ is identical to $B_r$) since we only concern the orientation (correspond to 3 axes) and position
-(correspond to the origin point) of the box.
+We denote the bounding box coordinate systems of $\mathcal{R}$, $\mathcal{T}$ and the world coordinate system by their corresponding basis matrices $B_r$, $B_t$ and $B_w$.  Note that the box is identical to the box coordinates system (\textit{i}.\textit{e}. $b_r$ is identical to $B_r$) since we only concern the orientation (corresponds to 3 axes) and position
+(corresponds to the origin point) of the box.
 
-Assume a point of $t \in \mathcal{T}$ corresponds to a point of $r \in \mathcal{R}$ after the registration, then we will have
+Assume a point $t \in \mathcal{T}$ corresponds to a point $r \in \mathcal{R}$ after the registration, we will have
 \begin{align}
 T t^{B_t} &= r^{B_r}\\
 T B_t^{-1}t^{B_w} &= r^{B_r} \label{eq:eq1}
 \end{align}
-where $r^{B_r}$ means a point of $r$ represented in the $B_r$ coordinate system. If the new coordinate system of $\mathcal{T}$ is denoted as $B'_t$, then we will have
+where $r^{B_r}$ means a point $r$ represented in the $B_r$ coordinate system. If the new coordinate system of $\mathcal{T}$ is denoted as $B'_t$, then we will have
 \begin{align} 
 t^{B'_t} &= r^{B_r}\\
 (B'_t)^{-1}t^{B_w} &= r^{B_r} \label{eq:eq2}
@@ -587,7 +586,7 @@ Meanwhile, tracking IDs can also be easily checked with the help of the function
 \subsection{Annotation Efficiency}
 
 Annotation efficiency can be measured by annotation accuracy and speed \cite{pointatme} \cite{Zimmer20193DBA}. POINTS aims to maximize the annotation accuracy within the minimum time.
-As shown in the previous section (\ref{sec:errcheck}) and also indicated in  \cite{pointatme} (Table I), some of the original KITTI labels are not suited as our ground truth, following \cite{pointatme} we carefully annotated some KITTI scenes and use the results as the ground truth.
+As shown in the previous section (\ref{sec:errcheck}) and also indicated in  \cite{pointatme} (Table I), some of the original KITTI labels are not suited as ground truth to compare our annotations with, following \cite{pointatme} we carefully annotated some KITTI scenes and use the results as the ground truth.
 Three users are employed to annotate the same set of data after a few hours of practicing. 
 For each user we measure the average annotation time (seconds) per object and average annotation errors per object.
 For a perfect annotation, all the points belonging to an object should be inside the bounding box and otherwise outside. 
@@ -650,7 +649,7 @@ It can be seen that POINTS can really help unexperienced users to achieve high a
 		\end{tabular}
 	}
 	\begin{tabular}{p{\linewidth}}
-		The value is in the form of Error points/Total points. “Ref. Obj.” means the reference object (i.e. the manually annotated object). 
+		The value is in the form of Error points/Total points. “Ref. Obj.” means the reference object (\textit{i}.\textit{e}. the manually annotated object). 
 		The “Err/Obj” and “FN” are the same as in Table II.	
 	\end{tabular}
 \end{table}
