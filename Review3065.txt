@@ -1,0 +1,19 @@
+Reviewer 2 of IV 2020 submission 429
+
+Comments to the author
+======================
+
+I very much appreciate the contribution to the annotation
+space. I think that making this project open source will
+help researchers throughout the space that rely on 3d
+boxes. Consider providing a public dataset as well, as
+private datasets provide limited benefits to the average
+researcher.
+I further encourage the authors to ensure continued support
+of this tool, which is crucial to the longevity and overall
+impact of such tools. In the process, consider specific
+tools to help in sequential scenes with potentially
+multiple overlapping sensor fields that can never perfectly
+align in time.
+I appreciate the solid organization of the paper and the
+clarity in purpose and writing.

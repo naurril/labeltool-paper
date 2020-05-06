@@ -1,0 +1,16 @@
+Reviewer 3 of IV 2020 submission 429
+
+Comments to the author
+======================
+
+The authors present POINTS, a new open source software for
+3D point cloud labeling. The paper is well written and easy
+to understand.
+The main contribution is the software itself, together with
+a good visualization and some heuristics to make the box
+labeling fast and easy.
+The evaluation makes sense but it would be nice to have
+more software packages as comparison. Also an ablation
+study would be interesting to see which ideas contribute
+the most to the improved performance (compared to the
+baseline).
