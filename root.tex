@@ -267,7 +267,7 @@ The web-based POINTS focuses on developing visualization modules and interative 
 The platform web server manages all the data, programmed with the CherryPy \cite{cherrypy} web application development framework.
 The platform frontend provides almost all the module functionalities, programmed with the \texttt{WebGL} library Three.js \cite{threejs}.
 Fig.~\ref{fig:arch_layer} shows the system architecture of POINTS.
-In the data pre-processing stage, intrinsic/extrinsic sensor parameters are estimated first; only those data frames consistent to calibration parameters, useful for algorithms training and verification are selected; then a set of AI algorithms including detection, segmentation, and 2D\&3D fusion are used to annotate the dataset initially. The data visualization modules provide helpful temporal/spatial navigation tools for users, distinguish data of different objects, and show multiple views of each object from different perspectives. The interactive data operations include editing labels in multiple views, automatically adjusting the size of 2D/3D boxes to fit the data of each object, and automatically extending (transferring) annotations of the same objects from one frame (modality) to different frames (modalities).
+In the data pre-processing stage, intrinsic/extrinsic sensor parameters are estimated first; only those data frames consistent to calibration parameters, useful for algorithms training and verification are selected; then a set of AI algorithms including detection, segmentation, and 2D\&3D fusion are used to annotate the dataset initially. The data visualization modules provide helpful temporal/spatial navigation tools for users, distinguish data of different objects, and show multiple views of each object from different perspectives. The interactive data operations include editing labels in multiple views, automatically adjusting the size of 2D/3D boxes to fit the data of each object, and automatically extending (transferring) annotations of the same objects from one frame to different frames.
 
 \subsection {Data Visualization Modules}
 \label{sec:visualization}
@@ -543,6 +543,7 @@ The whole evaluation contains three parts:
 
 
 \subsection{Annotation Error Checking Efficiency}
+\label {sec:errcheck}
 Examples from the KITTI 3D Object Detection dataset \cite{Geiger2012CVPR} are used to demonstrate the effectiveness and efficiency of POINTS in checking annotation errors. 
 The same examples are chosen as shown in Fig. 5 of \cite{pointatme}. 
 Although our platform supports all 9 degrees of freedom (DOFs) for 3D bounding boxes, only 7 DOFs (without pitch and tilt) are labeled in the KITTI dataset.
@@ -586,8 +587,7 @@ Meanwhile, tracking IDs can also be easily checked with the help of the function
 \subsection{Annotation Efficiency}
 
 Annotation efficiency can be measured by annotation accuracy and speed \cite{pointatme} \cite{Zimmer20193DBA}. POINTS aims to maximize the annotation accuracy within the minimum time.
-As original KITTI labels are not suited as ground truth due to their accuracy not high enough, 
-we carefully annotated some KITTI scenes and use the results as the ground truth \cite{pointatme}.
+As shown in the previous section (\ref{sec:errcheck}) and also indicated in  \cite{pointatme} (Table I), some of the original KITTI labels are not suited as our ground truth, following \cite{pointatme} we carefully annotated some KITTI scenes and use the results as the ground truth.
 Three users are employed to annotate the same set of data after a few hours of practicing. 
 For each user we measure the average annotation time (seconds) per object and average annotation errors per object.
 For a perfect annotation, all the points belonging to an object should be inside the bounding box and otherwise outside. 
