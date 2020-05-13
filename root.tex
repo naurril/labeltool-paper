@@ -68,10 +68,10 @@ Southern University of Science and Technology, Shenzhen, Guangdong, China, 51805
 The major challenges of developing 3D point cloud annotation systems for autonomous driving datasets include
 convenient user-data interfaces, efficient operations on geometric data units, and scalable annotation tools. 
 This paper presents a {Portable pOint-cloud Interactive aNnotation plaTform System} (\textit{i}.\textit{e}. SUSTech POINTS), 
-which contains a set of user-friendly interfaces and efficient annotation tools to help achieve high quality data annotations with high efficiency. 
-The novelty of this work is threefolds: 
-(1) developing a set of visulization modules for fast annotation error localization and convenient annotator-data interactions; 
-(2) developing a set of interactive tools for annonators labelling 3D point clouds and 2D images in high speeds;
+which contains a set of user-friendly interfaces and efficient annotation tools to help achieve high-quality data annotations with high efficiency. 
+The novelty of this work is threefold: 
+(1) developing a set of visualization modules for fast annotation error localization and convenient annotator-data interactions; 
+(2) developing a set of interactive tools for annotators labeling 3D point clouds and 2D images in high speed;
 (3) developing an annotation transfer method to label the same objects in different data frames. 
 The developed POINTS system is tested with public datasets such as KITTI and a private dataset (SUSTech SCAPES). 
 The experimental results show that the developed platform can help improve the annotation accuracy and efficiency 
@@ -102,7 +102,7 @@ which are enabled by a data management system and a user-data interaction interf
 Despite many efforts and successes in developing AI-based pre-processing techniques, data visualizations and interactive operations also impose a number of technical challenges upon developing an efficient data annotation platform, including
 \begin{enumerate}
 
-\item \textbf{Fast Error Checking}. Given the initial annotation results of 2D and 3D data, it is required to develop a set of data visualizaton modules that can help annotators quickly localize those annotation errors. 
+\item \textbf{Fast Error Checking}. Given the initial annotation results of 2D and 3D data, it is required to develop a set of data visualization modules that can help annotators quickly localize those annotation errors. 
 \item \textbf{Easy user-data interactions}. Each frame of data usually contains a great number of objects with irregular measurement data in a large field of view (FOV), hence it is necessary to develop a convenient human-computer interface to enable annotators to easily perform corrective operations upon annotation errors.
 \item \textbf{Flexible annotation extension}. There are a lot underlying correlations among data frames, FOVs, and sensing modalities, so the annotations of the same objects should be scalable and extensible among different frames, areas and modalities.
 
@@ -132,7 +132,7 @@ Despite many efforts and successes in developing AI-based pre-processing techniq
 			\hline 
 			%\hline
 			\multirow{2}{*}{}&\multicolumn{1}{c||}{} & \multicolumn{9}{c||}{Visualization}                         & \multicolumn{5}{c}{Operation}                 \\
-			\cline{2-16}                       &Open Source&3D Spatial/ Temporal Navigation & Main View Focus Mode   & Box \& Object Coloring & Top/Side/ Front Views  &Photo Context with 3D-2D Fusion  &Focused Context & Mult-Camera Switching & Stream Play & Object Locking    & Box Degrees of Freedom & Auto Box Initialization& Sub-View Editing &Interactive Box Fitting  & Annotation Transfer \\  \hline
+			\cline{2-16}                       &Open Source&3D Spatial/ Temporal Navigation & Main View Focus Mode   & Box \& Object Coloring & Top/Side/ Front Views  &Photo Context with 3D-2D Fusion  &Focused Context & Multi-Camera Switching & Stream Play & Object Locking    & Box Degrees of Freedom & Auto Box Initialization& Sub-View Editing &Interactive Box Fitting  & Annotation Transfer \\  \hline
 			PointAtMe~\cite{pointatme}         &$\surd$&                 $\surd$  & $\times$               &  $\times$              &  $\times$                     & $\surd$*                        &  $\times$      &  $\times$                       &  $\times$    &  $\times$                     & 9                      &     $\times$             &   $\times$     &   $\times$         &   $\times$            \\ \hline
 			3D BAT~\cite{Zimmer20193DBA}       &$\surd$&                 $\surd$  & $\times$               &  $\surd *$             &  $\surd$*              & $\surd$                         &  $\times$      &  $\surd$*                       &  $\times$    &  $\times$                       & 9                      &     $\times$             &   $\times$     &   $\times$         &   ++            \\ \hline
 			LATTE~\cite{Wang2019LATTEAL}       &$\surd$&                 $\surd$  & $\times$               &  $\times$              &  $\times$              & $\surd$*                        &  $\times$      &  $\times$                       &  $\times$    &  $\times$                       & 5                      &     ++                   &   $\times$     &   $\times$         &   ++            \\ \hline
@@ -146,7 +146,7 @@ Despite many efforts and successes in developing AI-based pre-processing techniq
 		
 		
 		The symbol ``$\surd$'' means that the system supports the functionality, ``$\times$'' means does not support,  ``$\surd$*'' means partially supports, and ``-'' means unknown.
-		The number of ``$\textbf{+}$''s represents the performance of a specific funcationality, more ``$\textbf{+}$''s means better performance. Some functionalities are explained as below:
+		The number of ``$\textbf{+}$''s represents the performance of a specific functionality, more ``$\textbf{+}$''s means better performance. Some functionalities are explained as below:
 
 		\begin{enumerate}
 			\item ``Main View Focus Mode'': to zoom in and center a selected object in the main view with one click.
@@ -181,21 +181,21 @@ Despite many efforts and successes in developing AI-based pre-processing techniq
 
 
 
-Current AD dataset annonation systems have developed temporal and spatial navigation tools to help quickly review annotation results \cite{Playment,SUPERVISELY,Wang2019LATTEAL,Zimmer20193DBA}, 
+Current AD dataset annotation systems have developed temporal and spatial navigation tools to help quickly review annotation results \cite{Playment,SUPERVISELY,Wang2019LATTEAL,Zimmer20193DBA}, 
 assigning different colors to annotation boxes to distinguish objects \cite{SUPERVISELY,Zimmer20193DBA,Playment,scale}, 
 providing various perspective/projective views and multi-camera photo contexts of 3D data to help localize annotation errors \cite{SUPERVISELY,Playment,Zimmer20193DBA}, 
-and supporting data stream playing and object locking in data streams to help check out the temporal consistency ammong annotation results \cite{Playment}.
+and supporting data stream playing and object locking in data streams to help check out the temporal consistency among annotation results \cite{Playment}.
 However, more visualization modules such as background removal, object based coloring, and modality/spatial/temporal consistency checking should be further developed to improve the error checking efficiency.
-On the other hand, interactive operations such as high degrees-of-freedom (DOFs) and multi-view editing, box initalization (one-click annotation)
+On the other hand, interactive operations such as high degrees-of-freedom (DOFs) and multi-view editing, box initialization (one-click annotation)
 and automatic fitting have also been developed \cite{pointatme,Zimmer20193DBA,Wang2019LATTEAL,SUPERVISELY,Playment}; but all need further refinement to increase annotation efficiency. 
 Besides, several annotation transfer methods have been developed to achieve annotation extensions to multiple frames \cite{Playment,Wang2019LATTEAL,Zimmer20193DBA}, 
 but no registration-based method has been proposed yet, which can provide more accuracy and higher speeds for annotations.
 
 
-In this paper, we present a comprehensive web-based AD dataset annotation platform system, which provides more advanced functionalities in visualization modules, interactive tools, and annotation trasnfer. The contributions of this work include
+In this paper, we present a comprehensive web-based AD dataset annotation platform system, which provides more advanced functionalities in visualization modules, interactive tools, and annotation transfer. The contributions of this work include
 \begin{enumerate}
 	\item developing an open-source portable 3D point cloud annotation platform with well-designed visualization modules and high-efficiency interactive tools, whose source codes are available for public access on Github (\url{https://github.com/naurril/SUSTechPOINTS}).
-	\item developing a series of enhanced data visulization modules such as stream playing, object locking, background removal, object based coloring, multi-camera
+	\item developing a series of enhanced data visualization modules such as stream playing, object locking, background removal, object based coloring, multi-camera
 swiching, and photo context adjusting to enable fast error checking.
 	\item developing a series of new interactive tools such as smart box initialization and interactive box fitting to enable fast and accurate 3D data annotating.
 	\item developing a novel registration-based inter-frame annotation transfer method, which can extend annotation results from one frame to the whole data stream with high accuracy and speeds.
@@ -233,20 +233,20 @@ Section~\ref{sec:conclusions} concludes the paper and outlines future work.
 
 
 Table~\ref{tab:comparison} summarizes a detailed comparison of the most popular 3D point clouds annotation systems in terms of visualization modules and interactive operations, where the first 3 systems (PointAtMe\cite{pointatme}, 3D BAT\cite{Zimmer20193DBA}, LATTE\cite{Wang2019LATTEAL}) and ours (POINTS) are open-source software, 
-and the remainning 3 systems (Supervise.ly\cite{SUPERVISELY}, scale.ai\cite{scale}, Playment.io\cite{Playment}) are commercial platforms. 
-It can be seen that in general the commercial platforms can provide advanced functionalities of data visualizations and interative operations, 
+and the remaining 3 systems (Supervise.ly\cite{SUPERVISELY}, scale.ai\cite{scale}, Playment.io\cite{Playment}) are commercial platforms. 
+It can be seen that in general the commercial platforms can provide advanced functionalities of data visualizations and interactive operations, 
 but their technological details are undisclosed. 
-By comparison, our open-source annotation platform (POINTS) can provide unique functionalies of main view focus mode, focused context and interactive box fitting, plus more advanced functionalities of stream playing, object locking, sub-view editing, auto box initialization and annotation transfer.
+By comparison, our open-source annotation platform (POINTS) can provide unique functionalities of main view focus mode, focused context and interactive box fitting, plus more advanced functionalities of stream playing, object locking, sub-view editing, auto box initialization and annotation transfer.
 
 3D point cloud annotation systems can be classified as screen based and virtual-reality (VR) based. 
 In the screen based systems, point clouds are visualized on 2D computer screens; users annotate objects by drawing 3D boxes with
-keyboads, mouse devices and/or gestures (if touch screens are available) \cite{LabelMe3D}; camera images are displayed to help identify objects; various algorithms are developed to assist iteractive operations \cite{Wang2019LATTEAL}. 
+keyboards, mouse devices and/or gestures (if touch screens are available) \cite{LabelMe3D}; camera images are displayed to help identify objects; various algorithms are developed to assist interactive operations \cite{Wang2019LATTEAL}. 
 VR based systems can provide better immersive experiences for users\cite{pointatme, gothentag}, but suffer from limits such as inaccurate operations and motion sickness. 
 Therefore, in this work we choose a screen based interface to develop our annotation system.
 
 Annotation systems can also be classified as web-based and PC-based. 
 The web-based systems, such as 3D-BAT\cite{Zimmer20193DBA} and supervise.ly \cite{SUPERVISELY}, are portable for users to perform 3D object annotations only using web browsers. 
-The PC-based systems, such as AppoloSuite \cite{wang2019apolloscape}, need software installed to perform annotations. 
+The PC-based systems, such as Apollo Suite \cite{wang2019apolloscape}, need software installed to perform annotations. 
 As a result, these systems need to be updated from time to time and annotation datasets need to be downloaded from servers. 
 Our proposed POINTS system is web-based, enabled by the CherryPy \cite{cherrypy} web application development framework. 
 We believe that web-based systems are more portable and scalable for massive data annotating when many annotators are involved.
@@ -254,7 +254,7 @@ We believe that web-based systems are more portable and scalable for massive dat
 There are no standard benchmark metrics for annotation system evaluation yet, to the best of our knowledge.
 Annotation efficiency can be measured by the annotation time used by annotators \cite{monica2017multi,pointatme,Zimmer20193DBA}. 
 PointAtMe evaluates the annotation accuracy by using labor-intensive annotation results as the ground truth \cite{pointatme}. 
-In this work, we choose the metrics used by PointAtMe \cite{pointatme} to evalute the efficiency and accuracy of our developed tools, 
+In this work, we choose the metrics used by PointAtMe \cite{pointatme} to evaluate the efficiency and accuracy of our developed tools, 
 and use its experiment results as the baseline to compare with.
 
 
@@ -263,11 +263,11 @@ and use its experiment results as the baseline to compare with.
 
 \subsection{System Architecture}
 
-The web-based POINTS focuses on developing visualization modules and interative tools for 3D bounding box and tracking ID annotation.
+The web-based POINTS focuses on developing visualization modules and interactive tools for 3D bounding box and tracking ID annotation.
 The platform web server manages all the data, programmed with the CherryPy \cite{cherrypy} web application development framework.
 The platform frontend provides almost all the module functionalities, programmed with the \texttt{WebGL} library Three.js \cite{threejs}.
 Fig.~\ref{fig:arch_layer} shows the system architecture of POINTS.
-In the data pre-processing stage, intrinsic/extrinsic sensor parameters are estimated first; only those data frames consistent to calibration parameters, useful for algorithms training and verification are selected; then optionaly a set of AI algorithms including detection, tracking, and 2D\&3D fusion are used to generate initial annotation results. The data visualization modules provide helpful temporal/spatial navigation tools for users, distinguish data of different objects, and show multiple views of each object from different perspectives. The interactive data operations include editing labels in multiple views, automatically adjusting the size of 2D/3D boxes to fit the data of each object, and automatically extending (transferring) annotations of the same objects from one frame to different frames.
+In the data pre-processing stage, intrinsic/extrinsic sensor parameters are estimated first; only those data frames consistent to calibration parameters, useful for algorithms training and verification are selected; then optionally a set of AI algorithms including detection, tracking, and 2D\&3D fusion are used to generate initial annotation results. The data visualization modules provide helpful temporal/spatial navigation tools for users, distinguish data of different objects, and show multiple views of each object from different perspectives. The interactive data operations include editing labels in multiple views, automatically adjusting the size of 2D/3D boxes to fit the data of each object, and automatically extending (transferring) annotations of the same objects from one frame to different frames.
 
 \subsection {Data Visualization Modules}
 \label{sec:visualization}
@@ -289,7 +289,7 @@ In the data pre-processing stage, intrinsic/extrinsic sensor parameters are esti
 
 Data visualization modules help edit and review the annotation results in terms of 3D boxes. 
 Fig.~\ref{fig:main-ui} shows the main user interface (UI) of POINTS, from which all the visualization functionalities can be achieved.
-The main UI contains the following functionalites: 
+The main UI contains the following functionalities: 
 \textbf{Sub-views}. The main window is divided into one main view (\textcircled{1} in Fig.~\ref{fig:main-ui}) and five sub-views,  and the top, front and side projective views of the selected object are displayed on the left side (\textcircled{3},\textcircled{4},\textcircled{5} in Fig.~\ref{fig:main-ui})with the background hidden. The context photo of the selected object is displayed in the top middle sub-view (\textcircled{2} in Fig.~\ref{fig:main-ui}) and an extra focused context is displayed in the bottom left sub-view (\textcircled{6} in Fig.~\ref{fig:main-ui}); the 3D annotation box of the selected object is projected onto these two sub-views.
 \textbf{Focus-mode}. A focus mode is provided to help check the details of the selected object. When the mode is activated through the fast toolbox (\textcircled{8}) in Fig.~\ref{fig:main-ui}), the selected object will be automatically centered in the main view and zoomed in with most of the background hidden.
 \textbf{Camera auto-switching}. Multiple camera images can all be displayed on the top of the main view \cite{Zimmer20193DBA}, or only one of them displayed to provide more focus \cite{scale,Wang2019LATTEAL,pointatme}, which requires automatic switching to the most relevant camera for a selected object. Manual camera selection should also be provided. Note that this functionality needs accurate calibration parameters of sensors.
@@ -316,7 +316,7 @@ The main UI contains the following functionalites:
 			\caption{Scaling}
 		\end{subfigure}
 	}
-	\caption{An illustration of annotaton box operations in the perspective view.}
+	\caption{An illustration of annotation box operations in the perspective view.}
 	\label{fig:box-mouse-edit}
 \end{figure}
 \begin{figure}[t]
@@ -340,9 +340,9 @@ The main UI contains the following functionalites:
 	\caption{An illustration of annotation box operations in the top projective view. Dotted lines suggest the next box pose after each operation.}
 	\label{fig:box-mouse-edit-subview}
 \end{figure}
-\textbf{3D box intialization}. A user can create a new 3D box by right clicking on an object and then select the object type from the popup context menu. 
+\textbf{3D box initialization}. A user can create a new 3D box by right clicking on an object and then select the object type from the pop-up context menu. 
 Our platform performs the following functionalities to help create a box easily:
-1) The initial box oritation is upward (\textit{i}.\textit{e} the degree of yaw along the z-axis is zero) within the main view of the x-y plane.  
+1) The initial box orientation is upward (\textit{i}.\textit{e} the degree of yaw along the z-axis is zero) within the main view of the x-y plane.  
 2) A box prototype (in accordance with the object type) is placed at the position of the mouse pointer.
 3) A Euclidean distance based growing algorithm is invoked to estimate all the points belonging to the object.
 4) An auto-fitting algorithm (Section~\ref{sec:support-algorithms}) is used to shrink the box size in case there is a margin between the box and the points of the object.
@@ -350,7 +350,7 @@ Our platform performs the following functionalities to help create a box easily:
 Note that in most cases, the annotation can be completed with such a single click. Different from the one-click-annotation of LATTE \cite{Wang2019LATTEAL}, which uses a clustering algorithm to search the points belonging to the object under selection, our method uses box prototypes to overcome numerical difficulties when the points of an object is too sparse for clustering algorithms. A user can also create a new box by drawing a 2D rectangle within the main view, enclosing relevant points. The box is initialized by setting its orientation as above and automatically fitted to the enclosed points. The object type is automatically chosen by simply matching the dimension of the object with those of prototypes.
 
 \textbf{3D box editing in the perspective view}. When an object is selected, a floating fast toolbox will appear next to it, as shown in Fig.~\ref{fig:main-ui}. A user can change the object type, tracking id, activate the focus mode, among others. For tracking ID, a user can input or select existing value in the fast toolbox, or select `auto' option letting the platform to generate a unique new ID  in the scene. A user can click on an object or the button of the fast toolbox to enable box editing, and drag the handlers to resize, rotate or translate the box, as shown in Fig.~\ref{fig:box-mouse-edit}. Corresponding keyboard shortcuts are also provided.
-\textbf{3D box editing in the projective sub-views}. Editing a 3D box in the perspective view is inconvenient as the user has to change the viewpoint from time to time. As shown in Fig.~\ref{fig:main-ui}, the annotation results are more clearly displayed in the projective sub-views,  hence our platform enables the user to rotate, resize or translate the box in the projective subviews by using mouse operations, as shown in Fig.~\ref{fig:box-mouse-edit-subview}. All operations can also be done with keyboard shortcuts.
+\textbf{3D box editing in the projective sub-views}. Editing a 3D box in the perspective view is inconvenient as the user has to change the viewpoint from time to time. As shown in Fig.~\ref{fig:main-ui}, the annotation results are more clearly displayed in the projective sub-views,  hence our platform enables the user to rotate, resize or translate the box in the projective sub-views by using mouse operations, as shown in Fig.~\ref{fig:box-mouse-edit-subview}. All operations can also be done with keyboard shortcuts.
 
 
 
@@ -394,8 +394,8 @@ Note that in most cases, the annotation can be completed with such a single clic
 
 
 \textbf{Interactive box fitting}. 
-When a bouding box is resized or rotated, our platform can fit the box to the object automatically by finding the minimal box enclosing all the points of the object. Fig.~\ref{fig:boundary-aware-rotation} illustrates the process of box auto-fitting after rotation; as the result, all the points of the car are kept inside the bounding box. 
-With this functionality, only two steps are needed to annotate a new object: (1) draw a rectangle to enclose all the pionts of an object; (2) rotate the 3D bounding box once. Note that the algorithm to find the minimal box may fail when the points of ground are present. 
+When a bounding box is resized or rotated, our platform can fit the box to the object automatically by finding the minimal box enclosing all the points of the object. Fig.~\ref{fig:boundary-aware-rotation} illustrates the process of box auto-fitting after rotation; as the result, all the points of the car are kept inside the bounding box. 
+With this functionality, only two steps are needed to annotate a new object: (1) draw a rectangle to enclose all the points of an object; (2) rotate the 3D bounding box once. Note that the algorithm to find the minimal box may fail when the points of ground are present. 
 For example, in Fig.~\ref{fig:box-rotate-fail-by-ground}, because the ground points (circular arcs) are present, the auto-fitted box becomes a little bit larger than the object. 
 One possible solution is to remove the ground points using algorithms, but it is not reliable when the ground is not smooth (as often can be seen in the KITTI dataset \cite{Geiger2012CVPR} where cars are often parked across the curb (Fig.~\ref{fig:annocheck})). We use a simple but effective method to solve this problem. Specifically, a large part  of the object bottom  (0.2m along the z-axis by default) is skipped while the object size along x-y dimensions (width and length) are accurately estimated, such that the ground points can be removed effectively. In real-world traffic scenarios, almost all objects are much higher than 0.2m. After such a object size estimation, the reduced 0.2m will be compensated along the z-dimension (height). The Interactive Box Fitting algorithm is summarized in Algorithm~\ref{alg:box-fitting}.
 
@@ -417,7 +417,7 @@ One possible solution is to remove the ground points using algorithms, but it is
 		}
 	\nl compute coordinates range $d$ of $\mathcal{R'}$ by finding maximum and minimum values along each coordinate axis. when computing $x,y$ ranges, ignore points whose $z$ value is in the lowest 0.2m part\;
 	\nl compute position delta $\delta p$ and scale $s''$ of new box $b'$ in coordinate system $B'$ by range $d$\;
-	\nl compute $\delta p'$ by reprensenting $\delta p$ in original coordinate system of $\mathcal{P}$
+	\nl compute $\delta p'$ by representing $\delta p$ in original coordinate system of $\mathcal{P}$
 	
 	\nl return $b' = (p+\delta p', s'', r+r')$\;
 	
@@ -446,7 +446,7 @@ One possible solution is to remove the ground points using algorithms, but it is
 		\caption{}\label{fig:reg-input}
 	\end{subfigure}\hfill
 	\caption{
-		An illustration of registration based annontation transfer. (a) The reference object and its bounding box. (b) The object in another frame with an initial bounding box. (c) The adjusted bounding box using our transfer algorithm. (d) The input of the registration algorithm consisting of two set of piont clouds from (a) and (b).}		
+		An illustration of registration based annotation transfer. (a) The reference object and its bounding box. (b) The object in another frame with an initial bounding box. (c) The adjusted bounding box using our transfer algorithm. (d) The input of the registration algorithm consisting of two set of point clouds from (a) and (b).}		
 	\label {fig:annotation-transfer}
 \end{figure}
 
@@ -466,7 +466,7 @@ The relative geometric transform between the reference and target objects will b
 The reference and target objects are cropped out and all their points are transformed to the corresponding bounding box coordinates systems automatically
 before feeding them into the registration algorithm.
 
-Fig.~\ref{fig:annotation-transfer} illustrates an example of annotaton transfer, whose performance relies on the effectiveness of the registration algorithm. 
+Fig.~\ref{fig:annotation-transfer} illustrates an example of annotation transfer, whose performance relies on the effectiveness of the registration algorithm. 
 The registration works well when the orientations of reference and target objects have small deviations.
 
 Given the reference and target objects (denoted by $\mathcal{R}$ and $\mathcal{T}$, respectively) and their bounding boxes ($b_r$; $b_t$), a registration algorithm aims to find the transform $T$ to match $\mathcal{T}$ with $\mathcal{R}$, minimizing a distance function $dist(T(\mathcal{T}); \mathcal{R} )$. For brevity we derive the formula for cases where only rotation is needed (\textit{i}.\textit{e}. zero translation).
@@ -490,7 +490,7 @@ From Eq. (2) and Eq. (4), we have
 & = B_t T^{-1} \label{eq:eq5}
 \end{align}
 
-The annonation transfer algorithm and an object crop and transform algorithm are summarized in Algorithm~\ref{alg:anno-trans} and Algorithm~\ref{alg:crop-trans}.
+The annotation transfer algorithm and an object crop and transform algorithm are summarized in Algorithm~\ref{alg:anno-trans} and Algorithm~\ref{alg:crop-trans}.
 
 \begin{algorithm}
 	\caption{Annotation Transfer Algorithm.}
@@ -503,8 +503,8 @@ The annonation transfer algorithm and an object crop and transform algorithm are
 	\KwOut{target box $b_t$}
 	
 	\nl initialize target box $b_t = (p_t,s_r,r_r)$\;
-	\nl compute points of reference object $\mathcal{R}$ represned in coordinate system $B_r$ by calling Algorithm.~\ref{alg:crop-trans} with input $\mathcal{P}_r$ and $b_r$\;
-	\nl compute points of target object $\mathcal{T}$ represned in coordinate system $B_t$ by calling Algorithm.~\ref{alg:crop-trans} with input $\mathcal{P}_t$ and $b_t$\;
+	\nl compute points of reference object $\mathcal{R}$ represented in coordinate system $B_r$ by calling Algorithm.~\ref{alg:crop-trans} with input $\mathcal{P}_r$ and $b_r$\;
+	\nl compute points of target object $\mathcal{T}$ represented in coordinate system $B_t$ by calling Algorithm.~\ref{alg:crop-trans} with input $\mathcal{P}_t$ and $b_t$\;
 	\nl compute relative rotation $\rho$ and translate $\tau$ by registering $\mathcal{T}$ to $\mathcal{R}$ with registration algorithm \cite{Yang2016GoICPAG} \;
 	\nl compute $\tau'$ by transform $\tau$ from box coordinate system $B_t$ into world coordinate system $B_w$\;
 	\nl	by using Eq.~(\ref{eq:eq5}), compute $b_t = (p_t-\tau', s_r, r_r-\rho)$\;
@@ -536,7 +536,7 @@ The annonation transfer algorithm and an object crop and transform algorithm are
 Generally speaking, it is hard to evaluate an 3D point cloud annotation platform as there are no standard benchmark metrics.
 In this work, we use KITTI \cite{Geiger2012CVPR} and SUSTech SCAPES to test the developed POINTS.
 The whole evaluation contains three parts:
-1) Annotation error checking effieicency. We use the KITTI dataset\cite{Geiger2012CVPR} to test POINTS's new visualization functionalities which help users to check the annotation errors.
+1) Annotation error checking efficiency. We use the KITTI dataset\cite{Geiger2012CVPR} to test POINTS's new visualization functionalities which help users to check the annotation errors.
 2) Annotation efficiency. We compare POINTS and PointAtMe \cite{pointatme} in the terms of annotation errors and speeds.
 3) Annotation transfer quality. We use four target frames for annotation transfer from one reference frames with three types of objects: car, rider, and bus.
 
@@ -755,7 +755,7 @@ for scenario 2, the annotation transfer errors of the rider are 0, with the rela
 for scenario 3, the annotation transfer errors of the bus are less than 0.5\%, with the relative number of FN points of 0.28\%.  
 Compared with Table II, it can be seen that the accuracy of transfer annotation is lower than manual annotations, 
 but still higher than baseline (although we used a different dataset).
-With the help of such a annotation transfer technique, each object in a data stream needs only almost once manual annotation at the begining. 
+With the help of such a annotation transfer technique, each object in a data stream needs only almost once manual annotation at the beginning. 
 Such a technique can also help solve the problem of distant or occluded objects when the number of data points are very sparse. 
 We believe that this technique is complementary to other existing annotation transfer algorithms, such as direct pasting and linear interpolation, 
 and if integrated with tracking algorithms POINTS could improve the annotation efficiency further.
@@ -767,12 +767,12 @@ and if integrated with tracking algorithms POINTS could improve the annotation e
 \label{sec:conclusions}
 
 In this paper, we have presented a framework for developing portable 3D point cloud iterative annotation platform systems (POINTS) for AD applications. 
-A number of important data visualization modules and interative operation tools, as well as supporting algorithms, have been specifically introduced.
-The major contributions of this work include developing a series of enhanced data visulization modules, new interactive tools, and a registration-based annotation transfer method to acheve high-accuracy and high-efficiency human-in-the-loop 3D data annotation.
+A number of important data visualization modules and interactive operation tools, as well as supporting algorithms, have been specifically introduced.
+The major contributions of this work include developing a series of enhanced data visualization modules, new interactive tools, and a registration-based annotation transfer method to achieve high-accuracy and high-efficiency human-in-the-loop 3D data annotation.
 The source codes of the developed SUSTech POINTS are available on Github for public access.
-Compred with PointAtMe, the proposed POINTS can achieve much lower annotation errors in shorter annotation time, tested with KITTI and SUSTech SCAPES datasets. 
-The developed annotation transfer method can tranfer annotations from one frame to multiple frames with errors of no more than 3\%.
-The future work includes integrating more AI-based algorithms, such as 3D object tracking algorithms, with our annotation platform (POINTS) to achieve more automatic annontation functionalities with high quality.
+Compared with PointAtMe, the proposed POINTS can achieve much lower annotation errors in shorter annotation time, tested with KITTI and SUSTech SCAPES datasets. 
+The developed annotation transfer method can transfer annotations from one frame to multiple frames with errors of no more than 3\%.
+The future work includes integrating more AI-based algorithms, such as 3D object tracking algorithms, with our annotation platform (POINTS) to achieve more automatic annotation functionalities with high quality.
 
 
 
